@@ -18,7 +18,8 @@ public class MenuScreen extends BaseScreen {
     private Texture ship;
     private Texture background;
     private Vector2 poz;
-    private Vector2 speed;
+    private Vector2 center;
+    private Vector2 target;
 
     public MenuScreen(Game game) {
         super(game);
@@ -30,8 +31,9 @@ public class MenuScreen extends BaseScreen {
         batch = new SpriteBatch();
         ship = new Texture("ship.png");
         background = new Texture("space.jpg");
-        poz = new Vector2(0f, 0f);
-        speed = new Vector2(0.5f, 0.5f);
+        poz = new Vector2(200, 200);
+        center = new Vector2(ship.getWidth() / 2, ship.getWidth() / 2);
+        target = new Vector2(200,200);
     }
 
     @Override
@@ -41,14 +43,21 @@ public class MenuScreen extends BaseScreen {
         batch.begin();
         batch.draw(background, 0, 0);
         batch.draw(ship, poz.x, poz.y);
-        poz.add(speed);
         batch.end();
+
+        moveSheep();
+
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Нажатие: screenX=" + screenX + "  screenY=" + screenY);// не работает
-        poz.add(speed);
+        screenY = reverseY(screenY);
+
+        target.x = screenX;
+        target.y = screenY;
+        target.sub(center);
+        System.out.println("int screenX=" + screenX + " int screenY=" + screenY);
+
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
@@ -60,5 +69,14 @@ public class MenuScreen extends BaseScreen {
         super.dispose();
 
     }
+
+    private void moveSheep() {
+        poz.add(findDirection());
+    }
+
+    private Vector2 findDirection() {
+        return target.cpy().sub(poz).nor();
+    }
+
 }
 

@@ -1,6 +1,7 @@
 package ru.geekbrains.base;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
@@ -12,6 +13,7 @@ public class BaseScreen implements Screen, InputProcessor{
 
     public BaseScreen(Game game) {
         this.game = game;
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -66,7 +68,6 @@ public class BaseScreen implements Screen, InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Нажатие: screenX=" + screenX + "  screenY=" + screenY);//не работает
         return false;
     }
 
@@ -88,6 +89,10 @@ public class BaseScreen implements Screen, InputProcessor{
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    protected int reverseY(int y){
+        return Gdx.graphics.getHeight() - y;
     }
 }
 
