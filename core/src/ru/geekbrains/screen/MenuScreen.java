@@ -20,6 +20,9 @@ public class MenuScreen extends BaseScreen {
     private Vector2 poz;
     private Vector2 center;
     private Vector2 target;
+    private Vector2 targetTemp;
+    private Vector2 speed;
+    float accelepation;
 
     public MenuScreen(Game game) {
         super(game);
@@ -34,6 +37,8 @@ public class MenuScreen extends BaseScreen {
         poz = new Vector2(200, 200);
         center = new Vector2(ship.getWidth() / 2, ship.getWidth() / 2);
         target = new Vector2(200,200);
+        targetTemp = new Vector2(200,200);
+        speed = new Vector2();
     }
 
     @Override
@@ -46,18 +51,15 @@ public class MenuScreen extends BaseScreen {
         batch.end();
 
         moveSheep();
-
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenY = reverseY(screenY);
-
-        target.x = screenX;
-        target.y = screenY;
+        target.set(screenX,screenY);
         target.sub(center);
-        System.out.println("int screenX=" + screenX + " int screenY=" + screenY);
-
+        setAcceleration();
+        speed.set(findDirection().setLength(accelepation));
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
@@ -67,15 +69,24 @@ public class MenuScreen extends BaseScreen {
         ship.dispose();
         background.dispose();
         super.dispose();
-
     }
 
     private void moveSheep() {
-        poz.add(findDirection());
+        targetTemp.set(target);
+        if(targetTemp.sub(poz).len() > accelepation){
+            poz.add(speed);
+        }
+        else{
+            poz.set(target);
+        }
     }
 
     private Vector2 findDirection() {
-        return target.cpy().sub(poz).nor();
+        return target.cpy().sub(poz);
+    }
+
+    private void setAcceleration(){
+        accelepation = target.cpy().sub(poz).len() / 60;
     }
 
 }
