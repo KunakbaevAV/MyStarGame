@@ -8,9 +8,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
+import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.MatrixUtils;
 
 public class MenuScreen extends BaseScreen {
@@ -23,6 +25,8 @@ public class MenuScreen extends BaseScreen {
     private Vector2 targetTemp;
     private Vector2 speed;
     private float accelepation;
+    private TextureRegion textureRegion;
+//    private Sprite ship;
 
     public MenuScreen(Game game) {
         super(game);
@@ -31,10 +35,12 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
+        textureRegion = new TextureRegion(new Texture("ship.png"),20,20);
+//        ship = new Sprite(textureRegion);
         ship = new Texture("ship.png");
         background = new Texture("space.jpg");
         poz = new Vector2();
-        center = new Vector2(ship.getWidth() / 2, ship.getWidth() / 2);
+        center = new Vector2(0.1f, 0.1f);
         target = new Vector2();
         targetTemp = new Vector2();
         speed = new Vector2();
@@ -46,6 +52,8 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, -0.5f, -0.5f,1,1);
+//        ship.draw(batch);
+//        ship.update(delta);
         batch.draw(ship, poz.x,poz.y,0.2f,0.2f);
         batch.end();
 
@@ -53,13 +61,13 @@ public class MenuScreen extends BaseScreen {
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//        System.out.println("screenX=" + super.touch.x + "screenY=" + super.touch.y);
-        target.set(super.touch);
-//        target.sub(center);
+    public boolean touchDown(Vector2 touch, int pointer) {
+        target.set(touch);
+        target.sub(center);
+        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
         setAcceleration();
         speed.set(findDirection().setLength(accelepation));
-        return super.touchDown(screenX, screenY, pointer, button);
+        return super.touchDown(touch, pointer);
     }
 
     @Override

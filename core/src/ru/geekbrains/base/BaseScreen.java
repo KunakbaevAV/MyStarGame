@@ -102,6 +102,12 @@ public class BaseScreen implements Screen, InputProcessor{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         touch.set(screenX, reverseY(screenY)).mul(screenToWorld);
+        touchDown(touch, pointer);
+        return false;
+    }
+
+    public boolean touchDown(Vector2 touch, int pointer){
+//        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
         return false;
     }
 
