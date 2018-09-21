@@ -7,17 +7,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
-import ru.geekbrains.base.Sprite;
-import ru.geekbrains.math.MatrixUtils;
 
 public class MenuScreen extends BaseScreen {
 
-    private Texture ship;
     private Texture background;
     private Vector2 poz;
     private Vector2 center;
@@ -25,8 +22,10 @@ public class MenuScreen extends BaseScreen {
     private Vector2 targetTemp;
     private Vector2 speed;
     private float accelepation;
-    private TextureRegion textureRegion;
-//    private Sprite ship;
+    private Sprite ship;
+    private Sprite exit;
+    private TextureRegion region;
+    private ru.geekbrains.base.Sprite mySprite;
 
     public MenuScreen(Game game) {
         super(game);
@@ -35,11 +34,22 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        textureRegion = new TextureRegion(new Texture("ship.png"),20,20);
-//        ship = new Sprite(textureRegion);
-        ship = new Texture("ship.png");
+        Texture shipTexture = new Texture("ship.png");
+        Texture exitTexture = new Texture("exit.png");
+        region = new TextureRegion(new Texture("badlogic.jpg"),0,0,128,128);// вырезал часть картинки
+        mySprite = new ru.geekbrains.base.Sprite(region);
+        mySprite.setLeft(0.5f);// пытаюсь указать позицию в центре для левого края (горизонтальное положение)
+        mySprite.setRight(0.2f);// пытаюсь сделать ширину на 1/5 экрана
+        mySprite.setTop(0.2f);// пытаюсь сделать высоту на 1/5 экрана
+        mySprite.setBottom(0.5f);// пытаюсь указать позицию в центре для нижнего края (вертикальное положение)
+
+        exit = new Sprite(exitTexture);
+        exit.setSize(0.1f,0.1f);
+        exit.setPosition(0.4f,0.4f);
+        ship = new Sprite(shipTexture);
+        ship.setSize(0.2f,0.2f);
         background = new Texture("space.jpg");
-        poz = new Vector2();
+        poz = new Vector2(0f,0f);
         center = new Vector2(0.1f, 0.1f);
         target = new Vector2();
         targetTemp = new Vector2();
@@ -52,9 +62,9 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, -0.5f, -0.5f,1,1);
-//        ship.draw(batch);
-//        ship.update(delta);
-        batch.draw(ship, poz.x,poz.y,0.2f,0.2f);
+        ship.draw(batch);
+        exit.draw(batch);
+        mySprite.draw(batch);// не рисуется ((
         batch.end();
 
         moveSheep();
@@ -72,7 +82,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-        ship.dispose();
+//        ship.dispose();
         background.dispose();
         super.dispose();
     }
@@ -85,6 +95,7 @@ public class MenuScreen extends BaseScreen {
         else{
             poz.set(target);
         }
+        ship.setPosition(poz.x,poz.y);
     }
 
     private Vector2 findDirection() {
