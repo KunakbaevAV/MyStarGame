@@ -4,6 +4,7 @@ package ru.geekbrains.base;
  * оболочка для объекта
  */
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,6 +16,7 @@ public class Sprite extends Rect {
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
+    protected float aspectWorld;
 
     public Sprite(TextureRegion region) {
         if (region == null) {
@@ -22,16 +24,43 @@ public class Sprite extends Rect {
         }
         regions = new TextureRegion[1];
         regions[0] = region;
+        setHeightProportion(0.1f);
+    }
+
+    public Sprite(TextureRegion region, float size) {
+        if (region == null) {
+            throw new NullPointerException("region == null");
+        }
+        regions = new TextureRegion[1];
+        regions[0] = region;
+        setHeightProportion(size);
+    }
+
+    public Sprite(TextureAtlas atlas, String path){
+        if (atlas == null) {
+            throw new NullPointerException("atlas == null");
+        }
+        regions = new TextureRegion[1];
+        regions[0] = atlas.findRegion(path);
     }
 
     public void setHeightProportion(float height) {
         setHeight(height);
-        float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();
+        Float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();
         setWidth(height * aspect);
     }
 
-    public void resize(Rect worldBounds) {
+    public void setPosition(Vector2 position){
+        setLeft(position.x);
+        setBottom(position.y);
+    }
 
+    public void setPosition(float x, float y){
+        setLeft(x);
+        setBottom(y);
+    }
+
+    public void resize(Rect worldBounds) {
     }
 
     public void update(float delta) {
