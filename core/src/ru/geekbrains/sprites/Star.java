@@ -11,12 +11,22 @@ public class Star extends Sprite {
     //    private String[] stars = {"star", "star2", "star3"};
     private Vector2 v;
     private Rect wordBounds;
+    private float random;
 
     public Star(TextureAtlas atlas, String path, float min, float max) {
         super(atlas, path);
-        float random = Rnd.nextFloat(min, max);
+        random = Rnd.nextFloat(min, max);
         setHeightProportion(random);
-        v = new Vector2(Rnd.nextFloat(-0.005f, 0.005f), random * -1);
+        v = new Vector2(setRangeX(0.05f), random * -1);
+
+    }
+
+    public Star(TextureAtlas atlas, String path, float min, float max, float rangeX) {
+        super(atlas, path);
+        random = Rnd.nextFloat(min, max);
+        setHeightProportion(random);
+        v = new Vector2(setRangeX(rangeX), random * -1);
+
     }
 
     private void checkAndHandleBounds() {
@@ -38,6 +48,10 @@ public class Star extends Sprite {
         float posX = Rnd.nextFloat(worldBounds.getLeft(), worldBounds.getRight());
         float posY = Rnd.nextFloat(worldBounds.getBottom(), worldBounds.getTop());
         setPosition(posX, posY);
+    }
+
+    public float setRangeX(float range){
+        return Rnd.nextFloat(range * -1, range);
     }
 }
 

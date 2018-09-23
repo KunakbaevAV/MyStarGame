@@ -1,7 +1,4 @@
 package ru.geekbrains.screen;
-/**
- * author Kunakbaev Artem
- */
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -17,50 +14,33 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
-import ru.geekbrains.sprites.ButtonChooseShip;
-import ru.geekbrains.sprites.ButtonExit;
-import ru.geekbrains.sprites.ButtonStart;
+import ru.geekbrains.sprites.Ship;
 import ru.geekbrains.sprites.Star;
 
-public class MenuScreen extends BaseScreen {
-
+public class GameScreen extends BaseScreen {
     private static final int WHITE_STAR_COUNT = 2048;
     private static final int RED_STAR_COUNT = 84;
     private static final int ORANGE_STAR_COUNT = 42;
     private List<Sprite> spites;
-    private List<Sprite> ships;
     private TextureAtlas atlas;
-    private Game game;
-    private Rect worldBound;
-
-    private Sprite label;
-
-    public MenuScreen(Game game) {
-        super(game);
-        this.game = game;
-    }
 
     @Override
     public void show() {
         super.show();
         spites = new ArrayList<Sprite>();
-        ships = new ArrayList<Sprite>();
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
-//        addShips();
-        addButtons();
+        addShip();
     }
 
-    private void addButtons() {
-        Sprite btnExit = new ButtonExit(atlas);
-        spites.add(btnExit);
-        Sprite btnStart = new ButtonStart(atlas, game);
-        spites.add(btnStart);
-        label = new Sprite(atlas, "menu/chooseShip");
-        label.setHeightProportion(0.15f);
-        label.setTop(0.5f);
-        spites.add(label);
+    private void addShip() {
+        Sprite ship = new Ship(atlas, "ships/ship02", 0.25f);
+        spites.add(ship);
+    }
+
+    public GameScreen(Game game) {
+        super(game);
     }
 
     private void addBackgroud() {
@@ -88,19 +68,6 @@ public class MenuScreen extends BaseScreen {
         }
     }
 
-//    private void addShips() {
-//        float posLeft = worldBound.getLeft();
-//        float posTop = 0.5f;
-//        for (int i = 0; i < 8; i++) {
-//            Sprite btnShip =new ButtonChooseShip(atlas, "ships/ship0");
-//            ships.add(btnShip);
-//            btnShip.setTop(posTop);
-//            btnShip.setHeightProportion(0.2f);
-//            posTop = btnShip.getBottom();
-//        }
-//        spites.addAll(ships);
-//    }
-
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -126,7 +93,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         for (Sprite s : spites) {
-            s.touchDown(touch, pointer);
+            s.touchDown(touch,pointer);
         }
         return super.touchDown(touch, pointer);
     }
@@ -134,14 +101,13 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
         for (Sprite s : spites) {
-            s.touchUp(touch, pointer);
+            s.touchUp(touch,pointer);
         }
         return super.touchUp(touch, pointer);
     }
 
     @Override
     public void resize(Rect worldBounds) {
-        this.worldBound = worldBounds;
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }
@@ -153,4 +119,3 @@ public class MenuScreen extends BaseScreen {
         super.dispose();
     }
 }
-

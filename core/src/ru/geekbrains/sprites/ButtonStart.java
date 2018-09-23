@@ -1,21 +1,26 @@
 package ru.geekbrains.sprites;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import ru.geekbrains.base.AnimatedButton;
 import ru.geekbrains.base.ButtonAction;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.screen.GameScreen;
 
 public class ButtonStart extends AnimatedButton implements ButtonAction{
-    public ButtonStart(TextureAtlas atlas) {
+    private Game game;
+    public ButtonStart(TextureAtlas atlas, Game game) {
         super(atlas, "menu/play");
         setHeightProportion(0.15f);
+        this.game = game;
     }
 
     @Override
     public void doButtonAction() {
-        System.out.println("Game start!");
+        game.setScreen(new GameScreen(game));
     }
 
     @Override
