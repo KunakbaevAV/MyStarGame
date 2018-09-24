@@ -26,6 +26,7 @@ public class GameScreen extends BaseScreen {
     private List<Sprite> spites;
     private TextureAtlas atlas;
     private int shipNumber;
+    private Sprite bigStar;
 
     @Override
     public void show() {
@@ -55,8 +56,8 @@ public class GameScreen extends BaseScreen {
     }
 
     private void addStars() {
-        Sprite bigStar = new BigStar(atlas);
-        spites.add(bigStar);
+        bigStar = new BigStar(atlas);
+//        spites.add(bigStar);
         Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
         Sprite[] redStar = new Star[RED_STAR_COUNT];
         Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
@@ -87,6 +88,7 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.draw(batch);
         }
+        bigStar.draw(batch);
         batch.end();
     }
 
@@ -94,6 +96,7 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.update(delta);
         }
+        bigStar.update(delta);
     }
 
     @Override
@@ -117,6 +120,7 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }
+        bigStar.resize(worldBounds);
     }
 
     @Override
