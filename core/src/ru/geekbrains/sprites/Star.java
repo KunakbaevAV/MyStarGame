@@ -8,10 +8,13 @@ import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 
 public class Star extends Sprite {
-    //    private String[] stars = {"star", "star2", "star3"};
     private Vector2 v;
     private Rect wordBounds;
     private float random;
+
+    public Star(TextureAtlas atlas, String path) {
+        super(atlas, path);
+    }
 
     public Star(TextureAtlas atlas, String path, float min, float max) {
         super(atlas, path);

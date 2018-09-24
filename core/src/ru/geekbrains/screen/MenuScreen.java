@@ -17,7 +17,7 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
-import ru.geekbrains.sprites.ButtonChooseShip;
+import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.sprites.ButtonExit;
 import ru.geekbrains.sprites.ButtonStart;
 import ru.geekbrains.sprites.Star;
@@ -28,12 +28,10 @@ public class MenuScreen extends BaseScreen {
     private static final int RED_STAR_COUNT = 84;
     private static final int ORANGE_STAR_COUNT = 42;
     private List<Sprite> spites;
-    private List<Sprite> ships;
+
     private TextureAtlas atlas;
     private Game game;
     private Rect worldBound;
-
-    private Sprite label;
 
     public MenuScreen(Game game) {
         super(game);
@@ -44,12 +42,17 @@ public class MenuScreen extends BaseScreen {
     public void show() {
         super.show();
         spites = new ArrayList<Sprite>();
-        ships = new ArrayList<Sprite>();
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
-//        addShips();
         addButtons();
+        addLogo();
+    }
+
+    private void addLogo() {
+        Sprite logo = new Sprite(atlas, "other/logo");
+        logo.setHeightProportion(0.3f);
+        spites.add(logo);
     }
 
     private void addButtons() {
@@ -57,10 +60,6 @@ public class MenuScreen extends BaseScreen {
         spites.add(btnExit);
         Sprite btnStart = new ButtonStart(atlas, game);
         spites.add(btnStart);
-        label = new Sprite(atlas, "menu/chooseShip");
-        label.setHeightProportion(0.15f);
-        label.setTop(0.5f);
-        spites.add(label);
     }
 
     private void addBackgroud() {
@@ -71,6 +70,8 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void addStars() {
+        Sprite bigStar = new BigStar(atlas);
+        spites.add(bigStar);
         Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
         Sprite[] redStar = new Star[RED_STAR_COUNT];
         Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
@@ -88,24 +89,17 @@ public class MenuScreen extends BaseScreen {
         }
     }
 
-//    private void addShips() {
-//        float posLeft = worldBound.getLeft();
-//        float posTop = 0.5f;
-//        for (int i = 0; i < 8; i++) {
-//            Sprite btnShip =new ButtonChooseShip(atlas, "ships/ship0");
-//            ships.add(btnShip);
-//            btnShip.setTop(posTop);
-//            btnShip.setHeightProportion(0.2f);
-//            posTop = btnShip.getBottom();
-//        }
-//        spites.addAll(ships);
-//    }
-
     @Override
     public void render(float delta) {
         super.render(delta);
         update(delta);
         draw();
+    }
+
+    private void update(float delta) {
+        for (Sprite s : spites) {
+            s.update(delta);
+        }
     }
 
     private void draw() {
@@ -115,12 +109,6 @@ public class MenuScreen extends BaseScreen {
             s.draw(batch);
         }
         batch.end();
-    }
-
-    private void update(float delta) {
-        for (Sprite s : spites) {
-            s.update(delta);
-        }
     }
 
     @Override

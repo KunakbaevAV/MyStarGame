@@ -14,6 +14,8 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Rnd;
+import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.sprites.Ship;
 import ru.geekbrains.sprites.Star;
 
@@ -23,6 +25,7 @@ public class GameScreen extends BaseScreen {
     private static final int ORANGE_STAR_COUNT = 42;
     private List<Sprite> spites;
     private TextureAtlas atlas;
+    private int shipNumber;
 
     @Override
     public void show() {
@@ -31,11 +34,12 @@ public class GameScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
+        shipNumber = (int)Rnd.nextFloat(0,7);
         addShip();
     }
 
     private void addShip() {
-        Sprite ship = new Ship(atlas, "ships/ship02", 0.25f);
+        Sprite ship = new Ship(atlas, "ships/ship0" + shipNumber, 0.25f);
         spites.add(ship);
     }
 
@@ -51,6 +55,8 @@ public class GameScreen extends BaseScreen {
     }
 
     private void addStars() {
+        Sprite bigStar = new BigStar(atlas);
+        spites.add(bigStar);
         Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
         Sprite[] redStar = new Star[RED_STAR_COUNT];
         Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
