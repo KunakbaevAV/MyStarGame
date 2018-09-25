@@ -32,7 +32,6 @@ public class MenuScreen extends BaseScreen {
     private TextureAtlas atlas;
     private Game game;
     private Rect worldBound;
-    private Sprite bigStar;
 
     public MenuScreen(Game game) {
         super(game);
@@ -71,19 +70,23 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void addStars() {
-        bigStar = new BigStar(atlas);
-//        spites.add(bigStar);
+        Sprite bigStar = new BigStar(atlas);
         Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
         Sprite[] redStar = new Star[RED_STAR_COUNT];
         Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
+
         for (int i = 0; i < whiteStar.length; i++) {
             whiteStar[i] = new Star(atlas, "star", 0.005f, 0.015f, 0.001f);
             spites.add(whiteStar[i]);
         }
+
+        spites.add(bigStar);
+
         for (int i = 0; i < redStar.length; i++) {
             redStar[i] = new Star(atlas, "star2", 0.01f, 0.1f, 0.002f);
             spites.add(redStar[i]);
         }
+
         for (int i = 0; i < orangeStar.length; i++) {
             orangeStar[i] = new Star(atlas, "star3", 0.01f, 0.1f, 0.004f);
             spites.add(orangeStar[i]);
@@ -101,7 +104,6 @@ public class MenuScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.update(delta);
         }
-        bigStar.update(delta);
     }
 
     private void draw() {
@@ -110,7 +112,6 @@ public class MenuScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.draw(batch);
         }
-        bigStar.draw(batch);
         batch.end();
     }
 
@@ -136,7 +137,6 @@ public class MenuScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }
-        bigStar.resize(worldBounds);
     }
 
     @Override
