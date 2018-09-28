@@ -50,7 +50,7 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void addLogo() {
-        Sprite logo = new Sprite(atlas, "other/logo");
+        Sprite logo = new Sprite(atlas, "logo");
         logo.setHeightProportion(0.3f);
         spites.add(logo);
     }

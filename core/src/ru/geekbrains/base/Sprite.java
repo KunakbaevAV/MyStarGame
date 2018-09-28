@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Regions;
 
 public class Sprite extends Rect {
 
@@ -20,6 +21,10 @@ public class Sprite extends Rect {
     private boolean isDestroyed;
 
     public Sprite() {
+    }
+
+    public Sprite(TextureRegion region, int rows, int cols, int frames) {
+        this.regions = Regions.split(region, rows, cols, frames);
     }
 
     public Sprite(TextureRegion region) {

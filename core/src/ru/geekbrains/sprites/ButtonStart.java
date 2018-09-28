@@ -13,7 +13,7 @@ import ru.geekbrains.screen.GameScreen;
 public class ButtonStart extends AnimatedButton implements ButtonAction{
     private Game game;
     public ButtonStart(TextureAtlas atlas, Game game) {
-        super(atlas, "menu/play");
+        super(atlas, "play");
         setHeightProportion(0.1f);
         this.game = game;
     }

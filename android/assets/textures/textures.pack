@@ -3,263 +3,95 @@ textures.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+explosion
+  rotate: false
+  xy: 1, 526
+  size: 1280, 1408
+  orig: 1280, 1408
+  offset: 0, 0
+  index: -1
+ship04
+  rotate: false
+  xy: 1, 19
+  size: 566, 505
+  orig: 566, 505
+  offset: 0, 0
+  index: -1
+mainShip
+  rotate: false
+  xy: 1283, 1623
+  size: 666, 311
+  orig: 666, 311
+  offset: 0, 0
+  index: -1
+ship01
+  rotate: false
+  xy: 569, 50
+  size: 500, 474
+  orig: 500, 474
+  offset: 0, 0
+  index: -1
+ship05
+  rotate: false
+  xy: 1283, 1191
+  size: 522, 430
+  orig: 522, 430
+  offset: 0, 0
+  index: -1
+ship02
+  rotate: false
+  xy: 1283, 746
+  size: 447, 443
+  orig: 447, 443
+  offset: 0, 0
+  index: -1
+ship03
+  rotate: false
+  xy: 1071, 32
+  size: 392, 492
+  orig: 392, 492
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 1732, 933
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 1732, 675
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 star
   rotate: false
-  xy: 1, 103
+  xy: 1283, 594
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 star2
   rotate: false
-  xy: 153, 103
+  xy: 1435, 594
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 star3
   rotate: false
-  xy: 305, 103
+  xy: 1807, 1471
   size: 127, 150
   orig: 127, 150
   offset: 0, 0
   index: -1
-exp01
+bullet
   rotate: false
   xy: 1, 1
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp02
-  rotate: false
-  xy: 434, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp03
-  rotate: false
-  xy: 103, 1
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp04
-  rotate: false
-  xy: 536, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp05
-  rotate: false
-  xy: 205, 1
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp06
-  rotate: false
-  xy: 638, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp07
-  rotate: false
-  xy: 307, 1
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp08
-  rotate: false
-  xy: 740, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp09
-  rotate: false
-  xy: 842, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp10
-  rotate: false
-  xy: 944, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp11
-  rotate: false
-  xy: 1046, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp12
-  rotate: false
-  xy: 1148, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp13
-  rotate: false
-  xy: 1250, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp14
-  rotate: false
-  xy: 1352, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp15
-  rotate: false
-  xy: 1454, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp16
-  rotate: false
-  xy: 1556, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp17
-  rotate: false
-  xy: 1658, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp18
-  rotate: false
-  xy: 1760, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp19
-  rotate: false
-  xy: 1862, 153
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp20
-  rotate: false
-  xy: 434, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp21
-  rotate: false
-  xy: 536, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp22
-  rotate: false
-  xy: 638, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp23
-  rotate: false
-  xy: 740, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp24
-  rotate: false
-  xy: 842, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp25
-  rotate: false
-  xy: 944, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp26
-  rotate: false
-  xy: 1046, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp27
-  rotate: false
-  xy: 1148, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp28
-  rotate: false
-  xy: 1250, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp29
-  rotate: false
-  xy: 1352, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp30
-  rotate: false
-  xy: 1454, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp31
-  rotate: false
-  xy: 1556, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp32
-  rotate: false
-  xy: 1658, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp33
-  rotate: false
-  xy: 1760, 51
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-exp34
-  rotate: false
-  xy: 1862, 51
-  size: 100, 100
-  orig: 100, 100
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 
@@ -267,116 +99,17 @@ textures2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-menu/chooseShip
-  rotate: false
-  xy: 1, 259
-  size: 512, 128
-  orig: 512, 128
-  offset: 0, 0
-  index: -1
-menu/exit
-  rotate: false
-  xy: 1, 1
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-menu/play
-  rotate: false
-  xy: 259, 1
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-
-textures3.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-other/logo
+logo
   rotate: false
   xy: 1, 131
   size: 1200, 670
   orig: 1200, 670
   offset: 0, 0
   index: -1
-other/bigStar
+bigStar
   rotate: false
   xy: 1203, 1
   size: 800, 800
   orig: 800, 800
-  offset: 0, 0
-  index: -1
-
-textures4.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-ships/ship08
-  rotate: false
-  xy: 1, 120
-  size: 700, 900
-  orig: 700, 900
-  offset: 0, 0
-  index: -1
-ships/ship09
-  rotate: false
-  xy: 703, 120
-  size: 700, 900
-  orig: 700, 900
-  offset: 0, 0
-  index: -1
-ships/ship04
-  rotate: false
-  xy: 1405, 515
-  size: 566, 505
-  orig: 566, 505
-  offset: 0, 0
-  index: -1
-ships/ship06
-  rotate: false
-  xy: 1405, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-textures5.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-ships/ship01
-  rotate: false
-  xy: 1, 446
-  size: 500, 474
-  orig: 500, 474
-  offset: 0, 0
-  index: -1
-ships/ship05
-  rotate: false
-  xy: 503, 490
-  size: 522, 430
-  orig: 522, 430
-  offset: 0, 0
-  index: -1
-ships/ship02
-  rotate: false
-  xy: 1, 1
-  size: 447, 443
-  orig: 447, 443
-  offset: 0, 0
-  index: -1
-ships/ship03
-  rotate: false
-  xy: 1027, 428
-  size: 392, 492
-  orig: 392, 492
-  offset: 0, 0
-  index: -1
-ships/ship07
-  rotate: false
-  xy: 1421, 610
-  size: 330, 310
-  orig: 330, 310
   offset: 0, 0
   index: -1

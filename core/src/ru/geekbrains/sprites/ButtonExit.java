@@ -10,7 +10,7 @@ import ru.geekbrains.math.Rect;
 public class ButtonExit extends AnimatedButton implements ButtonAction {
 
     public ButtonExit(TextureAtlas atlas) {
-        super(atlas, "menu/exit");
+        super(atlas, "exit");
         setHeightProportion(0.1f);
     }
 

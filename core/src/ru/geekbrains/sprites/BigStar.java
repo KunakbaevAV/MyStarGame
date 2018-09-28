@@ -12,7 +12,7 @@ public class BigStar extends Sprite {
     private Rect wordBounds;
 
     public BigStar(TextureAtlas atlas) {
-        super(atlas, "other/bigStar");
+        super(atlas, "bigStar");
         v = new Vector2(0,-0.02f);
         setHeightProportion(1);
     }
