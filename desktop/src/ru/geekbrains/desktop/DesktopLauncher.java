@@ -6,9 +6,12 @@ import ru.geekbrains.StarGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+		float aspect = 3/4f;
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.x = 300;
-		config.y = 100;
+		config.x = 350;
+		config.y = 50;
+		config.width = 400;
+		config.height = (int)(config.width/aspect);
 		new LwjglApplication(new StarGame(), config);
 	}
 }

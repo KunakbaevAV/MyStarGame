@@ -1,7 +1,4 @@
 package ru.geekbrains.screen;
-/**
- * author Kunakbaev Artem
- */
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -17,26 +14,18 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Rnd;
 import ru.geekbrains.sprites.BigStar;
-import ru.geekbrains.sprites.ButtonExit;
-import ru.geekbrains.sprites.ButtonStart;
+import ru.geekbrains.sprites.Ship;
 import ru.geekbrains.sprites.Star;
 
-public class MenuScreen extends BaseScreen {
-
+public class GameScreen extends BaseScreen {
     private static final int WHITE_STAR_COUNT = 2048;
     private static final int RED_STAR_COUNT = 84;
     private static final int ORANGE_STAR_COUNT = 42;
     private List<Sprite> spites;
-
     private TextureAtlas atlas;
-    private Game game;
-    private Rect worldBound;
-
-    public MenuScreen(Game game) {
-        super(game);
-        this.game = game;
-    }
+    private int shipNumber;
 
     @Override
     public void show() {
@@ -45,21 +34,17 @@ public class MenuScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
-        addButtons();
-        addLogo();
+        shipNumber = (int) Rnd.nextFloat(0, 7);
+        addShip();
     }
 
-    private void addLogo() {
-        Sprite logo = new Sprite(atlas, "other/logo");
-        logo.setHeightProportion(0.3f);
-        spites.add(logo);
+    private void addShip() {
+        Sprite ship = new Ship(atlas, "ships/ship0" + shipNumber, 0.25f);
+        spites.add(ship);
     }
 
-    private void addButtons() {
-        Sprite btnExit = new ButtonExit(atlas);
-        spites.add(btnExit);
-        Sprite btnStart = new ButtonStart(atlas, game);
-        spites.add(btnStart);
+    public GameScreen(Game game) {
+        super(game);
     }
 
     private void addBackgroud() {
@@ -100,12 +85,6 @@ public class MenuScreen extends BaseScreen {
         draw();
     }
 
-    private void update(float delta) {
-        for (Sprite s : spites) {
-            s.update(delta);
-        }
-    }
-
     private void draw() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -113,6 +92,12 @@ public class MenuScreen extends BaseScreen {
             s.draw(batch);
         }
         batch.end();
+    }
+
+    private void update(float delta) {
+        for (Sprite s : spites) {
+            s.update(delta);
+        }
     }
 
     @Override
@@ -133,7 +118,6 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void resize(Rect worldBounds) {
-        this.worldBound = worldBounds;
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }
@@ -145,4 +129,3 @@ public class MenuScreen extends BaseScreen {
         super.dispose();
     }
 }
-
