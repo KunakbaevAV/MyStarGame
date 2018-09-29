@@ -31,32 +31,34 @@ public class Ship extends Sprite {
     private Vector2 targetTemp;
     private Vector2 v;
     private float accelepation;
+    private boolean isFreeMove;
 
     public Ship(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("mainShip"),1,2,2);
         this.bulletRegion = atlas.findRegion("bullet");
         this.bulletPool = bulletPool;
-        pos = new Vector2(0,-0.4f);
+        pos = new Vector2();
         float size = 0.15f;
         setHeightProportion(size);
         center = new Vector2(size/2, size/2);
         target = new Vector2();
         targetTemp = new Vector2();
         v = new Vector2();
+        isFreeMove = false;
     }
 
     public void keyDown(int keycode) {
         switch (keycode) {
-//            case Input.Keys.A:
-//            case Input.Keys.LEFT:
-//                pressedLeft = true;
-//                moveLeft();
-//                break;
-//            case Input.Keys.D:
-//            case Input.Keys.RIGHT:
-//                pressedRight = true;
-//                moveRight();
-//                break;
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+                pressedLeft = true;
+                moveLeft();
+                break;
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                pressedRight = true;
+                moveRight();
+                break;
             case Input.Keys.UP:
                 shoot();
                 break;
@@ -64,33 +66,35 @@ public class Ship extends Sprite {
     }
 
     public void keyUp(int keycode) {
-//        switch (keycode) {
-//            case Input.Keys.A:
-//            case Input.Keys.LEFT:
-//                pressedLeft = false;
-//                if (pressedRight) {
-//                    moveRight();
-//                } else {
-//                    stop();
-//                }
-//                break;
-//            case Input.Keys.D:
-//            case Input.Keys.RIGHT:
-//                pressedRight = false;
-//                if (pressedLeft) {
-//                    moveLeft();
-//                } else {
-//                    stop();
-//                }
-//                break;
-//        }
+        switch (keycode) {
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+                pressedLeft = false;
+                if (pressedRight) {
+                    moveRight();
+                } else {
+                    stop();
+                }
+                break;
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                pressedRight = false;
+                if (pressedLeft) {
+                    moveLeft();
+                } else {
+                    stop();
+                }
+                break;
+        }
     }
 
     private void moveRight() {
+        isFreeMove = false;
         vHorizon.set(vHorizon0);
     }
 
     private void moveLeft() {
+        isFreeMove = false;
         vHorizon.set(vHorizon0).rotate(180);
     }
 
@@ -101,9 +105,10 @@ public class Ship extends Sprite {
     @Override
     public void update(float delta) {
         super.update(delta);
-        moveSheep();
+        if(isFreeMove) moveSheep();
 
         pos.mulAdd(vHorizon, delta);
+        setPosition(pos);
         if (getRight() > worldBounds.getRight()) {
             setRight(worldBounds.getRight());
             stop();
@@ -122,11 +127,8 @@ public class Ship extends Sprite {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        target.set(touch);
-        target.sub(center);
         System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
-        setAcceleration();
-        v.set(findDirection().setLength(accelepation));
+        startFreeMoving(touch);
         return super.touchDown(touch, pointer);
     }
 
@@ -136,6 +138,7 @@ public class Ship extends Sprite {
             pos.add(v);
         } else {
             pos.set(target);
+            isFreeMove = false;
         }
         this.setPosition(pos.x, pos.y);
     }
@@ -144,8 +147,12 @@ public class Ship extends Sprite {
         return target.cpy().sub(pos);
     }
 
-    private void setAcceleration() {
+    private void startFreeMoving(Vector2 touch) {
+        isFreeMove = true;
+        target.set(touch);
+        target.sub(center);
         accelepation = target.cpy().sub(pos).len() / 60;
+        v.set(findDirection().setLength(accelepation));
     }
 
     public void shoot() {
