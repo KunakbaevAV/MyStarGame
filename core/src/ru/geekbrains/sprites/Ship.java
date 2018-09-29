@@ -1,5 +1,6 @@
 package ru.geekbrains.sprites;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,6 +22,7 @@ public class Ship extends Sprite {
     private boolean pressedRight = false;
     private BulletPool bulletPool;
     private TextureRegion bulletRegion;
+    private Sound shotSound;
 
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
@@ -33,14 +35,16 @@ public class Ship extends Sprite {
     private float accelepation;
     private boolean isFreeMove;
 
-    public Ship(TextureAtlas atlas, BulletPool bulletPool) {
+    public Ship(TextureAtlas atlas, BulletPool bulletPool, Sound shotSound) {
         super(atlas.findRegion("mainShip"),1,2,2);
         this.bulletRegion = atlas.findRegion("bullet");
         this.bulletPool = bulletPool;
-        pos = new Vector2();
+        this.shotSound = shotSound;
+
         float size = 0.15f;
         setHeightProportion(size);
         center = new Vector2(size/2, size/2);
+        pos = new Vector2(-size/2, -0.4f);
         target = new Vector2();
         targetTemp = new Vector2();
         v = new Vector2();
@@ -122,7 +126,7 @@ public class Ship extends Sprite {
     @Override
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;
-        setBottom(worldBounds.getBottom() + 0.05f);
+//        setBottom(worldBounds.getBottom() + 0.05f);
     }
 
     @Override
@@ -158,5 +162,6 @@ public class Ship extends Sprite {
     public void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos.cpy().add(center), bulletV, 0.03f, worldBounds, 1);
+//        shotSound.play(1.0f); // выбрасывает ошибку
     }
 }

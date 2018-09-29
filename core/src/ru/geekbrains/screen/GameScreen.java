@@ -2,6 +2,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -30,6 +31,8 @@ public class GameScreen extends BaseScreen {
 
     private Ship mainShip;
     private BulletPool bulletPool;
+    private Sound shotSound;
+    private Sound backSound;
 
     public GameScreen(Game game) {
         super(game);
@@ -45,10 +48,13 @@ public class GameScreen extends BaseScreen {
 //        shipNumber = (int) Rnd.nextFloat(0, 7);
         bulletPool = new BulletPool();
         addMainShip();
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shotSound.wav"));
+        backSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
+        backSound.play(1.0f);
     }
 
     private void addMainShip() {
-        mainShip = new Ship(atlas, bulletPool);
+        mainShip = new Ship(atlas, bulletPool, shotSound);
         spites.add(mainShip);
     }
 
@@ -156,6 +162,7 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         atlas.dispose();
         bulletPool.dispose();
+        shotSound.dispose();
         super.dispose();
     }
 }
