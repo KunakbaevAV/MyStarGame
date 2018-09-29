@@ -162,6 +162,6 @@ public class Ship extends Sprite {
     public void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos.cpy().add(center), bulletV, 0.03f, worldBounds, 1);
-//        shotSound.play(1.0f); // выбрасывает ошибку
+        shotSound.play(1.0f); // выбрасывает ошибку
     }
 }

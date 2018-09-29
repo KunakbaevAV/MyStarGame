@@ -32,10 +32,13 @@ public class GameScreen extends BaseScreen {
     private Ship mainShip;
     private BulletPool bulletPool;
     private Sound shotSound;
-    private Sound backSound;
+    private Sound gameSound;
 
-    public GameScreen(Game game) {
+    public GameScreen(Game game, Sound gameSound) {
         super(game);
+        this.gameSound = gameSound;
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/myShotMp3.mp3"));
+
     }
 
     @Override
@@ -48,9 +51,9 @@ public class GameScreen extends BaseScreen {
 //        shipNumber = (int) Rnd.nextFloat(0, 7);
         bulletPool = new BulletPool();
         addMainShip();
-        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shotSound.wav"));
-        backSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
-        backSound.play(1.0f);
+//        backSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
+//        backSound.
+        gameSound.play(1);
     }
 
     private void addMainShip() {
@@ -163,6 +166,7 @@ public class GameScreen extends BaseScreen {
         atlas.dispose();
         bulletPool.dispose();
         shotSound.dispose();
+        gameSound.dispose();
         super.dispose();
     }
 }
