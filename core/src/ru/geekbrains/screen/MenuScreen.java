@@ -3,8 +3,10 @@ package ru.geekbrains.screen;
  * author Kunakbaev Artem
  */
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,15 +35,15 @@ public class MenuScreen extends BaseScreen {
     private TextureAtlas atlas;
     private Game game;
     private Rect worldBound;
-    private Sound gameSound;
-    private Sound menuSound;
+    private Music gameMusic;
+    private Sound menuMusic;
 
     public MenuScreen(Game game) {
         super(game);
         this.game = game;
-        gameSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
-        menuSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
-        menuSound.play(1.0f);
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/backSound.mp3"));
+        menuMusic = Gdx.audio.newSound(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
+        menuMusic.play(1.0f);
     }
 
     @Override
@@ -152,14 +154,14 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void dispose() {
         atlas.dispose();
-        menuSound.dispose();
-        gameSound.dispose();
+        menuMusic.dispose();
+        gameMusic.dispose();
         super.dispose();
     }
 
     public void startGame(){
-        menuSound.stop();
-        game.setScreen(new GameScreen(game, gameSound));
+        menuMusic.stop();
+        game.setScreen(new GameScreen(game, gameMusic));
     }
 }
 

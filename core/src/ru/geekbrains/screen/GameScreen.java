@@ -2,6 +2,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,10 +16,10 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
-import ru.geekbrains.math.Rnd;
 import ru.geekbrains.sprites.BigStar;
-import ru.geekbrains.sprites.BulletPool;
-import ru.geekbrains.sprites.Ship;
+import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.sprites.ships.MainShip;
+import ru.geekbrains.sprites.ships.Ship;
 import ru.geekbrains.sprites.Star;
 
 public class GameScreen extends BaseScreen {
@@ -29,14 +30,14 @@ public class GameScreen extends BaseScreen {
     private TextureAtlas atlas;
     private int shipNumber;
 
-    private Ship mainShip;
+    private MainShip mainShip;
     private BulletPool bulletPool;
     private Sound shotSound;
-    private Sound gameSound;
+    private Music gameMusic;
 
-    public GameScreen(Game game, Sound gameSound) {
+    public GameScreen(Game game, Music gameMusic) {
         super(game);
-        this.gameSound = gameSound;
+        this.gameMusic = gameMusic;
         shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
 
     }
@@ -48,16 +49,16 @@ public class GameScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
-//        shipNumber = (int) Rnd.nextFloat(0, 7);
         bulletPool = new BulletPool();
         addMainShip();
-//        backSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
-//        backSound.
-        gameSound.play(1);
+        gameMusic.play();
     }
 
     private void addMainShip() {
-        mainShip = new Ship(atlas, bulletPool, shotSound);
+        mainShip = new MainShip(
+                atlas,
+                bulletPool,
+                shotSound);
         spites.add(mainShip);
     }
 
@@ -166,7 +167,7 @@ public class GameScreen extends BaseScreen {
         atlas.dispose();
         bulletPool.dispose();
         shotSound.dispose();
-        gameSound.dispose();
+        gameMusic.dispose();
         super.dispose();
     }
 }
