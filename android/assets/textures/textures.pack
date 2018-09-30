@@ -3,99 +3,128 @@ textures.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-explosion
+shipEnemy4
   rotate: false
-  xy: 1, 526
-  size: 1280, 1408
-  orig: 1280, 1408
+  xy: 1, 1003
+  size: 2000, 1000
+  orig: 2000, 1000
   offset: 0, 0
   index: -1
-ship04
+shipEnemy3
   rotate: false
-  xy: 1, 19
-  size: 566, 505
-  orig: 566, 505
-  offset: 0, 0
-  index: -1
-mainShip
-  rotate: false
-  xy: 1283, 1623
-  size: 666, 311
-  orig: 666, 311
-  offset: 0, 0
-  index: -1
-ship01
-  rotate: false
-  xy: 569, 50
-  size: 500, 474
-  orig: 500, 474
-  offset: 0, 0
-  index: -1
-ship05
-  rotate: false
-  xy: 1283, 1191
-  size: 522, 430
-  orig: 522, 430
-  offset: 0, 0
-  index: -1
-ship02
-  rotate: false
-  xy: 1283, 746
-  size: 447, 443
-  orig: 447, 443
-  offset: 0, 0
-  index: -1
-ship03
-  rotate: false
-  xy: 1071, 32
-  size: 392, 492
-  orig: 392, 492
-  offset: 0, 0
-  index: -1
-exit
-  rotate: false
-  xy: 1732, 933
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-play
-  rotate: false
-  xy: 1732, 675
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-star
-  rotate: false
-  xy: 1283, 594
-  size: 150, 150
-  orig: 150, 150
-  offset: 0, 0
-  index: -1
-star2
-  rotate: false
-  xy: 1435, 594
-  size: 150, 150
-  orig: 150, 150
+  xy: 1, 1
+  size: 1900, 1000
+  orig: 1900, 1000
   offset: 0, 0
   index: -1
 star3
   rotate: false
-  xy: 1807, 1471
+  xy: 1903, 851
   size: 127, 150
   orig: 127, 150
   offset: 0, 0
   index: -1
 bullet
   rotate: false
-  xy: 1, 1
-  size: 16, 16
-  orig: 16, 16
+  xy: 1903, 721
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shotEnemy
+  rotate: false
+  xy: 1903, 591
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shotEnemy2
+  rotate: false
+  xy: 1903, 461
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 
 textures2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainShip
+  rotate: false
+  xy: 1, 1003
+  size: 1800, 1000
+  orig: 1800, 1000
+  offset: 0, 0
+  index: -1
+shipEnemy1
+  rotate: false
+  xy: 1, 1
+  size: 1800, 1000
+  orig: 1800, 1000
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 1803, 1853
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+star2
+  rotate: false
+  xy: 1803, 1701
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+
+textures3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+shipEnemy2
+  rotate: false
+  xy: 1, 1003
+  size: 1800, 1000
+  orig: 1800, 1000
+  offset: 0, 0
+  index: -1
+shipEnemy5
+  rotate: false
+  xy: 1, 1
+  size: 1800, 1000
+  orig: 1800, 1000
+  offset: 0, 0
+  index: -1
+
+textures4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+explosion
+  rotate: false
+  xy: 1, 259
+  size: 1280, 1408
+  orig: 1280, 1408
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 1283, 1411
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+
+textures5.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none

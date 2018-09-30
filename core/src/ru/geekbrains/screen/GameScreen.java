@@ -37,7 +37,7 @@ public class GameScreen extends BaseScreen {
     public GameScreen(Game game, Sound gameSound) {
         super(game);
         this.gameSound = gameSound;
-        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/myShotMp3.mp3"));
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
 
     }
 
