@@ -15,7 +15,9 @@ import java.util.List;
 
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
+import ru.geekbrains.math.EnemiesEmitter;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.pools.EnemyPool;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.ships.MainShip;
@@ -33,13 +35,17 @@ public class GameScreen extends BaseScreen {
     private MainShip mainShip;
     private BulletPool bulletPool;
     private Sound shotSound;
+    private Sound enemyShot;
     private Music gameMusic;
+
+    EnemyPool enemyPool;
+    EnemiesEmitter enemiesEmitter;
 
     public GameScreen(Game game, Music gameMusic) {
         super(game);
         this.gameMusic = gameMusic;
         shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
-
+        enemyShot = Gdx.audio.newSound(Gdx.files.internal("sounds/enemyShot.wav"));
     }
 
     @Override
@@ -52,6 +58,8 @@ public class GameScreen extends BaseScreen {
         bulletPool = new BulletPool();
         addMainShip();
         gameMusic.play();
+        enemyPool = new EnemyPool(atlas, bulletPool, enemyShot, mainShip);
+        enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool);
     }
 
     private void addMainShip() {
@@ -104,6 +112,7 @@ public class GameScreen extends BaseScreen {
 
     private void deleteAllDestroed() {
         bulletPool.freeAllDestroyedActiveObjects();
+        enemyPool.freeAllDestroyedActiveObjects();
     }
 
     private void checkCollisions() {
@@ -117,6 +126,7 @@ public class GameScreen extends BaseScreen {
             s.draw(batch);
         }
         bulletPool.drawActiveObjects(batch);
+        enemyPool.drawActiveObjects(batch);
         batch.end();
     }
 
@@ -125,6 +135,8 @@ public class GameScreen extends BaseScreen {
             s.update(delta);
         }
         bulletPool.updateActiveObjects(delta);
+        enemyPool.updateActiveObjects(delta);
+        enemiesEmitter.generateEnemies(delta);
     }
 
     @Override
@@ -166,7 +178,9 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         atlas.dispose();
         bulletPool.dispose();
+        enemyPool.dispose();
         shotSound.dispose();
+        enemyShot.dispose();
         gameMusic.dispose();
         super.dispose();
     }

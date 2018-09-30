@@ -21,7 +21,7 @@ import ru.geekbrains.math.Rect;
 public class BaseScreen implements Screen, InputProcessor{
     protected Game game;
     private Rect screenBounds;
-    private Rect worldBounds;
+    protected Rect worldBounds;
     private Rect glBounds;
     protected SpriteBatch batch;
     protected Matrix4 worldToGl;

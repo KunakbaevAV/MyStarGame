@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Rect {
 
-    public final Vector2 pos = new Vector2(); // позиция по центру
+    protected final Vector2 pos = new Vector2(); // позиция по центру
     protected float halfWidth; // половина ширины
     protected float halfHeight; // половина высоты
 
@@ -30,6 +30,8 @@ public class Rect {
         return pos.y + halfHeight;
     }
 
+//    public Vector2 getTopVector(){return new Vector2(pos.x, pos.y + halfHeight);}
+
     public float getRight() {
         return pos.x + halfWidth;
     }
@@ -37,6 +39,8 @@ public class Rect {
     public float getBottom() {
         return pos.y - halfHeight;
     }
+
+//    public Vector2 getBottomVector(){return new Vector2(pos.x, pos.y - halfHeight);}
 
     public float getHalfWidth() {
         return halfWidth;

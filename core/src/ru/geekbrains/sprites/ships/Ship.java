@@ -1,7 +1,6 @@
 package ru.geekbrains.sprites.ships;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,17 +14,19 @@ public class Ship extends Sprite {
 
     TextureAtlas atlas;
 
-    Vector2 pos;
-    Rect worldBounds;
-    Vector2 vBullet;
-    BulletPool bulletPool;
-    TextureRegion bulletRegion;
-    float bulletHeight;
-    int bulledDamage;
+    Vector2 v = new Vector2();
+    protected Rect worldBounds; // нужно инициализировать
+    Vector2         bulletV = new Vector2();
+    BulletPool      bulletPool;
+    TextureRegion   bulletRegion;
+    float           bulletHeight;
+    int             bulledDamage;
     Sound shotSound;
 
-    Vector2 center;
-    Vector2 correction;
+    float reloadInterval;
+    float reloadTimer;
+
+    int hp;
 
     public Ship(
             TextureAtlas atlas,
@@ -45,20 +46,42 @@ public class Ship extends Sprite {
         this.shotSound = shotSound;
     }
 
+    public Ship( // конструктор для создания врагов
+                 TextureAtlas atlas,
+                 String shipName,
+                 BulletPool bulletPool,
+                 Sound shotSound) {
+        super(atlas.findRegion(shipName), 1, 2, 2);
+        this.atlas = atlas;
+        this.bulletPool = bulletPool;
+        this.bulletRegion = atlas.findRegion("shotEnemy");
+        this.shotSound = shotSound;
+        this.worldBounds = new Rect();
+    }
+
     @Override
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;
     }
 
-    void shoot() {
+    private void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this,
                 bulletRegion,
-                pos.cpy().add(center).add(correction),
-                vBullet,
+                pos,
+                bulletV,
                 bulletHeight,
                 worldBounds,
                 bulledDamage);
+        System.out.println("shot " + this.toString());
         shotSound.play(1.0f);
+    }
+
+    void autoShot(float delta) {
+        reloadTimer += delta;
+        if (reloadTimer >= reloadInterval) {
+            shoot();
+            reloadTimer = 0;
+        }
     }
 }
