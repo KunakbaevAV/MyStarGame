@@ -54,14 +54,14 @@ public class MainShip extends Ship {
 
         autoShot(delta);
 
-//        if (isFreeMove) moveSheepFree(delta);
+        if (isFreeMove) moveSheepFree(delta);
         moveSheepHorisont(delta);
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
 //        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
-//        startFreeMoving(touch);
+        startFreeMoving(touch);
         return super.touchDown(touch, pointer);
     }
 
@@ -133,24 +133,24 @@ public class MainShip extends Ship {
     }
 
     // движение за курсором
-//    private void startFreeMoving(Vector2 touch) {
-//        isFreeMove = true;
-//        target.set(touch);
+    private void startFreeMoving(Vector2 touch) {
+        isFreeMove = true;
+        target.set(touch);
 //        target.sub(center);
-//        accelepation = target.cpy().sub(pos).len() / 60;
-//        Vector2 direction = target.cpy().sub(pos);
-//        vMoveToTouch.set(direction.setLength(accelepation));
-//    }
-//    private void moveSheepFree(float delta) {
-//        targetTemp.set(target);
-//        if (targetTemp.sub(pos).len() > accelepation) {
-//            pos.add(vMoveToTouch);
-//        } else {
-//            pos.set(target);
-//            isFreeMove = false;
-//        }
-//        setPosition(pos.x, pos.y);
-//    }
+        accelepation = target.cpy().sub(pos).len() / 60;
+        Vector2 direction = target.cpy().sub(pos);
+        vMoveToTouch.set(direction.setLength(accelepation));
+    }
+    private void moveSheepFree(float delta) {
+        targetTemp.set(target);
+        if (targetTemp.sub(pos).len() > accelepation) {
+            pos.add(vMoveToTouch);
+        } else {
+            pos.set(target);
+            isFreeMove = false;
+        }
+        setPosition(pos.x, pos.y);
+    }
 
 
 }

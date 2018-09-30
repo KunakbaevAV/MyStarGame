@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.sprites.Bullet;
 
 public class Enemy extends Ship {
     private MainShip mainShip;
@@ -21,10 +22,9 @@ public class Enemy extends Ship {
         super(atlas, shipName, bulletPool, shotSound);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
-        bulletHeight = 0.3f;
-        bulledDamage = 1;
-        bulletV = new Vector2(0, -3);
-        bulletRegion = atlas.findRegion("bullet");
+//        bulletHeight = 0.2f;
+//        bulledDamage = 1;
+//        bulletRegion = atlas.findRegion("bullet");
         this.mainShip = mainShip;
         this.v.set(v0);
     }
@@ -35,27 +35,18 @@ public class Enemy extends Ship {
         autoShot(delta);
         pos.mulAdd(v0, delta);
     }
-//    public void set(
-//            TextureRegion[] regions,
-//            Vector2 v0,
-//            TextureRegion bulletRegion,
-//            float bulletHeight,
-//            float bulletVY,
-//            int bulletDamage,
-//            float reloadInterval,
-//            float height,
-//            int hp
-//    ) {
-//        this.regions = regions;
-//        this.v0.set(v0);
-//        this.bulletRegion = bulletRegion;
-//        this.bulletHeight = bulletHeight;
-//        this.bulletV.set(0, bulletVY);
-//        this.bulletDamage = bulletDamage;
-//        this.reloadInterval = reloadInterval;
-//        this.hp = hp;
-//        setHeightProportion(height);
-//        reloadTimer = reloadInterval;
-//        v.set(v0);
-//    }
+
+    @Override
+    void shoot() {
+        Bullet bullet = bulletPool.obtain();
+        Vector2 posBullet = new Vector2(pos.x, getBottom());
+        bullet.set(this,
+                bulletRegion,
+                posBullet,
+                this.bulletV,
+                bulletHeight,
+                worldBounds,
+                bulledDamage);
+        shotSound.play(1.0f);
+    }
 }

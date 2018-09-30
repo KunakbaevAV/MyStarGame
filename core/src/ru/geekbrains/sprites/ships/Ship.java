@@ -13,12 +13,14 @@ import ru.geekbrains.sprites.Bullet;
 public class Ship extends Sprite {
 
     TextureAtlas atlas;
-
     Vector2 v = new Vector2();
+
     protected Rect worldBounds; // нужно инициализировать
+
     Vector2         bulletV = new Vector2();
     BulletPool      bulletPool;
     TextureRegion   bulletRegion;
+//    String          bulletName;
     float           bulletHeight;
     int             bulledDamage;
     Sound shotSound;
@@ -54,9 +56,9 @@ public class Ship extends Sprite {
         super(atlas.findRegion(shipName), 1, 2, 2);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
+//        this.bulletName = "shotEnemy";
         this.bulletRegion = atlas.findRegion("shotEnemy");
         this.shotSound = shotSound;
-        this.worldBounds = new Rect();
     }
 
     @Override
@@ -64,16 +66,15 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
-    private void shoot() {
+    void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this,
                 bulletRegion,
-                pos,
+                pos.cpy().add(0, getHalfHeight()),
                 bulletV,
                 bulletHeight,
                 worldBounds,
                 bulledDamage);
-        System.out.println("shot " + this.toString());
         shotSound.play(1.0f);
     }
 

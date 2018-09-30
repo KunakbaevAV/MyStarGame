@@ -14,7 +14,6 @@ public class EnemyPool extends SpritesPool<Enemy> {
     private BulletPool bulletPool;
     private Sound shotSound;
     private MainShip mainShip;
-//    private Rect worldBounds;
 
     public EnemyPool(TextureAtlas atlas,
                      BulletPool bulletPool,
@@ -24,7 +23,22 @@ public class EnemyPool extends SpritesPool<Enemy> {
         this.bulletPool = bulletPool;
         this.shotSound = shotSound;
         this.mainShip = mainShip;
-//        this.worldBounds = worldBounds;
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
+
+    public BulletPool getBulletPool() {
+        return bulletPool;
+    }
+
+    public Sound getShotSound() {
+        return shotSound;
+    }
+
+    public MainShip getMainShip() {
+        return mainShip;
     }
 
     @Override

@@ -17,7 +17,6 @@ public class Sprite extends Rect {
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
-//    protected float aspectWorld;
     private boolean isDestroyed;
 
     public Sprite() {
@@ -59,10 +58,10 @@ public class Sprite extends Rect {
         setWidth(height * aspect);
     }
 
-    public void setPosition(Vector2 position){
-        setLeft(position.x);
-        setBottom(position.y);
-    }
+//    public void setPosition(Vector2 position){
+//        setLeft(position.x);
+//        setBottom(position.y);
+//    }
 
     public void setPosition(float x, float y){
         setLeft(x);
