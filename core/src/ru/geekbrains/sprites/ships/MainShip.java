@@ -22,6 +22,8 @@ public class MainShip extends Ship {
     private float accelepation;
     private boolean isFreeMove;
 
+    private Vector2 exp = new Vector2(0.1f,0.1f);
+
     public MainShip(
             TextureAtlas atlas,
             BulletPool bulletPool,
@@ -55,13 +57,15 @@ public class MainShip extends Ship {
         autoShot(delta);
 
         if (isFreeMove) moveSheepFree(delta);
-        moveSheepHorisont(delta);
+        else moveSheepHorisont(delta);
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
 //        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
         startFreeMoving(touch);
+//        pos.add(exp);
+//        System.out.println(touch);
         return super.touchDown(touch, pointer);
     }
 
@@ -138,18 +142,23 @@ public class MainShip extends Ship {
         target.set(touch);
 //        target.sub(center);
         accelepation = target.cpy().sub(pos).len() / 60;
+//        System.out.println("pos = " + pos);
+//        System.out.println("target = " + target);
+//        System.out.println("accel = " + accelepation);
         Vector2 direction = target.cpy().sub(pos);
         vMoveToTouch.set(direction.setLength(accelepation));
     }
     private void moveSheepFree(float delta) {
         targetTemp.set(target);
+//        Vector2 exp = new Vector2(0,0.0001f);
         if (targetTemp.sub(pos).len() > accelepation) {
             pos.add(vMoveToTouch);
+//            setBottom(0);
         } else {
             pos.set(target);
             isFreeMove = false;
         }
-        setPosition(pos.x, pos.y);
+//        setPosition(pos.x, pos.y);
     }
 
 

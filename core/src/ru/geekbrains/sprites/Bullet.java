@@ -31,7 +31,7 @@ public class Bullet extends Sprite {
     ) {
         this.owner = owner;
         this.regions[0] = region;
-        this.pos.set(pos0);
+        pos.set(pos0);
         this.v.set(v0);
         setHeightProportion(height);
         this.worldBounds = worldBounds;
@@ -40,7 +40,7 @@ public class Bullet extends Sprite {
 
     @Override
     public void update(float delta) {
-        this.pos.mulAdd(v, delta);
+        pos.mulAdd(v, delta);
         if (isOutside(worldBounds)) {
             destroy();
         }
