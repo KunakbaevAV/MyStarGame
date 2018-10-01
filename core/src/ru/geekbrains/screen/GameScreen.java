@@ -18,6 +18,7 @@ import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.EnemiesEmitter;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pools.EnemyPool;
+import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.ships.MainShip;
@@ -72,8 +73,10 @@ public class GameScreen extends BaseScreen {
 
     private void addBackgroud() {
         Texture backgroudTexture = new Texture("space.png");
-        Sprite background = new Sprite(new TextureRegion(backgroudTexture), 1);
-        background.setPosition(-0.5f, -0.5f);
+        TextureRegion region = new TextureRegion(backgroudTexture);
+//        Sprite background = new Sprite(new TextureRegion(backgroudTexture), 1);
+//        background.setPosition(-0.5f, -0.5f);
+        Sprite background = new Background(region);
         spites.add(background);
     }
 

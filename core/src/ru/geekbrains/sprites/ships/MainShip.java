@@ -22,8 +22,6 @@ public class MainShip extends Ship {
     private float accelepation;
     private boolean isFreeMove;
 
-    private Vector2 exp = new Vector2(0.1f,0.1f);
-
     public MainShip(
             TextureAtlas atlas,
             BulletPool bulletPool,
