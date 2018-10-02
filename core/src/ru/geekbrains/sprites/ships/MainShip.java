@@ -34,14 +34,10 @@ public class MainShip extends Ship {
                 bulletPool,
                 "bullet",
                 shotSound);
-//        weaponPos = new Vector2(this.getTopVector());
         this.bulletV = new Vector2(0, 0.5f);
         this.reloadInterval = 0.4f;
         float size = 0.15f;
         setHeightProportion(size);
-//        center = new Vector2(size / 2, size / 2);
-//        correction = new Vector2(-0.0065f, 0.06f);
-//        pos = new Vector2(-size / 2, -0.45f);
         target = new Vector2();
         targetTemp = new Vector2();
         vMoveToTouch = new Vector2();
@@ -60,17 +56,13 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-//        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
         startFreeMoving(touch);
-//        pos.add(exp);
-//        System.out.println(touch);
         return super.touchDown(touch, pointer);
     }
 
     // движение стрелками
     private void moveSheepHorisont(float delta) {
         pos.mulAdd(vArrows, delta);
-//        setPosition(pos);
         if (getRight() > worldBounds.getRight()) {
             setRight(worldBounds.getRight());
             stop();
@@ -138,26 +130,17 @@ public class MainShip extends Ship {
     private void startFreeMoving(Vector2 touch) {
         isFreeMove = true;
         target.set(touch);
-//        target.sub(center);
         accelepation = target.cpy().sub(pos).len() / 60;
-//        System.out.println("pos = " + pos);
-//        System.out.println("target = " + target);
-//        System.out.println("accel = " + accelepation);
         Vector2 direction = target.cpy().sub(pos);
         vMoveToTouch.set(direction.setLength(accelepation));
     }
     private void moveSheepFree(float delta) {
         targetTemp.set(target);
-//        Vector2 exp = new Vector2(0,0.0001f);
         if (targetTemp.sub(pos).len() > accelepation) {
             pos.add(vMoveToTouch);
-//            setBottom(0);
         } else {
             pos.set(target);
             isFreeMove = false;
         }
-//        setPosition(pos.x, pos.y);
     }
-
-
 }

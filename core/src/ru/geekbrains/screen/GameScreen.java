@@ -22,7 +22,6 @@ import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.ships.MainShip;
-import ru.geekbrains.sprites.ships.Ship;
 import ru.geekbrains.sprites.Star;
 
 public class GameScreen extends BaseScreen {
@@ -35,18 +34,18 @@ public class GameScreen extends BaseScreen {
 
     private MainShip mainShip;
     private BulletPool bulletPool;
-    private Sound shotSound;
-    private Sound enemyShot;
+    private Sound shotMainSound;
+    private Sound shotEnemySound;
     private Music gameMusic;
 
-    EnemyPool enemyPool;
-    EnemiesEmitter enemiesEmitter;
+    private EnemyPool enemyPool;
+    private EnemiesEmitter enemiesEmitter;
 
-    public GameScreen(Game game, Music gameMusic) {
+    GameScreen(Game game, Music gameMusic) {
         super(game);
         this.gameMusic = gameMusic;
-        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
-        enemyShot = Gdx.audio.newSound(Gdx.files.internal("sounds/enemyShot.wav"));
+        shotMainSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
+        shotEnemySound = Gdx.audio.newSound(Gdx.files.internal("sounds/shotProt1.wav"));
     }
 
     @Override
@@ -59,7 +58,8 @@ public class GameScreen extends BaseScreen {
         bulletPool = new BulletPool();
         addMainShip();
         gameMusic.play();
-        enemyPool = new EnemyPool(atlas, bulletPool, enemyShot, mainShip);
+        gameMusic.setVolume(VOLUME);
+        enemyPool = new EnemyPool(atlas, bulletPool, shotEnemySound, mainShip);
         enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool);
     }
 
@@ -67,15 +67,13 @@ public class GameScreen extends BaseScreen {
         mainShip = new MainShip(
                 atlas,
                 bulletPool,
-                shotSound);
+                shotMainSound);
         spites.add(mainShip);
     }
 
     private void addBackgroud() {
         Texture backgroudTexture = new Texture("space.png");
         TextureRegion region = new TextureRegion(backgroudTexture);
-//        Sprite background = new Sprite(new TextureRegion(backgroudTexture), 1);
-//        background.setPosition(-0.5f, -0.5f);
         Sprite background = new Background(region);
         spites.add(background);
     }
@@ -182,8 +180,8 @@ public class GameScreen extends BaseScreen {
         atlas.dispose();
         bulletPool.dispose();
         enemyPool.dispose();
-        shotSound.dispose();
-        enemyShot.dispose();
+        shotMainSound.dispose();
+        shotEnemySound.dispose();
         gameMusic.dispose();
         super.dispose();
     }

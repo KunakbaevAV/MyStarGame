@@ -19,6 +19,7 @@ import ru.geekbrains.math.Rect;
  * @author Kunakbaev Artem
  */
 public class BaseScreen implements Screen, InputProcessor{
+    public final float VOLUME = 0.1f;
     protected Game game;
     private Rect screenBounds;
     protected Rect worldBounds;

@@ -3,11 +3,9 @@ package ru.geekbrains.screen;
  * author Kunakbaev Artem
  */
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -35,16 +33,16 @@ public class MenuScreen extends BaseScreen {
 
     private TextureAtlas atlas;
     private Game game;
-    private Rect worldBound;
     private Music gameMusic;
-    private Sound menuMusic;
+    private Music menuMusic;
 
     public MenuScreen(Game game) {
         super(game);
         this.game = game;
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/backSound.mp3"));
-        menuMusic = Gdx.audio.newSound(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
-        menuMusic.play(1.0f);
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
+        menuMusic.play();
+        menuMusic.setVolume(VOLUME);
     }
 
     @Override
@@ -74,8 +72,6 @@ public class MenuScreen extends BaseScreen {
     private void addBackgroud() {
         Texture backgroudTexture = new Texture("space.png");
         TextureRegion region = new TextureRegion(backgroudTexture);
-//        Sprite background = new Sprite(new TextureRegion(backgroudTexture), 1);
-//        background.setPosition(-0.5f, -0.5f);
         Sprite background = new Background(region);
         spites.add(background);
     }
@@ -148,7 +144,6 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void resize(Rect worldBounds) {
-        this.worldBound = worldBounds;
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }

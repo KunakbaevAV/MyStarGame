@@ -17,7 +17,7 @@ public class ButtonStart extends AnimatedButton implements ButtonAction{
     private MenuScreen screen;
     public ButtonStart(MenuScreen screen) {
         super(screen.getAtlas(), "play");
-        setHeightProportion(0.1f);
+        setHeightProportion(0.15f);
         this.game = game;
         this.screen = screen;
     }

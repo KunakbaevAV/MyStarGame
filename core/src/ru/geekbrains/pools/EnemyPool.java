@@ -7,6 +7,8 @@ import ru.geekbrains.base.SpritesPool;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.sprites.ships.Enemy;
 import ru.geekbrains.sprites.ships.Enemy1;
+import ru.geekbrains.sprites.ships.Enemy2;
+import ru.geekbrains.sprites.ships.Enemy3;
 import ru.geekbrains.sprites.ships.MainShip;
 
 public class EnemyPool extends SpritesPool<Enemy> {
@@ -14,6 +16,7 @@ public class EnemyPool extends SpritesPool<Enemy> {
     private BulletPool bulletPool;
     private Sound shotSound;
     private MainShip mainShip;
+    int shipType;
 
     public EnemyPool(TextureAtlas atlas,
                      BulletPool bulletPool,
@@ -41,8 +44,21 @@ public class EnemyPool extends SpritesPool<Enemy> {
         return mainShip;
     }
 
+    public void setShipType(int shipType) {
+        this.shipType = shipType;
+    }
+
     @Override
     protected Enemy newObject() {
-        return new Enemy1(atlas, bulletPool, shotSound, mainShip);
+        switch (shipType) {
+            case 1:
+                return new Enemy1(atlas, bulletPool, shotSound, mainShip);
+            case 2:
+                return new Enemy2(atlas, bulletPool, shotSound, mainShip);
+            case 3:
+                return new Enemy3(atlas, bulletPool, shotSound, mainShip);
+            default:
+                return new Enemy1(atlas, bulletPool, shotSound, mainShip);
+        }
     }
 }

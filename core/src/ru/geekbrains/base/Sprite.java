@@ -13,6 +13,7 @@ import ru.geekbrains.math.Regions;
 
 public class Sprite extends Rect {
 
+    public final float VOLUME = 0.1f;
     protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;
@@ -63,11 +64,6 @@ public class Sprite extends Rect {
         Float aspect = regions[frame].getRegionHeight() / (float) regions[frame].getRegionWidth();
         setHeight(widht * aspect);
     }
-
-//    public void setPosition(Vector2 position){
-//        setLeft(position.x);
-//        setBottom(position.y);
-//    }
 
     public void setPosition(float x, float y){
         setLeft(x);

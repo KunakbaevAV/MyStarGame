@@ -1,18 +1,13 @@
 package ru.geekbrains.math;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
 import ru.geekbrains.pools.EnemyPool;
 import ru.geekbrains.sprites.ships.Enemy;
-import ru.geekbrains.sprites.ships.Enemy1;
 
 public class EnemiesEmitter {
     private final EnemyPool enemyPool;
     private Rect worldBounds;
     private float generateInterval = 4f;
     private float generateTimer;
-//    private TextureAtlas atlas;
 
     public EnemiesEmitter(Rect worldBounds, EnemyPool enemyPool) {
         this.enemyPool = enemyPool;
@@ -23,23 +18,26 @@ public class EnemiesEmitter {
         generateTimer += delta;
         if (generateTimer >= generateInterval){
             generateTimer = 0;
-            Enemy enemy = enemyPool.obtain();
-            getEnemy(enemy);
-            // настроить корабль врага
+            getEnemyType(enemyPool); // выбор типа корабля
+            Enemy enemy = enemyPool.obtain(); // добавить корабль
             enemy.pos.x = (Rnd.nextFloat(
-                    worldBounds.getLeft() + enemy.getHalfWidth(),
-                    worldBounds.getRight()) - enemy.getHalfWidth());
+                    worldBounds.getLeft() + enemy.getWidth(),
+                    worldBounds.getRight()) - enemy.getWidth());
             enemy.setBottom(worldBounds.getTop());
             enemy.resize(worldBounds);
         }
     }
 
-    private void getEnemy(Enemy enemy) {
+    private void getEnemyType(EnemyPool enemyPool) {
         float type = (float) Math.random();
-        enemy = new Enemy1(
-                enemyPool.getAtlas(),
-                enemyPool.getBulletPool(),
-                enemyPool.getShotSound(),
-                enemyPool.getMainShip());
+        if(type < 0.5f){
+            System.out.println(1);
+            enemyPool.setShipType(1);
+        }else if (type < 0.8f){
+            System.out.println(2);
+            enemyPool.setShipType(2);
+        }else {
+            enemyPool.setShipType(3);
+        }
     }
 }

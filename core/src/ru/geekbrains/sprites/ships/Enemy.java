@@ -4,14 +4,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
-import ru.geekbrains.math.Rect;
-import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.Bullet;
 
 public class Enemy extends Ship {
     private MainShip mainShip;
-    Vector2 v0 = new Vector2();
 
     public Enemy(
             TextureAtlas atlas,
@@ -19,21 +16,32 @@ public class Enemy extends Ship {
             BulletPool bulletPool,
             Sound shotSound,
             MainShip mainShip) {
-        super(atlas, shipName, bulletPool, shotSound);
+        super(atlas, shipName, bulletPool, "shotEnemy", shotSound);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
-//        bulletHeight = 0.2f;
-//        bulledDamage = 1;
-//        bulletRegion = atlas.findRegion("bullet");
         this.mainShip = mainShip;
-        this.v.set(v0);
+//        reloadTimer = reloadInterval;
+    }
+
+    public void setEnemyShipV(Vector2 enemyShipV) {
+        v.set(enemyShipV);
+    }
+
+    public void setEnemyShipV(float x, float y) {
+        v = new Vector2(x, y);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        autoShot(delta);
-        pos.mulAdd(v0, delta);
+
+        if (getTop() > worldBounds.getTop()){
+            pos.mulAdd(INPUT_V, delta);
+        }else {
+            autoShot(delta);
+            pos.mulAdd(v, delta);
+        }
+//        if (getBottom() < worldBounds.getBottom()) System.out.println("destroy " + this.getClass());
     }
 
     @Override
@@ -47,6 +55,6 @@ public class Enemy extends Ship {
                 bulletHeight,
                 worldBounds,
                 bulledDamage);
-        shotSound.play(1.0f);
+        shotSound.play(VOLUME);
     }
 }

@@ -27,6 +27,18 @@ public abstract class SpritesPool<T extends Sprite> {
         return object;
     }
 
+    public T obtain(String name) {
+        T object;
+        if (freeObjects.isEmpty()) {
+            object = newObject();
+        } else {
+            object = freeObjects.remove(freeObjects.size() - 1);
+        }
+        activeObjects.add(object);
+        log();
+        return object;
+    }
+
     public void updateActiveObjects(float delta) {
         for (int i = 0; i < activeObjects.size(); i++) {
             Sprite sprite = activeObjects.get(i);

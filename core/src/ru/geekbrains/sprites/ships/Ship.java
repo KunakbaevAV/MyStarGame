@@ -14,15 +14,16 @@ public class Ship extends Sprite {
 
     TextureAtlas atlas;
     Vector2 v = new Vector2();
+    public final Vector2 INPUT_V = new Vector2(0, -0.3f);
 
-    protected Rect worldBounds; // нужно инициализировать
+    protected Rect worldBounds;
 
-    Vector2         bulletV = new Vector2();
-    BulletPool      bulletPool;
-    TextureRegion   bulletRegion;
-//    String          bulletName;
-    float           bulletHeight;
-    int             bulledDamage;
+    Vector2 bulletV = new Vector2();
+    BulletPool bulletPool;
+    String bulletName;
+    TextureRegion bulletRegion;
+    float bulletHeight;
+    int bulledDamage;
     Sound shotSound;
 
     float reloadInterval;
@@ -48,16 +49,19 @@ public class Ship extends Sprite {
         this.shotSound = shotSound;
     }
 
-    public Ship( // конструктор для создания врагов
-                 TextureAtlas atlas,
-                 String shipName,
-                 BulletPool bulletPool,
-                 Sound shotSound) {
+    public Ship( // конструктор для врагов
+            TextureAtlas atlas,
+            String shipName,
+            BulletPool bulletPool,
+            String bulletName,
+            Sound shotSound) {
         super(atlas.findRegion(shipName), 1, 2, 2);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
-//        this.bulletName = "shotEnemy";
-        this.bulletRegion = atlas.findRegion("shotEnemy");
+        this.bulletName = bulletName;
+        this.bulletRegion = atlas.findRegion(this.bulletName);
+        bulletHeight = 0.03f;
+        bulledDamage = 1;
         this.shotSound = shotSound;
     }
 
@@ -75,9 +79,8 @@ public class Ship extends Sprite {
                 bulletHeight,
                 worldBounds,
                 bulledDamage);
-        shotSound.play(1.0f);
+        shotSound.play(VOLUME);
     }
-
     void autoShot(float delta) {
         reloadTimer += delta;
         if (reloadTimer >= reloadInterval) {
