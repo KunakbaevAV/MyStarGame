@@ -15,16 +15,19 @@ public class EnemyPool extends SpritesPool<Enemy> {
     private TextureAtlas atlas;
     private BulletPool bulletPool;
     private Sound shotSound;
+    private Rect worldBounds;
     private MainShip mainShip;
     int shipType;
 
     public EnemyPool(TextureAtlas atlas,
                      BulletPool bulletPool,
                      Sound shotSound,
+                     Rect worldBounds,
                      MainShip mainShip) {
         this.atlas = atlas;
         this.bulletPool = bulletPool;
         this.shotSound = shotSound;
+        this.worldBounds = worldBounds;
         this.mainShip = mainShip;
     }
 
@@ -52,13 +55,13 @@ public class EnemyPool extends SpritesPool<Enemy> {
     protected Enemy newObject() {
         switch (shipType) {
             case 1:
-                return new Enemy1(atlas, bulletPool, shotSound, mainShip);
+                return new Enemy1(atlas, bulletPool, shotSound, worldBounds, mainShip);
             case 2:
-                return new Enemy2(atlas, bulletPool, shotSound, mainShip);
+                return new Enemy2(atlas, bulletPool, shotSound, worldBounds, mainShip);
             case 3:
-                return new Enemy3(atlas, bulletPool, shotSound, mainShip);
+                return new Enemy3(atlas, bulletPool, shotSound, worldBounds, mainShip);
             default:
-                return new Enemy1(atlas, bulletPool, shotSound, mainShip);
+                return new Enemy1(atlas, bulletPool, shotSound, worldBounds, mainShip);
         }
     }
 }

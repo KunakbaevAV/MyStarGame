@@ -11,6 +11,7 @@ public class Rnd {
      * @return результат
      */
     public static float nextFloat(float min, float max) {
+        System.out.println("min=" + min + " max =" + max);
         return random.nextFloat() * (max - min) + min;
     }
 }

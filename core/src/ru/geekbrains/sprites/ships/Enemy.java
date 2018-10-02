@@ -4,6 +4,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
+import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.Bullet;
 
@@ -15,12 +17,13 @@ public class Enemy extends Ship {
             String shipName,
             BulletPool bulletPool,
             Sound shotSound,
+            Rect worldBonds,
             MainShip mainShip) {
-        super(atlas, shipName, bulletPool, "shotEnemy", shotSound);
+        super(atlas, shipName, bulletPool, "shotEnemy", shotSound, worldBonds);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
         this.mainShip = mainShip;
-//        reloadTimer = reloadInterval;
+        generatePos();
     }
 
     public void setEnemyShipV(Vector2 enemyShipV) {
@@ -56,5 +59,15 @@ public class Enemy extends Ship {
                 worldBounds,
                 bulledDamage);
         shotSound.play(VOLUME);
+    }
+
+    void generatePos(){
+        float x = Rnd.nextFloat(worldBounds.getLeft() + getWidth(), worldBounds.getRight() - getWidth());
+//        System.out.println(
+//                "min=" + (worldBounds.getLeft() + getWidth()) +
+//                "max=" + (worldBounds.getRight() - getWidth()));
+        Vector2 startPos = new Vector2(x, worldBounds.getTop());
+        System.out.println(startPos.x);
+        pos.set(startPos);
     }
 }

@@ -50,11 +50,12 @@ public class Ship extends Sprite {
     }
 
     public Ship( // конструктор для врагов
-            TextureAtlas atlas,
-            String shipName,
-            BulletPool bulletPool,
-            String bulletName,
-            Sound shotSound) {
+                 TextureAtlas atlas,
+                 String shipName,
+                 BulletPool bulletPool,
+                 String bulletName,
+                 Sound shotSound,
+                 Rect worldBounds) {
         super(atlas.findRegion(shipName), 1, 2, 2);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
@@ -63,6 +64,7 @@ public class Ship extends Sprite {
         bulletHeight = 0.03f;
         bulledDamage = 1;
         this.shotSound = shotSound;
+        this.worldBounds = worldBounds;
     }
 
     @Override
@@ -81,6 +83,7 @@ public class Ship extends Sprite {
                 bulledDamage);
         shotSound.play(VOLUME);
     }
+
     void autoShot(float delta) {
         reloadTimer += delta;
         if (reloadTimer >= reloadInterval) {

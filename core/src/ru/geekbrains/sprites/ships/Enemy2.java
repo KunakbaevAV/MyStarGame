@@ -3,6 +3,7 @@ package ru.geekbrains.sprites.ships;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import ru.geekbrains.math.Rect;
 import ru.geekbrains.pools.BulletPool;
 
 public class Enemy2 extends Enemy {
@@ -10,11 +11,13 @@ public class Enemy2 extends Enemy {
     public Enemy2(TextureAtlas atlas,
                   BulletPool bulletPool,
                   Sound shotSound,
+                  Rect worldBonds,
                   MainShip mainShip) {
         super(atlas,
                 "shipEnemy2", // название корабля
                 bulletPool,
                 shotSound,
+                worldBonds,
                 mainShip);
         setHeightProportion (0.2f); // размеры корабля
         setEnemyShipV       (0, -0.09f); // скорость корабля

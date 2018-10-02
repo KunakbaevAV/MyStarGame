@@ -21,11 +21,13 @@ public class Enemy1 extends Enemy {
     public Enemy1(TextureAtlas atlas,
                   BulletPool bulletPool,
                   Sound shotSound,
+                  Rect worldBonds,
                   MainShip mainShip) {
         super(atlas,
                 "shipEnemy1", // название корабля
                 bulletPool,
                 shotSound,
+                worldBonds,
                 mainShip);
         setHeightProportion (0.15f); // размеры корабля
         setEnemyShipV       (0, -0.1f); // скорость корабля

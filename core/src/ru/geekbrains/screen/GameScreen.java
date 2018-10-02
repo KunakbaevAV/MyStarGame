@@ -59,8 +59,8 @@ public class GameScreen extends BaseScreen {
         addMainShip();
         gameMusic.play();
         gameMusic.setVolume(VOLUME);
-        enemyPool = new EnemyPool(atlas, bulletPool, shotEnemySound, mainShip);
-        enemiesEmitter = new EnemiesEmitter(worldBounds, enemyPool);
+        enemyPool = new EnemyPool(atlas, bulletPool, shotEnemySound, worldBounds, mainShip);
+        enemiesEmitter = new EnemiesEmitter(enemyPool);
     }
 
     private void addMainShip() {

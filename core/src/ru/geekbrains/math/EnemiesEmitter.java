@@ -5,13 +5,13 @@ import ru.geekbrains.sprites.ships.Enemy;
 
 public class EnemiesEmitter {
     private final EnemyPool enemyPool;
-    private Rect worldBounds;
+//    private Rect worldBounds;
     private float generateInterval = 4f;
     private float generateTimer;
 
-    public EnemiesEmitter(Rect worldBounds, EnemyPool enemyPool) {
+    public EnemiesEmitter(EnemyPool enemyPool) {
         this.enemyPool = enemyPool;
-        this.worldBounds = worldBounds;
+//        this.worldBounds = worldBounds;
     }
 
     public void generateEnemies(float delta){
@@ -20,11 +20,11 @@ public class EnemiesEmitter {
             generateTimer = 0;
             getEnemyType(enemyPool); // выбор типа корабля
             Enemy enemy = enemyPool.obtain(); // добавить корабль
-            enemy.pos.x = (Rnd.nextFloat(
-                    worldBounds.getLeft() + enemy.getWidth(),
-                    worldBounds.getRight()) - enemy.getWidth());
-            enemy.setBottom(worldBounds.getTop());
-            enemy.resize(worldBounds);
+//            enemy.pos.x = (Rnd.nextFloat(
+//                    worldBounds.getLeft() + enemy.getWidth(),
+//                    worldBounds.getRight()) - enemy.getWidth());
+//            enemy.setBottom(worldBounds.getTop());
+//            enemy.resize(worldBounds);
         }
     }
 
