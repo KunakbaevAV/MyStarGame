@@ -2,6 +2,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,9 +19,11 @@ import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.EnemiesEmitter;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pools.EnemyPool;
+import ru.geekbrains.pools.ExplosionPull;
 import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.sprites.Explosion;
 import ru.geekbrains.sprites.ships.MainShip;
 import ru.geekbrains.sprites.Star;
 
@@ -40,6 +43,7 @@ public class GameScreen extends BaseScreen {
 
     private EnemyPool enemyPool;
     private EnemiesEmitter enemiesEmitter;
+    private ExplosionPull explosionPull;
 
     GameScreen(Game game, Music gameMusic) {
         super(game);
@@ -56,11 +60,12 @@ public class GameScreen extends BaseScreen {
         addBackgroud();
         addStars();
         bulletPool = new BulletPool();
-        addMainShip();
         gameMusic.play();
         gameMusic.setVolume(VOLUME);
+        addMainShip();
         enemyPool = new EnemyPool(atlas, bulletPool, shotEnemySound, worldBounds, mainShip);
         enemiesEmitter = new EnemiesEmitter(enemyPool);
+        explosionPull = new ExplosionPull(atlas);
     }
 
     private void addMainShip() {
@@ -114,6 +119,7 @@ public class GameScreen extends BaseScreen {
     private void deleteAllDestroed() {
         bulletPool.freeAllDestroyedActiveObjects();
         enemyPool.freeAllDestroyedActiveObjects();
+        explosionPull.freeAllDestroyedActiveObjects();
     }
 
     private void checkCollisions() {
@@ -128,6 +134,8 @@ public class GameScreen extends BaseScreen {
         }
         bulletPool.drawActiveObjects(batch);
         enemyPool.drawActiveObjects(batch);
+        mainShip.draw(batch);
+        explosionPull.drawActiveObjects(batch);
         batch.end();
     }
 
@@ -138,13 +146,25 @@ public class GameScreen extends BaseScreen {
         bulletPool.updateActiveObjects(delta);
         enemyPool.updateActiveObjects(delta);
         enemiesEmitter.generateEnemies(delta);
+        explosionPull.updateActiveObjects(delta);
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        switch (keycode){
+            case Input.Keys.UP:
+            doExplosion();
+            break;
+        }
+
         mainShip.keyDown(keycode);
         return super.keyDown(keycode);
     }
+
+    public void doExplosion(){
+        Explosion explosion = explosionPull.obtain();
+        explosion.set(worldBounds.pos, 0.2f);
+    };
 
     @Override
     public boolean keyUp(int keycode) {
@@ -180,6 +200,7 @@ public class GameScreen extends BaseScreen {
         atlas.dispose();
         bulletPool.dispose();
         enemyPool.dispose();
+        explosionPull.dispose();
         shotMainSound.dispose();
         shotEnemySound.dispose();
         gameMusic.dispose();

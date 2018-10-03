@@ -23,7 +23,7 @@ public class Enemy extends Ship {
         this.atlas = atlas;
         this.bulletPool = bulletPool;
         this.mainShip = mainShip;
-        generatePos();
+//        generatePos();
     }
 
     public void setEnemyShipV(Vector2 enemyShipV) {
@@ -62,10 +62,7 @@ public class Enemy extends Ship {
     }
 
     void generatePos(){
-        float x = Rnd.nextFloat(worldBounds.getLeft() + getWidth(), worldBounds.getRight() - getWidth());
-//        System.out.println(
-//                "min=" + (worldBounds.getLeft() + getWidth()) +
-//                "max=" + (worldBounds.getRight() - getWidth()));
+        float x = Rnd.nextFloat(worldBounds.getLeft() + getHalfWidth(), worldBounds.getRight() - getHalfWidth());
         Vector2 startPos = new Vector2(x, worldBounds.getTop());
         System.out.println(startPos.x);
         pos.set(startPos);

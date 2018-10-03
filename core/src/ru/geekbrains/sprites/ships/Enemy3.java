@@ -28,5 +28,6 @@ public class Enemy3 extends Enemy {
         reloadInterval =    4f; // перезарядка
         hp =                2; // запас прочности
         reloadTimer = reloadInterval;
+        generatePos();
     }
 }

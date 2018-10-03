@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.pools.ExplosionPull;
+import ru.geekbrains.sprites.Explosion;
 
 public class MainShip extends Ship {
 
@@ -25,7 +28,7 @@ public class MainShip extends Ship {
     public MainShip(
             TextureAtlas atlas,
             BulletPool bulletPool,
-            Sound shotSound) {
+            Sound shotSound){
         super(atlas,
                 "mainShip",
                 1,
@@ -72,17 +75,21 @@ public class MainShip extends Ship {
             stop();
         }
     }
+
     private void moveRight() {
         isFreeMove = false;
         vArrows.set(vArrows0);
     }
+
     private void moveLeft() {
         isFreeMove = false;
         vArrows.set(vArrows0).rotate(180);
     }
+
     private void stop() {
         vArrows.setZero();
     }
+
     public void keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.A:
