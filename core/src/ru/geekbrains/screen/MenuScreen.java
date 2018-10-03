@@ -37,7 +37,7 @@ public class MenuScreen extends BaseScreen {
     private Music menuMusic;
 
     public MenuScreen(Game game) {
-        super(game);
+        super();
         this.game = game;
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/backSound.mp3"));
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));

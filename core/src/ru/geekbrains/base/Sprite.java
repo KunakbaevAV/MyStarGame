@@ -103,6 +103,10 @@ public class Sprite extends Rect {
         this.scale = scale;
     }
 
+    public void setRegions(TextureAtlas atlas, String name) {
+        this.regions = Regions.split(atlas.findRegion(name), 1,2,2);
+    }
+
     public void destroy() {
         this.isDestroyed = true;
     }

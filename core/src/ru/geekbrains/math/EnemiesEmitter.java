@@ -1,6 +1,7 @@
 package ru.geekbrains.math;
 
 import ru.geekbrains.pools.EnemyPool;
+import ru.geekbrains.sprites.ships.Enemy;
 
 public class EnemiesEmitter {
     private final EnemyPool enemyPool;
@@ -15,19 +16,24 @@ public class EnemiesEmitter {
         generateTimer += delta;
         if (generateTimer >= generateInterval){
             generateTimer = 0;
-            getEnemyType(enemyPool); // выбор типа корабля
-            enemyPool.obtain(); // добавить корабль
+            Enemy enemy = enemyPool.obtain(); // добавить корабль
+            enemy.setShip(getEnemyType());
         }
+
     }
 
-    private void getEnemyType(EnemyPool enemyPool) {
+    private int getEnemyType() {
         float type = (float) Math.random();
-        if(type < 0.5f){
-            enemyPool.setShipType(1);
+        if(type < 0.3f){
+            return 1;
+        }else if (type < 0.6f){
+            return 2;
         }else if (type < 0.8f){
-            enemyPool.setShipType(2);
+            return 3;
+        }else if (type < 0.9){
+            return 4;
         }else {
-            enemyPool.setShipType(3);
+            return 5;
         }
     }
 }

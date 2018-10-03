@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import ru.geekbrains.base.SpritesPool;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.sprites.ships.Enemy;
-import ru.geekbrains.sprites.ships.Enemy1;
-import ru.geekbrains.sprites.ships.Enemy2;
-import ru.geekbrains.sprites.ships.Enemy3;
 import ru.geekbrains.sprites.ships.MainShip;
 
 public class EnemyPool extends SpritesPool<Enemy> {
@@ -18,7 +15,6 @@ public class EnemyPool extends SpritesPool<Enemy> {
     private Sound shotSound;
     private Rect worldBounds;
     private MainShip mainShip;
-    private int shipType;
 
     public EnemyPool(TextureAtlas atlas,
                      BulletPool bulletPool,
@@ -50,21 +46,8 @@ public class EnemyPool extends SpritesPool<Enemy> {
         return mainShip;
     }
 
-    public void setShipType(int shipType) {
-        this.shipType = shipType;
-    }
-
     @Override
     protected Enemy newObject() {
-        switch (shipType) {
-            case 1:
-                return new Enemy1(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
-            case 2:
-                return new Enemy2(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
-            case 3:
-                return new Enemy3(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
-            default:
-                return new Enemy1(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
-        }
+        return new Enemy(atlas, "shipEnemy1", explosionPull, bulletPool, shotSound, worldBounds, mainShip);
     }
 }

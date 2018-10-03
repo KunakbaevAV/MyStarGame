@@ -23,7 +23,9 @@ import ru.geekbrains.pools.ExplosionPull;
 import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.sprites.Bullet;
 import ru.geekbrains.sprites.Explosion;
+import ru.geekbrains.sprites.ships.Enemy;
 import ru.geekbrains.sprites.ships.MainShip;
 import ru.geekbrains.sprites.Star;
 
@@ -33,7 +35,6 @@ public class GameScreen extends BaseScreen {
     private static final int ORANGE_STAR_COUNT = 42;
     private List<Sprite> spites;
     private TextureAtlas atlas;
-    private int shipNumber;
 
     private MainShip mainShip;
     private BulletPool bulletPool;
@@ -47,7 +48,7 @@ public class GameScreen extends BaseScreen {
     private ExplosionPull explosionPull;
 
     GameScreen(Game game, Music gameMusic) {
-        super(game);
+        super();
         this.gameMusic = gameMusic;
         shotMainSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
         shotEnemySound = Gdx.audio.newSound(Gdx.files.internal("sounds/shotProt1.wav"));
@@ -125,7 +126,29 @@ public class GameScreen extends BaseScreen {
     }
 
     private void checkCollisions() {
+        // столкновение кораблей
+        List<Enemy> enemyList = enemyPool.getActiveObjects();
+        for (Enemy enemy : enemyList) {
+            if (enemy.isDestroyed()) {
+                continue;
+            }
+            float minDist = enemy.getHalfWidth() + mainShip.getHalfWidth();
+            if (enemy.pos.dst2(mainShip.pos) < minDist * minDist) {
+                enemy.destroy();
+                enemy.destroyShipOut();
+            }
+        }
 
+        // попадание во вражеский корабль
+        List<Bullet> bulletList = bulletPool.getActiveObjects();
+        for (Enemy enemy : enemyList) {
+            if (enemy.isDestroyed()) {
+                continue;
+            }
+            for (Bullet bullet : bulletPool.getActiveObjects()) {
+
+            }
+        }
     }
 
     private void draw() {
@@ -153,20 +176,22 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode){
+        switch (keycode) {
             case Input.Keys.UP:
-            doExplosion();
-            break;
+                doExplosion();
+                break;
         }
 
         mainShip.keyDown(keycode);
         return super.keyDown(keycode);
     }
 
-    public void doExplosion(){
+    public void doExplosion() {
         Explosion explosion = explosionPull.obtain();
         explosion.set(worldBounds.pos, 0.2f);
-    };
+    }
+
+    ;
 
     @Override
     public boolean keyUp(int keycode) {

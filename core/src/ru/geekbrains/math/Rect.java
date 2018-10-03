@@ -30,8 +30,6 @@ public class Rect {
         return pos.y + halfHeight;
     }
 
-//    public Vector2 getTopVector(){return new Vector2(pos.x, pos.y + halfHeight);}
-
     public float getRight() {
         return pos.x + halfWidth;
     }
@@ -39,8 +37,6 @@ public class Rect {
     public float getBottom() {
         return pos.y - halfHeight;
     }
-
-//    public Vector2 getBottomVector(){return new Vector2(pos.x, pos.y - halfHeight);}
 
     public float getHalfWidth() {
         return halfWidth;

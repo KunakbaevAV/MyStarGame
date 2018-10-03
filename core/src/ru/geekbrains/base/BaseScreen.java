@@ -19,23 +19,16 @@ import ru.geekbrains.math.Rect;
  * @author Kunakbaev Artem
  */
 public class BaseScreen implements Screen, InputProcessor{
-    public final float VOLUME = 0.9f;
-    protected Game game;
+    protected final float VOLUME = 0.9f;
     private Rect screenBounds;
     protected Rect worldBounds;
     private Rect glBounds;
     protected SpriteBatch batch;
-    protected Matrix4 worldToGl;
-    protected Matrix3 screenToWorld;
-    protected Vector2 touch;
-    private float aspectWorld;
+    private Matrix4 worldToGl;
+    private Matrix3 screenToWorld;
+    private Vector2 touch;
 
-    public float getAspectWorld() {
-        return aspectWorld;
-    }
-
-    public BaseScreen(Game game) {
-        this.game = game;
+    public BaseScreen() {
         Gdx.input.setInputProcessor(this);
         screenBounds = new Rect();
         worldBounds = new Rect();
@@ -62,7 +55,7 @@ public class BaseScreen implements Screen, InputProcessor{
         screenBounds.setLeft(0);
         screenBounds.setBottom(0);
 
-        aspectWorld = width / (float)height;
+        float aspectWorld = width / (float) height;
         worldBounds.setHeight(1f);
         worldBounds.setWidth(1f * aspectWorld);
 
@@ -152,7 +145,7 @@ public class BaseScreen implements Screen, InputProcessor{
         return false;
     }
 
-    protected int reverseY(int y){
+    private int reverseY(int y){
         return Gdx.graphics.getHeight() - y;
     }
 }

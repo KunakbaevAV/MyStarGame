@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Regions;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.pools.ExplosionPull;
 import ru.geekbrains.sprites.Bullet;
@@ -16,14 +17,14 @@ public class Ship extends Sprite {
 
     TextureAtlas atlas;
     Vector2 v = new Vector2();
-    public final Vector2 INPUT_V = new Vector2(0, -0.3f);
+    final Vector2 INPUT_V = new Vector2(0, -0.3f);
 
     protected Rect worldBounds;
 
     Vector2 bulletV = new Vector2();
     BulletPool bulletPool;
     ExplosionPull explosionPull;
-    String bulletName;
+    private String bulletName;
     TextureRegion bulletRegion;
     float bulletHeight;
     int bulledDamage;
@@ -32,9 +33,12 @@ public class Ship extends Sprite {
     float reloadInterval;
     float reloadTimer;
 
+    float damageAnimateTimer;
+    float damageAnimateInterval = 0.5f;
+
     int hp;
 
-    public Ship(
+    Ship(
             TextureAtlas atlas,
             String shipName,
             int rows,
@@ -52,14 +56,14 @@ public class Ship extends Sprite {
         this.shotSound = shotSound;
     }
 
-    public Ship( // конструктор для врагов
-                 TextureAtlas atlas,
-                 String shipName,
-                 ExplosionPull explosionPull,
-                 BulletPool bulletPool,
-                 String bulletName,
-                 Sound shotSound,
-                 Rect worldBounds) {
+    Ship( // конструктор для врагов
+          TextureAtlas atlas,
+          String shipName,
+          ExplosionPull explosionPull,
+          BulletPool bulletPool,
+          String bulletName,
+          Sound shotSound,
+          Rect worldBounds) {
         super(atlas.findRegion(shipName), 1, 2, 2);
         this.atlas = atlas;
         this.explosionPull = explosionPull;
@@ -72,11 +76,49 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
+    void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    void setShipVY(float y){
+        this.v.y = y;
+    }
+
+    void setBulletVY(float y) {
+        this.bulletV.y = y;
+    }
+
+    void setBulletName(String bulletName) {
+        this.bulletName = bulletName;
+    }
+
+    public void setBulletRegion(TextureRegion bulletRegion) {
+        this.bulletRegion = bulletRegion;
+    }
+
+    void setBulletHeight(float bulletHeight) {
+        this.bulletHeight = bulletHeight;
+    }
+
+    void setBulledDamage(int bulledDamage) {
+        this.bulledDamage = bulledDamage;
+    }
+
+    void setReloadInterval(float reloadInterval) {
+        this.reloadInterval = reloadInterval;
+    }
+
     @Override
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;
     }
 
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+//        damageAnimateTimer += delta;
+//        if ()
+    }
 
     void shoot() {
         Bullet bullet = bulletPool.obtain();
