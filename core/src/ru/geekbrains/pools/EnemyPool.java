@@ -14,18 +14,21 @@ import ru.geekbrains.sprites.ships.MainShip;
 public class EnemyPool extends SpritesPool<Enemy> {
     private TextureAtlas atlas;
     private BulletPool bulletPool;
+    private ExplosionPull explosionPull;
     private Sound shotSound;
     private Rect worldBounds;
     private MainShip mainShip;
-    int shipType;
+    private int shipType;
 
     public EnemyPool(TextureAtlas atlas,
                      BulletPool bulletPool,
+                     ExplosionPull explosionPull,
                      Sound shotSound,
                      Rect worldBounds,
                      MainShip mainShip) {
         this.atlas = atlas;
         this.bulletPool = bulletPool;
+        this.explosionPull = explosionPull;
         this.shotSound = shotSound;
         this.worldBounds = worldBounds;
         this.mainShip = mainShip;
@@ -55,13 +58,13 @@ public class EnemyPool extends SpritesPool<Enemy> {
     protected Enemy newObject() {
         switch (shipType) {
             case 1:
-                return new Enemy1(atlas, bulletPool, shotSound, worldBounds, mainShip);
+                return new Enemy1(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
             case 2:
-                return new Enemy2(atlas, bulletPool, shotSound, worldBounds, mainShip);
+                return new Enemy2(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
             case 3:
-                return new Enemy3(atlas, bulletPool, shotSound, worldBounds, mainShip);
+                return new Enemy3(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
             default:
-                return new Enemy1(atlas, bulletPool, shotSound, worldBounds, mainShip);
+                return new Enemy1(atlas, bulletPool, explosionPull, shotSound, worldBounds, mainShip);
         }
     }
 }

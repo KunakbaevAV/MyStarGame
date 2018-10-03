@@ -39,6 +39,7 @@ public class GameScreen extends BaseScreen {
     private BulletPool bulletPool;
     private Sound shotMainSound;
     private Sound shotEnemySound;
+    private Sound expSound;
     private Music gameMusic;
 
     private EnemyPool enemyPool;
@@ -50,6 +51,7 @@ public class GameScreen extends BaseScreen {
         this.gameMusic = gameMusic;
         shotMainSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
         shotEnemySound = Gdx.audio.newSound(Gdx.files.internal("sounds/shotProt1.wav"));
+        expSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bang.wav"));
     }
 
     @Override
@@ -63,9 +65,9 @@ public class GameScreen extends BaseScreen {
         gameMusic.play();
         gameMusic.setVolume(VOLUME);
         addMainShip();
-        enemyPool = new EnemyPool(atlas, bulletPool, shotEnemySound, worldBounds, mainShip);
+        explosionPull = new ExplosionPull(atlas, expSound);
+        enemyPool = new EnemyPool(atlas, bulletPool, explosionPull, shotEnemySound, worldBounds, mainShip);
         enemiesEmitter = new EnemiesEmitter(enemyPool);
-        explosionPull = new ExplosionPull(atlas);
     }
 
     private void addMainShip() {
@@ -203,6 +205,7 @@ public class GameScreen extends BaseScreen {
         explosionPull.dispose();
         shotMainSound.dispose();
         shotEnemySound.dispose();
+        expSound.dispose();
         gameMusic.dispose();
         super.dispose();
     }

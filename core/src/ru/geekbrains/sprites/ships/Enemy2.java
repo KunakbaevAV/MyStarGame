@@ -5,16 +5,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.pools.ExplosionPull;
 
 public class Enemy2 extends Enemy {
 
     public Enemy2(TextureAtlas atlas,
                   BulletPool bulletPool,
+                  ExplosionPull explosionPull,
                   Sound shotSound,
                   Rect worldBonds,
                   MainShip mainShip) {
         super(atlas,
                 "shipEnemy2", // название корабля
+                explosionPull,
                 bulletPool,
                 shotSound,
                 worldBonds,

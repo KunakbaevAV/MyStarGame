@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.pools.ExplosionPull;
 import ru.geekbrains.sprites.Bullet;
+import ru.geekbrains.sprites.Explosion;
 
 public class Ship extends Sprite {
 
@@ -20,6 +22,7 @@ public class Ship extends Sprite {
 
     Vector2 bulletV = new Vector2();
     BulletPool bulletPool;
+    ExplosionPull explosionPull;
     String bulletName;
     TextureRegion bulletRegion;
     float bulletHeight;
@@ -52,12 +55,14 @@ public class Ship extends Sprite {
     public Ship( // конструктор для врагов
                  TextureAtlas atlas,
                  String shipName,
+                 ExplosionPull explosionPull,
                  BulletPool bulletPool,
                  String bulletName,
                  Sound shotSound,
                  Rect worldBounds) {
         super(atlas.findRegion(shipName), 1, 2, 2);
         this.atlas = atlas;
+        this.explosionPull = explosionPull;
         this.bulletPool = bulletPool;
         this.bulletName = bulletName;
         this.bulletRegion = atlas.findRegion(this.bulletName);
@@ -72,6 +77,7 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
+
     void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this,
@@ -83,7 +89,6 @@ public class Ship extends Sprite {
                 bulledDamage);
         shotSound.play(VOLUME);
     }
-
     void autoShot(float delta) {
         reloadTimer += delta;
         if (reloadTimer >= reloadInterval) {

@@ -7,7 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.pools.ExplosionPull;
 import ru.geekbrains.sprites.Bullet;
+import ru.geekbrains.sprites.Explosion;
 
 public class Enemy extends Ship {
     private MainShip mainShip;
@@ -15,15 +17,15 @@ public class Enemy extends Ship {
     public Enemy(
             TextureAtlas atlas,
             String shipName,
+            ExplosionPull explosionPull,
             BulletPool bulletPool,
             Sound shotSound,
             Rect worldBonds,
             MainShip mainShip) {
-        super(atlas, shipName, bulletPool, "shotEnemy", shotSound, worldBonds);
+        super(atlas, shipName, explosionPull, bulletPool, "shotEnemy", shotSound, worldBonds);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
         this.mainShip = mainShip;
-//        generatePos();
     }
 
     public void setEnemyShipV(Vector2 enemyShipV) {
@@ -38,13 +40,13 @@ public class Enemy extends Ship {
     public void update(float delta) {
         super.update(delta);
 
-        if (getTop() > worldBounds.getTop()){
+        if (getTop() > worldBounds.getTop()) {
             pos.mulAdd(INPUT_V, delta);
-        }else {
+        } else {
             autoShot(delta);
             pos.mulAdd(v, delta);
+//            if (getBottom() < worldBounds.getBottom()) destroyShipOut(); // Эта строчка взрывает корабли внизу, но взрывы зацикливаются
         }
-//        if (getBottom() < worldBounds.getBottom()) System.out.println("destroy " + this.getClass());
     }
 
     @Override
@@ -61,10 +63,15 @@ public class Enemy extends Ship {
         shotSound.play(VOLUME);
     }
 
-    void generatePos(){
+    private void destroyShipOut() {
+        Explosion explosion = explosionPull.obtain();
+        explosion.set(pos, getHeight());
+        destroy();
+    }
+
+    void generatePos() {
         float x = Rnd.nextFloat(worldBounds.getLeft() + getHalfWidth(), worldBounds.getRight() - getHalfWidth());
         Vector2 startPos = new Vector2(x, worldBounds.getTop());
-        System.out.println(startPos.x);
         pos.set(startPos);
     }
 }

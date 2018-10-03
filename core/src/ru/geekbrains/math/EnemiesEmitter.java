@@ -1,7 +1,6 @@
 package ru.geekbrains.math;
 
 import ru.geekbrains.pools.EnemyPool;
-import ru.geekbrains.sprites.ships.Enemy;
 
 public class EnemiesEmitter {
     private final EnemyPool enemyPool;
@@ -26,7 +25,6 @@ public class EnemiesEmitter {
         if(type < 0.5f){
             enemyPool.setShipType(1);
         }else if (type < 0.8f){
-            System.out.println(2);
             enemyPool.setShipType(2);
         }else {
             enemyPool.setShipType(3);

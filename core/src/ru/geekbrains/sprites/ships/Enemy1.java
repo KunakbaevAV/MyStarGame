@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pools.BulletPool;
+import ru.geekbrains.pools.ExplosionPull;
 
 public class Enemy1 extends Enemy {
 //    private String          SHIP_NAME       = "shipEnemy1";
@@ -20,11 +21,13 @@ public class Enemy1 extends Enemy {
 
     public Enemy1(TextureAtlas atlas,
                   BulletPool bulletPool,
+                  ExplosionPull explosionPull,
                   Sound shotSound,
                   Rect worldBonds,
                   MainShip mainShip) {
         super(atlas,
                 "shipEnemy1", // название корабля
+                explosionPull,
                 bulletPool,
                 shotSound,
                 worldBonds,
