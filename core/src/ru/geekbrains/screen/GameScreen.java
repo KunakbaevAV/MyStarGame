@@ -2,7 +2,6 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -25,7 +24,6 @@ import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.Bullet;
 import ru.geekbrains.sprites.ButtonNewGame;
-import ru.geekbrains.sprites.Explosion;
 import ru.geekbrains.sprites.MessageGameOver;
 import ru.geekbrains.sprites.ships.Enemy;
 import ru.geekbrains.sprites.ships.MainShip;
@@ -35,10 +33,10 @@ public class GameScreen extends BaseScreen {
     private static final int WHITE_STAR_COUNT = 2048;
     private static final int RED_STAR_COUNT = 84;
     private static final int ORANGE_STAR_COUNT = 42;
+    private BigStar bigStar;
 
-    private enum State {PLAING, GAME_OVER}
+    private boolean gameOver;
 
-    ;
     private List<Sprite> spites;
     private TextureAtlas atlas;
 
@@ -53,7 +51,6 @@ public class GameScreen extends BaseScreen {
     private EnemiesEmitter enemiesEmitter;
     private ExplosionPull explosionPull;
 
-    private State state;
     private MessageGameOver messageGameOver;
     private ButtonNewGame buttonNewGame;
 
@@ -89,7 +86,6 @@ public class GameScreen extends BaseScreen {
                 explosionPull,
                 bulletPool,
                 shotMainSound);
-        spites.add(mainShip);
     }
 
     private void addBackgroud() {
@@ -100,7 +96,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void addStars() {
-        Sprite bigStar = new BigStar(atlas);
+        bigStar = new BigStar(atlas);
         Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
         Sprite[] redStar = new Star[RED_STAR_COUNT];
         Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
@@ -127,8 +123,6 @@ public class GameScreen extends BaseScreen {
         return atlas;
     }
 
-
-
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -148,7 +142,7 @@ public class GameScreen extends BaseScreen {
         enemyPool.drawActiveObjects(batch);
         mainShip.draw(batch);
         explosionPull.drawActiveObjects(batch);
-        if (state == State.GAME_OVER){
+        if (gameOver) {
             messageGameOver.draw(batch);
             buttonNewGame.draw(batch);
         }
@@ -162,16 +156,11 @@ public class GameScreen extends BaseScreen {
         explosionPull.updateActiveObjects(delta);
         bulletPool.updateActiveObjects(delta);
 
-        if (mainShip.isDestroyed()) state = State.GAME_OVER;
-        else state = State.PLAING;
-        switch (state){
-            case PLAING:
-                enemyPool.updateActiveObjects(delta);
-                enemiesEmitter.generateEnemies(delta);
-                break;
-            case GAME_OVER:
-
-                break;
+        gameOver = mainShip.isDestroyed();
+        if (!gameOver) {
+            mainShip.update(delta);
+            enemyPool.updateActiveObjects(delta);
+            enemiesEmitter.generateEnemies(delta);
         }
     }
 
@@ -219,16 +208,17 @@ public class GameScreen extends BaseScreen {
     }
 
     public void startNewGame() {
-        state = State.PLAING;
+        gameOver = false;
         bulletPool.freeAllActiveObjects();
         explosionPull.freeAllActiveObjects();
         enemyPool.freeAllActiveObjects();
         mainShip.startNewGame();
+        bigStar.startNewGame();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (state == State.PLAING){
+        if (!gameOver) {
             mainShip.keyDown(keycode);
         }
         return super.keyDown(keycode);
@@ -236,7 +226,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (state == State.PLAING) {
+        if (!gameOver) {
             mainShip.keyUp(keycode);
         }
         return super.keyUp(keycode);
@@ -247,7 +237,9 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.touchDown(touch, pointer);
         }
-        if (state == State.GAME_OVER){
+        if (!gameOver) {
+            mainShip.touchDown(touch, pointer);
+        } else {
             buttonNewGame.touchDown(touch, pointer);
         }
         return super.touchDown(touch, pointer);
@@ -258,6 +250,11 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.touchUp(touch, pointer);
         }
+        if (!gameOver) {
+            mainShip.touchDown(touch, pointer);
+        } else {
+            buttonNewGame.touchUp(touch, pointer);
+        }
         return super.touchUp(touch, pointer);
     }
 
@@ -266,6 +263,9 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }
+        mainShip.resize(worldBounds);
+        messageGameOver.resize(worldBounds);
+        buttonNewGame.resize(worldBounds);
     }
 
     @Override

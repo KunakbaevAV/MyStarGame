@@ -1,15 +1,10 @@
 package ru.geekbrains.sprites;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import ru.geekbrains.base.AnimatedButton;
-import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.ButtonAction;
 import ru.geekbrains.math.Rect;
-import ru.geekbrains.screen.GameScreen;
 import ru.geekbrains.screen.MenuScreen;
 
 public class ButtonStart extends AnimatedButton implements ButtonAction{

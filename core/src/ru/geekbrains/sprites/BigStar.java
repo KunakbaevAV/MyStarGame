@@ -25,6 +25,10 @@ public class BigStar extends Sprite {
         setBottom(0.4f);
     }
 
+    public void startNewGame(){
+        setBottom(wordBounds.getTop());
+    }
+
     @Override
     public void update(float delta) {
         pos.mulAdd(v, delta);

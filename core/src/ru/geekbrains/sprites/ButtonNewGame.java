@@ -1,9 +1,7 @@
 package ru.geekbrains.sprites;
 
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
 import ru.geekbrains.base.AnimatedButton;
+import ru.geekbrains.math.Rect;
 import ru.geekbrains.screen.GameScreen;
 
 public class ButtonNewGame extends AnimatedButton {
@@ -18,7 +16,12 @@ public class ButtonNewGame extends AnimatedButton {
 
     @Override
     public void doButtonAction() {
-        System.out.println("new game");
         screen.startNewGame();
+    }
+
+    @Override
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        setBottom(worldBounds.getBottom() + getHalfHeight());
     }
 }
