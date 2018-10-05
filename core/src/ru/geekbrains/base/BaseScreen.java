@@ -39,6 +39,10 @@ public class BaseScreen implements Screen, InputProcessor{
         touch = new Vector2();
     }
 
+    public Rect getWorldBounds() {
+        return worldBounds;
+    }
+
     @Override
     public void show() {
 

@@ -31,12 +31,12 @@ public class Ship extends Sprite {
     Sound shotSound;
 
     float reloadInterval;
-    float reloadTimer;
+    private float reloadTimer;
 
-    float damageAnimateTimer;
-    float damageAnimateInterval = 0.5f;
+    private float damageAnimateTimer = 0;
+    private float damageAnimateInterval = 0.2f;
 
-    int hp;
+    private int hp;
 
     Ship(
             TextureAtlas atlas,
@@ -44,11 +44,13 @@ public class Ship extends Sprite {
             int rows,
             int cols,
             int frames,
+            ExplosionPull explosionPull,
             BulletPool bulletPool,
             String bulletName,
             Sound shotSound) {
         super(atlas.findRegion(shipName), rows, cols, frames);
         this.atlas = atlas;
+        this.explosionPull = explosionPull;
         this.bulletPool = bulletPool;
         this.bulletRegion = atlas.findRegion(bulletName);
         this.bulletHeight = 0.03f;
@@ -76,11 +78,19 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
+    public void setReloadTimer(float reloadTimer) {
+        this.reloadTimer = reloadTimer;
+    }
+
     void setHp(int hp) {
         this.hp = hp;
     }
 
-    void setShipVY(float y){
+    public int getHp() {
+        return hp;
+    }
+
+    void setShipVY(float y) {
         this.v.y = y;
     }
 
@@ -116,8 +126,30 @@ public class Ship extends Sprite {
     @Override
     public void update(float delta) {
         super.update(delta);
-//        damageAnimateTimer += delta;
-//        if ()
+        doAnimateDamage(delta);
+    }
+
+    public void doDamage(int damage) {
+        frame = 1;
+        damageAnimateTimer = 0;
+        hp -= damage;
+        if (hp <= 0) {
+            boom();
+            destroy();
+        }
+    }
+
+    private void doAnimateDamage(float delta) {
+        damageAnimateTimer += delta;
+        if (damageAnimateTimer >= damageAnimateInterval) {
+            frame = 0;
+        }
+    }
+
+    void boom(){
+        Explosion explosion = explosionPull.obtain();
+        explosion.set(pos, getHeight());
+        setHp(0);
     }
 
     void shoot() {
@@ -132,10 +164,12 @@ public class Ship extends Sprite {
         shotSound.play(VOLUME);
     }
     void autoShot(float delta) {
-        reloadTimer += delta;
-        if (reloadTimer >= reloadInterval) {
-            shoot();
-            reloadTimer = 0;
+        if (!isDestroyed()) {
+            reloadTimer += delta;
+            if (reloadTimer >= reloadInterval) {
+                shoot();
+                reloadTimer = 0;
+            }
         }
     }
 }

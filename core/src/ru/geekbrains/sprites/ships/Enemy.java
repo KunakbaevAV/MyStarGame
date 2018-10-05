@@ -45,8 +45,7 @@ public class Enemy extends Ship {
         } else {
             autoShot(delta);
             pos.mulAdd(v, delta);
-            if (pos.y < worldBounds.getBottom())
-                destroyShipOut(); // Эта строчка взрывает корабли внизу, но взрывы зацикливаются
+            if (pos.y < worldBounds.getBottom()) doDamage(getHp());
         }
     }
 
@@ -70,7 +69,7 @@ public class Enemy extends Ship {
         destroy();
     }
 
-    void generatePos() {
+    private void generatePos() {
         float x = Rnd.nextFloat(worldBounds.getLeft() + getHalfWidth(), worldBounds.getRight() - getHalfWidth());
         Vector2 startPos = new Vector2(x, worldBounds.getTop());
         pos.set(startPos);
@@ -82,7 +81,7 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy1");          // название текстуры корабля
                 setHeightProportion(0.15f);                     // размеры корабля
                 setShipVY(-0.1f);                               // скорость падения корабля
-                setHp(1);                                       // прочность корабля
+                setHp(3);                                       // прочность корабля
                 setBulletName("shotEnemy");                     // название текстуры пули
                 setBulletHeight(0.05f);                         // размеры пули
                 setBulledDamage(1);                             // урон пули
@@ -93,7 +92,7 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy2");          // название текстуры корабля
                 setHeightProportion(0.20f);                     // размеры корабля
                 setShipVY(-0.09f);                              // скорость падения корабля
-                setHp(2);                                       // прочность корабля
+                setHp(5);                                       // прочность корабля
                 setBulletName("shotEnemy");                     // название текстуры пули
                 setBulletHeight(0.07f);                         // размеры пули
                 setBulledDamage(2);                             // урон пули
@@ -104,7 +103,7 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy3");          // название текстуры корабля
                 setHeightProportion(0.3f);                      // размеры корабля
                 setShipVY(-0.06f);                              // скорость падения корабля
-                setHp(5);                                       // прочность корабля
+                setHp(7);                                       // прочность корабля
                 setBulletName("shotEnemy2");                    // название текстуры пули
                 setBulletHeight(0.1f);                          // размеры пули
                 setBulledDamage(3);                             // урон пули
@@ -115,7 +114,7 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy4");          // название текстуры корабля
                 setHeightProportion(0.4f);                      // размеры корабля
                 setShipVY(-0.03f);                              // скорость падения корабля
-                setHp(7);                                       // прочность корабля
+                setHp(10);                                       // прочность корабля
                 setBulletName("shotEnemy2");                    // название текстуры пули
                 setBulletHeight(0.15f);                         // размеры пули
                 setBulledDamage(4);                             // урон пули
@@ -126,7 +125,7 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy5");          // название текстуры корабля
                 setHeightProportion(0.6f);                      // размеры корабля
                 setShipVY(-0.02f);                              // скорость падения корабля
-                setHp(10);                                      // прочность корабля
+                setHp(15);                                      // прочность корабля
                 setBulletName("shotEnemy2");                    // название текстуры пули
                 setBulletHeight(0.2f);                          // размеры пули
                 setBulledDamage(5);                             // урон пули
@@ -136,5 +135,6 @@ public class Enemy extends Ship {
             default:
         }
         generatePos();
+        setReloadTimer(reloadInterval);
     }
 }

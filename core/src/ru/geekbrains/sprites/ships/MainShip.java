@@ -27,6 +27,7 @@ public class MainShip extends Ship {
 
     public MainShip(
             TextureAtlas atlas,
+            ExplosionPull explosionPull,
             BulletPool bulletPool,
             Sound shotSound){
         super(atlas,
@@ -34,17 +35,24 @@ public class MainShip extends Ship {
                 1,
                 2,
                 2,
+                explosionPull,
                 bulletPool,
                 "bullet",
                 shotSound);
         this.bulletV = new Vector2(0, 0.5f);
         this.reloadInterval = 0.4f;
+        setHp(20);
         float size = 0.15f;
         setHeightProportion(size);
         target = new Vector2();
         targetTemp = new Vector2();
         vMoveToTouch = new Vector2();
         isFreeMove = false;
+    }
+
+    public void startNewGame(){
+        setHp(20);
+        flushDestroy();
     }
 
     @Override
@@ -102,9 +110,9 @@ public class MainShip extends Ship {
                 pressedRight = true;
                 moveRight();
                 break;
-            case Input.Keys.UP:
-                frame = 1;
-                break;
+//            case Input.Keys.UP:
+//                frame = 1;
+//                break;
         }
     }
     public void keyUp(int keycode) {
@@ -121,9 +129,9 @@ public class MainShip extends Ship {
                 if (pressedLeft) moveLeft();
                 else stop();
                 break;
-            case Input.Keys.UP:
-                frame = 0;
-                break;
+//            case Input.Keys.UP:
+//                frame = 0;
+//                break;
         }
     }
 
