@@ -29,7 +29,7 @@ public class MainShip extends Ship {
             TextureAtlas atlas,
             ExplosionPull explosionPull,
             BulletPool bulletPool,
-            Sound shotSound){
+            Sound shotSound) {
         super(atlas,
                 "mainShip",
                 1,
@@ -40,7 +40,7 @@ public class MainShip extends Ship {
                 "bullet",
                 shotSound);
         this.bulletV = new Vector2(0, 0.5f);
-        this.reloadInterval = 0.4f;
+        setReloadInterval(0.4f);
         setHp(20);
         float size = 0.15f;
         setHeightProportion(size);
@@ -50,7 +50,7 @@ public class MainShip extends Ship {
         isFreeMove = false;
     }
 
-    public void startNewGame(){
+    public void startNewGame() {
         setHp(20);
         flushDestroy();
     }
@@ -110,11 +110,9 @@ public class MainShip extends Ship {
                 pressedRight = true;
                 moveRight();
                 break;
-//            case Input.Keys.UP:
-//                frame = 1;
-//                break;
         }
     }
+
     public void keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.A:
@@ -129,9 +127,6 @@ public class MainShip extends Ship {
                 if (pressedLeft) moveLeft();
                 else stop();
                 break;
-//            case Input.Keys.UP:
-//                frame = 0;
-//                break;
         }
     }
 
@@ -149,6 +144,7 @@ public class MainShip extends Ship {
         Vector2 direction = target.cpy().sub(pos);
         vMoveToTouch.set(direction.setLength(accelepation));
     }
+
     private void moveSheepFree(float delta) {
         targetTemp.set(target);
         if (targetTemp.sub(pos).len() > accelepation) {

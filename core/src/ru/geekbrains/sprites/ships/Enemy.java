@@ -59,7 +59,8 @@ public class Enemy extends Ship {
                 this.bulletV,
                 bulletHeight,
                 worldBounds,
-                bulledDamage);
+                bulledDamage,
+                explosionPull);
         shotSound.play(VOLUME);
     }
 
@@ -145,6 +146,5 @@ public class Enemy extends Ship {
             default:
         }
         generatePos();
-        setReloadTimer(reloadInterval);
     }
 }

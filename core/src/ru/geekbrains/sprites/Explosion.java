@@ -22,6 +22,12 @@ public class Explosion extends Sprite {
         expSound.play(VOLUME);
     }
 
+    public void set(Vector2 posExplosion, float size, float volumeMod) {
+        this.pos.set(posExplosion);
+        setHeightProportion(size);
+        expSound.play(VOLUME * volumeMod);
+    }
+
     @Override
     public void update(float delta) {
         animateTimer += delta;

@@ -195,7 +195,7 @@ public class GameScreen extends BaseScreen {
             for (Bullet bullet : bulletPool.getActiveObjects()) {
                 if (bullet.getOwner() != mainShip || bullet.isDestroyed()) continue;
                 if (bullet.isCollision(enemy, 0.7f)) {
-                    bullet.destroy();
+                    bullet.boomBullet();
                     enemy.doDamage(bullet.getDamage());
                 }
             }
@@ -206,7 +206,7 @@ public class GameScreen extends BaseScreen {
             if (bullet.getOwner() == mainShip || bullet.isDestroyed()) continue;
             if (bullet.isCollision(mainShip, 0.6f)) {
                 mainShip.doDamage(bullet.getDamage());
-                bullet.destroy();
+                bullet.boomBullet();
             }
         }
     }

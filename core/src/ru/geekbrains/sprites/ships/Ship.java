@@ -15,11 +15,11 @@ import ru.geekbrains.sprites.Explosion;
 
 public class Ship extends Sprite {
 
+    protected Rect worldBounds;
     TextureAtlas atlas;
     Vector2 v = new Vector2();
     final Vector2 INPUT_V = new Vector2(0, -0.3f);
-
-    protected Rect worldBounds;
+    private int hp;
 
     Vector2 bulletV = new Vector2();
     BulletPool bulletPool;
@@ -30,13 +30,11 @@ public class Ship extends Sprite {
     int bulledDamage;
     Sound shotSound;
 
-    float reloadInterval;
+    private float reloadInterval;
     private float reloadTimer;
 
     private float damageAnimateTimer = 0;
     private float damageAnimateInterval = 0.2f;
-
-    private int hp;
 
     private float angleMod;
     private float angleAnimateTimer = 0;
@@ -82,12 +80,8 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
-    public void setAngleMod(float angleMod) {
+    void setAngleMod(float angleMod) {
         this.angleMod = angleMod;
-    }
-
-    public void setReloadTimer(float reloadTimer) {
-        this.reloadTimer = reloadTimer;
     }
 
     void setHp(int hp) {
@@ -111,10 +105,6 @@ public class Ship extends Sprite {
         this.bulletRegion = atlas.findRegion(this.bulletName);
     }
 
-    public void setBulletRegion(TextureRegion bulletRegion) {
-        this.bulletRegion = bulletRegion;
-    }
-
     void setBulletHeight(float bulletHeight) {
         this.bulletHeight = bulletHeight;
     }
@@ -125,6 +115,7 @@ public class Ship extends Sprite {
 
     void setReloadInterval(float reloadInterval) {
         this.reloadInterval = reloadInterval;
+        reloadTimer = reloadInterval;
     }
 
     @Override
@@ -156,14 +147,14 @@ public class Ship extends Sprite {
         }
     }
 
-    private void doAnimateAngle(float delta){
+    private void doAnimateAngle(float delta) {
         angleAnimateTimer += delta;
-        if (angleAnimateTimer >= angleAnimateInterval){
+        if (angleAnimateTimer >= angleAnimateInterval) {
             setAngle(angle += angleMod);
         }
     }
 
-    private void boom(){
+    private void boom() {
         Explosion explosion = explosionPull.obtain();
         explosion.set(pos, getHeight());
         setHp(0);
@@ -177,9 +168,11 @@ public class Ship extends Sprite {
                 bulletV,
                 bulletHeight,
                 worldBounds,
-                bulledDamage);
+                bulledDamage,
+                explosionPull);
         shotSound.play(VOLUME);
     }
+
     void autoShot(float delta) {
         if (!isDestroyed()) {
             reloadTimer += delta;
