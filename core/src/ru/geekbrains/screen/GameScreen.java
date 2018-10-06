@@ -23,6 +23,7 @@ import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.Bullet;
+import ru.geekbrains.sprites.ButtonExit;
 import ru.geekbrains.sprites.ButtonNewGame;
 import ru.geekbrains.sprites.MessageGameOver;
 import ru.geekbrains.sprites.ships.Enemy;
@@ -53,6 +54,7 @@ public class GameScreen extends BaseScreen {
 
     private MessageGameOver messageGameOver;
     private ButtonNewGame buttonNewGame;
+    private ButtonExit buttonExit;
 
     GameScreen(Game game, Music gameMusic) {
         super();
@@ -69,15 +71,16 @@ public class GameScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
-        bulletPool = new BulletPool();
         gameMusic.play();
         gameMusic.setVolume(VOLUME);
         explosionPull = new ExplosionPull(atlas, expSound);
+        bulletPool = new BulletPool();
         addMainShip();
         enemyPool = new EnemyPool(atlas, bulletPool, explosionPull, shotEnemySound, worldBounds, mainShip);
         enemiesEmitter = new EnemiesEmitter(enemyPool);
         messageGameOver = new MessageGameOver(atlas);
         buttonNewGame = new ButtonNewGame(this);
+        buttonExit = new ButtonExit(atlas);
     }
 
     private void addMainShip() {
@@ -145,6 +148,7 @@ public class GameScreen extends BaseScreen {
         if (gameOver) {
             messageGameOver.draw(batch);
             buttonNewGame.draw(batch);
+            buttonExit.draw(batch);
         }
         batch.end();
     }
@@ -241,6 +245,7 @@ public class GameScreen extends BaseScreen {
             mainShip.touchDown(touch, pointer);
         } else {
             buttonNewGame.touchDown(touch, pointer);
+            buttonExit.touchDown(touch,pointer);
         }
         return super.touchDown(touch, pointer);
     }
@@ -254,6 +259,7 @@ public class GameScreen extends BaseScreen {
             mainShip.touchDown(touch, pointer);
         } else {
             buttonNewGame.touchUp(touch, pointer);
+            buttonExit.touchUp(touch,pointer);
         }
         return super.touchUp(touch, pointer);
     }
@@ -266,6 +272,7 @@ public class GameScreen extends BaseScreen {
         mainShip.resize(worldBounds);
         messageGameOver.resize(worldBounds);
         buttonNewGame.resize(worldBounds);
+        buttonExit.resize(worldBounds);
     }
 
     @Override

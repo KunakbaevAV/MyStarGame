@@ -38,6 +38,10 @@ public class Ship extends Sprite {
 
     private int hp;
 
+    private float angleMod;
+    private float angleAnimateTimer = 0;
+    private float angleAnimateInterval = 0.5f;
+
     Ship(
             TextureAtlas atlas,
             String shipName,
@@ -78,6 +82,10 @@ public class Ship extends Sprite {
         this.worldBounds = worldBounds;
     }
 
+    public void setAngleMod(float angleMod) {
+        this.angleMod = angleMod;
+    }
+
     public void setReloadTimer(float reloadTimer) {
         this.reloadTimer = reloadTimer;
     }
@@ -100,6 +108,7 @@ public class Ship extends Sprite {
 
     void setBulletName(String bulletName) {
         this.bulletName = bulletName;
+        this.bulletRegion = atlas.findRegion(this.bulletName);
     }
 
     public void setBulletRegion(TextureRegion bulletRegion) {
@@ -127,6 +136,7 @@ public class Ship extends Sprite {
     public void update(float delta) {
         super.update(delta);
         doAnimateDamage(delta);
+        doAnimateAngle(delta);
     }
 
     public void doDamage(int damage) {
@@ -146,7 +156,14 @@ public class Ship extends Sprite {
         }
     }
 
-    void boom(){
+    private void doAnimateAngle(float delta){
+        angleAnimateTimer += delta;
+        if (angleAnimateTimer >= angleAnimateInterval){
+            setAngle(angle += angleMod);
+        }
+    }
+
+    private void boom(){
         Explosion explosion = explosionPull.obtain();
         explosion.set(pos, getHeight());
         setHp(0);

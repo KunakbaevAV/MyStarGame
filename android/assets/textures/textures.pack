@@ -104,28 +104,35 @@ filter: Nearest,Nearest
 repeat: none
 explosion
   rotate: false
-  xy: 1, 499
+  xy: 1, 517
   size: 1280, 1408
   orig: 1280, 1408
   offset: 0, 0
   index: -1
-gameStart
+gameOver
   rotate: false
   xy: 1, 259
-  size: 500, 238
-  orig: 500, 238
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+gameStart
+  rotate: false
+  xy: 1283, 1669
+  size: 512, 256
+  orig: 512, 256
   offset: 0, 0
   index: -1
 exit
   rotate: false
-  xy: 1283, 1651
+  xy: 1, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 1, 1
+  xy: 515, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
@@ -135,13 +142,6 @@ textures5.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-gameOver
-  rotate: false
-  xy: 1, 803
-  size: 1366, 768
-  orig: 1366, 768
-  offset: 0, 0
-  index: -1
 logo
   rotate: false
   xy: 1, 131
