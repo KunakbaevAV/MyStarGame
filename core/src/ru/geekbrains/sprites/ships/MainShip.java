@@ -28,8 +28,7 @@ public class MainShip extends Ship {
     public MainShip(
             TextureAtlas atlas,
             ExplosionPull explosionPull,
-            BulletPool bulletPool,
-            Sound shotSound) {
+            BulletPool bulletPool) {
         super(atlas,
                 "mainShip",
                 1,
@@ -38,7 +37,7 @@ public class MainShip extends Ship {
                 explosionPull,
                 bulletPool,
                 "bullet",
-                shotSound);
+                bulletPool.shotSounds[0]);
         this.bulletV = new Vector2(0, 0.5f);
         setReloadInterval(0.4f);
         setHp(20);

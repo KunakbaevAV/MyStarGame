@@ -28,7 +28,7 @@ public class Ship extends Sprite {
     TextureRegion bulletRegion;
     float bulletHeight;
     int bulledDamage;
-    Sound shotSound;
+    private Sound shotSound;
 
     private float reloadInterval;
     private float reloadTimer;
@@ -49,7 +49,8 @@ public class Ship extends Sprite {
             ExplosionPull explosionPull,
             BulletPool bulletPool,
             String bulletName,
-            Sound shotSound) {
+            Sound shotSound
+    ) {
         super(atlas.findRegion(shipName), rows, cols, frames);
         this.atlas = atlas;
         this.explosionPull = explosionPull;
@@ -66,7 +67,6 @@ public class Ship extends Sprite {
           ExplosionPull explosionPull,
           BulletPool bulletPool,
           String bulletName,
-          Sound shotSound,
           Rect worldBounds) {
         super(atlas.findRegion(shipName), 1, 2, 2);
         this.atlas = atlas;
@@ -76,7 +76,6 @@ public class Ship extends Sprite {
         this.bulletRegion = atlas.findRegion(this.bulletName);
         bulletHeight = 0.03f;
         bulledDamage = 1;
-        this.shotSound = shotSound;
         this.worldBounds = worldBounds;
     }
 
@@ -94,6 +93,14 @@ public class Ship extends Sprite {
 
     void setShipVY(float y) {
         this.v.y = y;
+    }
+
+    public void setShotSound(Sound shotSound) {
+        this.shotSound = shotSound;
+    }
+
+    public Sound getShotSound() {
+        return shotSound;
     }
 
     void setBulletVY(float y) {

@@ -1,6 +1,5 @@
 package ru.geekbrains.sprites.ships;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
@@ -19,10 +18,9 @@ public class Enemy extends Ship {
             String shipName,
             ExplosionPull explosionPull,
             BulletPool bulletPool,
-            Sound shotSound,
             Rect worldBonds,
             MainShip mainShip) {
-        super(atlas, shipName, explosionPull, bulletPool, "shotEnemy", shotSound, worldBonds);
+        super(atlas, shipName, explosionPull, bulletPool, "shotEnemy", worldBonds);
         this.atlas = atlas;
         this.bulletPool = bulletPool;
         this.mainShip = mainShip;
@@ -61,7 +59,7 @@ public class Enemy extends Ship {
                 worldBounds,
                 bulledDamage,
                 explosionPull);
-        shotSound.play(VOLUME);
+        getShotSound().play(VOLUME);
     }
 
     public void destroyShipOut() {
@@ -88,6 +86,7 @@ public class Enemy extends Ship {
                 setBulledDamage(1);                             // урон пули
                 setBulletVY(-0.5f);                             // скорость пули
                 setReloadInterval(3);                           // частота стрельбы
+                setShotSound(bulletPool.shotSounds[1]);
                 setAngle(0);
                 setAngleMod(0);
                 break;
@@ -101,6 +100,7 @@ public class Enemy extends Ship {
                 setBulledDamage(2);                             // урон пули
                 setBulletVY(-0.5f);                             // скорость пули
                 setReloadInterval(2);                           // частота стрельбы
+                setShotSound(bulletPool.shotSounds[1]);
                 setAngle(0);
                 setAngleMod(0);
                 break;
@@ -114,6 +114,7 @@ public class Enemy extends Ship {
                 setBulledDamage(3);                             // урон пули
                 setBulletVY(-0.4f);                             // скорость пули
                 setReloadInterval(1.5f);                        // частота стрельбы
+                setShotSound(bulletPool.shotSounds[2]);
                 setAngle(0);
                 setAngleMod(0);
                 break;
@@ -127,6 +128,7 @@ public class Enemy extends Ship {
                 setBulledDamage(4);                             // урон пули
                 setBulletVY(-0.3f);                             // скорость пули
                 setReloadInterval(3);                           // частота стрельбы
+                setShotSound(bulletPool.shotSounds[1]);
                 setAngle(0);
                 setAngleMod(0.5f);
                 break;
@@ -140,6 +142,7 @@ public class Enemy extends Ship {
                 setBulledDamage(5);                             // урон пули
                 setBulletVY(-0.2f);                             // скорость пули
                 setReloadInterval(3);                           // частота стрельбы
+                setShotSound(bulletPool.shotSounds[3]);
                 setAngle(0);
                 setAngleMod(0);
                 break;
