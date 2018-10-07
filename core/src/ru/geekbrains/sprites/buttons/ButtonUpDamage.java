@@ -21,6 +21,7 @@ public class ButtonUpDamage extends AnimatedButton {
     @Override
     public void doButtonAction() {
         mainShip.setBulledDamage(mainShip.getBulledDamage() + 1);
+        mainShip.setBulletHeight(mainShip.getBulletHeight() + 0.03f);
         gameScreen.continueGame();
     }
     @Override

@@ -206,7 +206,7 @@ public class GameScreen extends BaseScreen {
         gameMode = GameMode.LevelUp;
     }
 
-    public void continueGame(){
+    public void continueGame() {
         gameMode = GameMode.Play;
     }
 
@@ -235,7 +235,7 @@ public class GameScreen extends BaseScreen {
 
                 break;
             case LevelUp:
-                buttonUpDamage.draw(batch);
+                if (mainShip.getBulledDamage() < 4) buttonUpDamage.draw(batch);
                 buttonUpHP.draw(batch);
                 buttonUpReload.draw(batch);
                 break;
@@ -344,14 +344,14 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.touchDown(touch, pointer);
         }
-        switch (gameMode){
+        switch (gameMode) {
             case Play:
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                buttonUpDamage.touchDown(touch,pointer);
-                buttonUpHP.touchDown(touch,pointer);
-                buttonUpReload.touchDown(touch,pointer);
+                if (mainShip.getBulledDamage() < 4) buttonUpDamage.touchDown(touch, pointer);
+                buttonUpHP.touchDown(touch, pointer);
+                buttonUpReload.touchDown(touch, pointer);
                 break;
             case GameOver:
                 buttonNewGame.touchDown(touch, pointer);
@@ -366,14 +366,14 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.touchUp(touch, pointer);
         }
-        switch (gameMode){
+        switch (gameMode) {
             case Play:
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                buttonUpDamage.touchUp(touch,pointer);
-                buttonUpHP.touchUp(touch,pointer);
-                buttonUpReload.touchUp(touch,pointer);
+                if (mainShip.getBulledDamage() < 4) buttonUpDamage.touchUp(touch, pointer);
+                buttonUpHP.touchUp(touch, pointer);
+                buttonUpReload.touchUp(touch, pointer);
                 break;
             case GameOver:
                 buttonNewGame.touchUp(touch, pointer);

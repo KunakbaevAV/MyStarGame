@@ -112,7 +112,7 @@ public class Ship extends Sprite {
         this.bulletRegion = atlas.findRegion(this.bulletName);
     }
 
-    void setBulletHeight(float bulletHeight) {
+    public void setBulletHeight(float bulletHeight) {
         this.bulletHeight = bulletHeight;
     }
 
@@ -123,6 +123,11 @@ public class Ship extends Sprite {
     public int getBulledDamage() {
         return bulledDamage;
     }
+
+    public float getBulletHeight() {
+        return bulletHeight;
+    }
+
 
     public void setReloadInterval(float reloadInterval) {
         this.reloadInterval = reloadInterval;
