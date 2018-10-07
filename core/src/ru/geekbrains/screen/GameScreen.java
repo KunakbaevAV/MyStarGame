@@ -55,7 +55,7 @@ public class GameScreen extends BaseScreen {
     private Font fontNextLevel;
     private float intervalLabel = 3;
     private float timerLabel = 0;
-    private final float LABEL_Y = 0.2f;
+    private final float LABEL_Y = 0.5f;
     private float posLabelY;
 
     private enum GameMode {Play, LevelUp, GameOver}
@@ -216,7 +216,6 @@ public class GameScreen extends BaseScreen {
         if (timerLabel > intervalLabel) {
             timerLabel = 0;
             posLabelY = LABEL_Y;
-//            gameMode = GameMode.Play;
         }
     }
 
@@ -254,7 +253,7 @@ public class GameScreen extends BaseScreen {
             s.update(delta);
         }
         explosionPull.updateActiveObjects(delta);
-        bulletPool.updateActiveObjects(delta);
+
         if (mainShip.isDestroyed()) gameMode = GameMode.GameOver;
 
         switch (gameMode) {
@@ -262,6 +261,7 @@ public class GameScreen extends BaseScreen {
                 mainShip.update(delta);
                 enemyPool.updateActiveObjects(delta);
                 enemiesEmitter.generateEnemies(delta);
+                bulletPool.updateActiveObjects(delta);
                 break;
             case LevelUp:
                 labelAnimation(delta);
@@ -344,8 +344,10 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.touchDown(touch, pointer);
         }
-        mainShip.touchDown(touch, pointer);
         switch (gameMode){
+            case Play:
+                mainShip.touchDown(touch, pointer);
+                break;
             case LevelUp:
                 buttonUpDamage.touchDown(touch,pointer);
                 buttonUpHP.touchDown(touch,pointer);
@@ -364,10 +366,10 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.touchUp(touch, pointer);
         }
-        mainShip.touchDown(touch, pointer);
-
         switch (gameMode){
             case Play:
+                mainShip.touchDown(touch, pointer);
+                break;
             case LevelUp:
                 buttonUpDamage.touchUp(touch,pointer);
                 buttonUpHP.touchUp(touch,pointer);
