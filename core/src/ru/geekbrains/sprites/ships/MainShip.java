@@ -9,13 +9,13 @@ import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.pools.ExplosionPull;
+import ru.geekbrains.screen.GameScreen;
 import ru.geekbrains.sprites.Explosion;
 
 public class MainShip extends Ship {
 
     private Vector2 vArrows0 = new Vector2(0.5f, 0f);
     private Vector2 vArrows = new Vector2();
-
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
 
@@ -25,10 +25,17 @@ public class MainShip extends Ship {
     private float accelepation;
     private boolean isFreeMove;
 
+    private int level = 1;
+    private int frags = 0;
+    private int fragsForNextLevel = 3;
+
+    private GameScreen gameScreen;
+
     public MainShip(
             TextureAtlas atlas,
             ExplosionPull explosionPull,
-            BulletPool bulletPool) {
+            BulletPool bulletPool,
+            GameScreen gameScreen) {
         super(atlas,
                 "mainShip",
                 1,
@@ -43,6 +50,7 @@ public class MainShip extends Ship {
         setHp(20);
         float size = 0.15f;
         setHeightProportion(size);
+        this.gameScreen = gameScreen;
         target = new Vector2();
         targetTemp = new Vector2();
         vMoveToTouch = new Vector2();
@@ -51,7 +59,48 @@ public class MainShip extends Ship {
 
     public void startNewGame() {
         setHp(20);
+        setFrags(0);
+        setFragsForNextLevel(3);
+        setLevel(1);
+        setReloadInterval(0.4f);
         flushDestroy();
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getFrags() {
+        return frags;
+    }
+
+    public void setFrags(int frags) {
+        this.frags = frags;
+    }
+
+    public int getFragsForNextLevel() {
+        return fragsForNextLevel;
+    }
+
+    public void setFragsForNextLevel(int fragsForNextLevel) {
+        this.fragsForNextLevel = fragsForNextLevel;
+    }
+
+    void addFrag() {
+        frags++;
+        if (frags > fragsForNextLevel) levelUp();
+    }
+
+    private void levelUp() {
+        level++;
+        fragsForNextLevel += level * 2;
+        setHp(getHp() + 10);
+        setReloadInterval(0.3f/level + 0.1f);
+        gameScreen.nextLevel();
     }
 
     @Override
@@ -65,9 +114,9 @@ public class MainShip extends Ship {
     }
 
     @Override
-    public boolean touchDown(Vector2 touch, int pointer) {
-        startFreeMoving(touch);
-        return super.touchDown(touch, pointer);
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        setBottom(worldBounds.getBottom() + 0.03f);
     }
 
     // движение стрелками
@@ -129,12 +178,6 @@ public class MainShip extends Ship {
         }
     }
 
-    @Override
-    public void resize(Rect worldBounds) {
-        super.resize(worldBounds);
-        setBottom(worldBounds.getBottom() + 0.03f);
-    }
-
     // движение за курсором
     private void startFreeMoving(Vector2 touch) {
         isFreeMove = true;
@@ -152,5 +195,11 @@ public class MainShip extends Ship {
             pos.set(target);
             isFreeMove = false;
         }
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer) {
+        startFreeMoving(touch);
+        return super.touchDown(touch, pointer);
     }
 }

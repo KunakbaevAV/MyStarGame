@@ -142,9 +142,18 @@ public class Ship extends Sprite {
         damageAnimateTimer = 0;
         hp -= damage;
         if (hp <= 0) {
-            boom();
-            destroy();
+            destroyAndFrag();
         }
+    }
+
+    public void destroyAndFrag() {
+        boom();
+        destroy();
+    }
+
+    void destroyWithoutFrag(){
+        boom();
+        destroy();
     }
 
     private void doAnimateDamage(float delta) {
