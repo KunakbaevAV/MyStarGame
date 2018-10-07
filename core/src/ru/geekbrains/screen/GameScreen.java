@@ -2,6 +2,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +17,7 @@ import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
 import ru.geekbrains.sprites.BigStar;
+import ru.geekbrains.sprites.BulletPool;
 import ru.geekbrains.sprites.Ship;
 import ru.geekbrains.sprites.Star;
 
@@ -27,6 +29,18 @@ public class GameScreen extends BaseScreen {
     private TextureAtlas atlas;
     private int shipNumber;
 
+    private Ship mainShip;
+    private BulletPool bulletPool;
+    private Sound shotSound;
+    private Sound gameSound;
+
+    public GameScreen(Game game, Sound gameSound) {
+        super(game);
+        this.gameSound = gameSound;
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
+
+    }
+
     @Override
     public void show() {
         super.show();
@@ -34,17 +48,17 @@ public class GameScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/textures.pack");
         addBackgroud();
         addStars();
-        shipNumber = (int) Rnd.nextFloat(0, 7);
-        addShip();
+//        shipNumber = (int) Rnd.nextFloat(0, 7);
+        bulletPool = new BulletPool();
+        addMainShip();
+//        backSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
+//        backSound.
+        gameSound.play(1);
     }
 
-    private void addShip() {
-        Sprite ship = new Ship(atlas, "ships/ship0" + shipNumber, 0.25f);
-        spites.add(ship);
-    }
-
-    public GameScreen(Game game) {
-        super(game);
+    private void addMainShip() {
+        mainShip = new Ship(atlas, bulletPool, shotSound);
+        spites.add(mainShip);
     }
 
     private void addBackgroud() {
@@ -82,7 +96,17 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
         update(delta);
+        checkCollisions();
+        deleteAllDestroed();
         draw();
+    }
+
+    private void deleteAllDestroed() {
+        bulletPool.freeAllDestroyedActiveObjects();
+    }
+
+    private void checkCollisions() {
+
     }
 
     private void draw() {
@@ -91,6 +115,7 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.draw(batch);
         }
+        bulletPool.drawActiveObjects(batch);
         batch.end();
     }
 
@@ -98,6 +123,19 @@ public class GameScreen extends BaseScreen {
         for (Sprite s : spites) {
             s.update(delta);
         }
+        bulletPool.updateActiveObjects(delta);
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        mainShip.keyDown(keycode);
+        return super.keyDown(keycode);
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        mainShip.keyUp(keycode);
+        return super.keyUp(keycode);
     }
 
     @Override
@@ -126,6 +164,9 @@ public class GameScreen extends BaseScreen {
     @Override
     public void dispose() {
         atlas.dispose();
+        bulletPool.dispose();
+        shotSound.dispose();
+        gameSound.dispose();
         super.dispose();
     }
 }

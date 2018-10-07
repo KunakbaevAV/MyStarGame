@@ -5,6 +5,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -32,10 +33,15 @@ public class MenuScreen extends BaseScreen {
     private TextureAtlas atlas;
     private Game game;
     private Rect worldBound;
+    private Sound gameSound;
+    private Sound menuSound;
 
     public MenuScreen(Game game) {
         super(game);
         this.game = game;
+        gameSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
+        menuSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
+        menuSound.play(1.0f);
     }
 
     @Override
@@ -50,7 +56,7 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void addLogo() {
-        Sprite logo = new Sprite(atlas, "other/logo");
+        Sprite logo = new Sprite(atlas, "logo");
         logo.setHeightProportion(0.3f);
         spites.add(logo);
     }
@@ -58,7 +64,7 @@ public class MenuScreen extends BaseScreen {
     private void addButtons() {
         Sprite btnExit = new ButtonExit(atlas);
         spites.add(btnExit);
-        Sprite btnStart = new ButtonStart(atlas, game);
+        Sprite btnStart = new ButtonStart(this);
         spites.add(btnStart);
     }
 
@@ -115,6 +121,10 @@ public class MenuScreen extends BaseScreen {
         batch.end();
     }
 
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
+
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         for (Sprite s : spites) {
@@ -142,7 +152,14 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void dispose() {
         atlas.dispose();
+        menuSound.dispose();
+        gameSound.dispose();
         super.dispose();
+    }
+
+    public void startGame(){
+        menuSound.stop();
+        game.setScreen(new GameScreen(game, gameSound));
     }
 }
 
