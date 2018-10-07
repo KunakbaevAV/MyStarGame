@@ -123,16 +123,37 @@ gameStart
   orig: 512, 256
   offset: 0, 0
   index: -1
-exit
+upDamage
   rotate: false
   xy: 1, 1
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+upHP
+  rotate: false
+  xy: 515, 259
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+upReload
+  rotate: false
+  xy: 1283, 1411
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 515, 1
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 515, 259
+  xy: 1283, 1153
   size: 256, 256
   orig: 256, 256
   offset: 0, 0

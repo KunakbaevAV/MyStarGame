@@ -99,7 +99,7 @@ public class MainShip extends Ship {
         level++;
         fragsForNextLevel += level * 2;
         setHp(getHp() + 10);
-        setReloadInterval(0.3f/level + 0.1f);
+//        setReloadInterval(0.3f/level + 0.1f);
         gameScreen.nextLevel();
     }
 

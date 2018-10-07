@@ -83,7 +83,7 @@ public class Ship extends Sprite {
         this.angleMod = angleMod;
     }
 
-    void setHp(int hp) {
+    public void setHp(int hp) {
         this.hp = hp;
     }
 
@@ -116,13 +116,21 @@ public class Ship extends Sprite {
         this.bulletHeight = bulletHeight;
     }
 
-    void setBulledDamage(int bulledDamage) {
+    public void setBulledDamage(int bulledDamage) {
         this.bulledDamage = bulledDamage;
     }
 
-    void setReloadInterval(float reloadInterval) {
+    public int getBulledDamage() {
+        return bulledDamage;
+    }
+
+    public void setReloadInterval(float reloadInterval) {
         this.reloadInterval = reloadInterval;
         reloadTimer = reloadInterval;
+    }
+
+    public float getReloadInterval(){
+        return reloadInterval;
     }
 
     @Override
