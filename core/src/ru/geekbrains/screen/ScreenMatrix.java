@@ -9,7 +9,7 @@ public class ScreenMatrix extends BaseScreen {
     private SpriteBatch batch;
 
     public ScreenMatrix(Game game) {
-        super(game);
+        super();
     }
 
     @Override

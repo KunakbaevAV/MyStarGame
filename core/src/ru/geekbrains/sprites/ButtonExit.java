@@ -11,7 +11,7 @@ public class ButtonExit extends AnimatedButton implements ButtonAction {
 
     public ButtonExit(TextureAtlas atlas) {
         super(atlas, "exit");
-        setHeightProportion(0.1f);
+        setHeightProportion(0.15f);
     }
 
     @Override

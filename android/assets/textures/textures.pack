@@ -104,9 +104,23 @@ filter: Nearest,Nearest
 repeat: none
 explosion
   rotate: false
-  xy: 1, 259
+  xy: 1, 517
   size: 1280, 1408
   orig: 1280, 1408
+  offset: 0, 0
+  index: -1
+gameOver
+  rotate: false
+  xy: 1, 259
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+gameStart
+  rotate: false
+  xy: 1283, 1669
+  size: 512, 256
+  orig: 512, 256
   offset: 0, 0
   index: -1
 exit
@@ -118,7 +132,7 @@ exit
   index: -1
 play
   rotate: false
-  xy: 1283, 1411
+  xy: 515, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0

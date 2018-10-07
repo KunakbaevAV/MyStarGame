@@ -1,15 +1,10 @@
 package ru.geekbrains.sprites;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import ru.geekbrains.base.AnimatedButton;
-import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.ButtonAction;
 import ru.geekbrains.math.Rect;
-import ru.geekbrains.screen.GameScreen;
 import ru.geekbrains.screen.MenuScreen;
 
 public class ButtonStart extends AnimatedButton implements ButtonAction{
@@ -17,7 +12,7 @@ public class ButtonStart extends AnimatedButton implements ButtonAction{
     private MenuScreen screen;
     public ButtonStart(MenuScreen screen) {
         super(screen.getAtlas(), "play");
-        setHeightProportion(0.1f);
+        setHeightProportion(0.15f);
         this.game = game;
         this.screen = screen;
     }

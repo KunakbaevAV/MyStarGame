@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Rect {
 
     public final Vector2 pos = new Vector2(); // позиция по центру
+    private Vector2 posTemp = new Vector2(); // позиция для расчетов, чтобы не использовать cpu()
     protected float halfWidth; // половина ширины
     protected float halfHeight; // половина высоты
 
@@ -95,6 +96,18 @@ public class Rect {
 
     public boolean isOutside(Rect other) {
         return getLeft() > other.getRight() || getRight() < other.getLeft() || getBottom() > other.getTop() || getTop() < other.getBottom();
+    }
+
+    public boolean isCollision(Rect other){
+        posTemp.set(pos);
+        float len = posTemp.sub(other.pos).len();
+        return len < getHalfWidth() + other.getHalfWidth();
+    }
+
+    public boolean isCollision(Rect other, float correction){
+        posTemp.set(pos);
+        float len = posTemp.sub(other.pos).len();
+        return len < (getHalfWidth() + other.getHalfWidth()) * correction;
     }
 
     @Override

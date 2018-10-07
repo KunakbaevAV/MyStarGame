@@ -3,6 +3,7 @@ package ru.geekbrains.base;
 /**
  * оболочка для объекта
  */
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,11 +14,11 @@ import ru.geekbrains.math.Regions;
 
 public class Sprite extends Rect {
 
+    public final float VOLUME = 0.9f;
     protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
-    protected float aspectWorld;
     private boolean isDestroyed;
 
     public Sprite() {
@@ -45,7 +46,7 @@ public class Sprite extends Rect {
         setHeightProportion(size);
     }
 
-    public Sprite(TextureAtlas atlas, String path){
+    public Sprite(TextureAtlas atlas, String path) {
         if (atlas == null) {
             throw new NullPointerException("atlas == null");
         }
@@ -59,12 +60,13 @@ public class Sprite extends Rect {
         setWidth(height * aspect);
     }
 
-    public void setPosition(Vector2 position){
-        setLeft(position.x);
-        setBottom(position.y);
+    public void setWightProportion(float widht) {
+        setWidth(widht);
+        Float aspect = regions[frame].getRegionHeight() / (float) regions[frame].getRegionWidth();
+        setHeight(widht * aspect);
     }
 
-    public void setPosition(float x, float y){
+    public void setPosition(float x, float y) {
         setLeft(x);
         setBottom(y);
     }
@@ -102,6 +104,10 @@ public class Sprite extends Rect {
         this.scale = scale;
     }
 
+    public void setRegions(TextureAtlas atlas, String name) {
+        this.regions = Regions.split(atlas.findRegion(name), 1, 2, 2);
+    }
+
     public void destroy() {
         this.isDestroyed = true;
     }
@@ -115,13 +121,16 @@ public class Sprite extends Rect {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(
-                regions[frame],
-                getLeft(), getBottom(), // точка отрисовки
-                halfWidth, halfHeight, // точка вращения
-                getWidth(), getHeight(),
-                scale, scale, // масштаб по x и y
-                angle // угол поворота
-        );
+        if (!isDestroyed) {
+            batch.draw(
+                    regions[frame],
+                    getLeft(), getBottom(), // точка отрисовки
+                    halfWidth, halfHeight, // точка вращения
+                    getWidth(), getHeight(),
+                    scale, scale, // масштаб по x и y
+                    angle // угол поворота
+            );
+        }
+
     }
 }

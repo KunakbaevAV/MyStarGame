@@ -5,7 +5,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +18,7 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.sprites.ButtonExit;
 import ru.geekbrains.sprites.ButtonStart;
@@ -32,16 +33,16 @@ public class MenuScreen extends BaseScreen {
 
     private TextureAtlas atlas;
     private Game game;
-    private Rect worldBound;
-    private Sound gameSound;
-    private Sound menuSound;
+    private Music gameMusic;
+    private Music menuMusic;
 
     public MenuScreen(Game game) {
-        super(game);
+        super();
         this.game = game;
-        gameSound = Gdx.audio.newSound(Gdx.files.internal("sounds/backSound.mp3"));
-        menuSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
-        menuSound.play(1.0f);
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/backSound.mp3"));
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
+        menuMusic.play();
+        menuMusic.setVolume(VOLUME);
     }
 
     @Override
@@ -70,8 +71,8 @@ public class MenuScreen extends BaseScreen {
 
     private void addBackgroud() {
         Texture backgroudTexture = new Texture("space.png");
-        Sprite background = new Sprite(new TextureRegion(backgroudTexture), 1);
-        background.setPosition(-0.5f, -0.5f);
+        TextureRegion region = new TextureRegion(backgroudTexture);
+        Sprite background = new Background(region);
         spites.add(background);
     }
 
@@ -143,7 +144,6 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void resize(Rect worldBounds) {
-        this.worldBound = worldBounds;
         for (Sprite s : spites) {
             s.resize(worldBounds);
         }
@@ -152,14 +152,14 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void dispose() {
         atlas.dispose();
-        menuSound.dispose();
-        gameSound.dispose();
+        menuMusic.dispose();
+        gameMusic.dispose();
         super.dispose();
     }
 
     public void startGame(){
-        menuSound.stop();
-        game.setScreen(new GameScreen(game, gameSound));
+        menuMusic.stop();
+        game.setScreen(new GameScreen(game, gameMusic));
     }
 }
 
