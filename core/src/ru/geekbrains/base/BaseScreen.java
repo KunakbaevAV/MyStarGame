@@ -19,7 +19,7 @@ import ru.geekbrains.math.Rect;
  * @author Kunakbaev Artem
  */
 public class BaseScreen implements Screen, InputProcessor{
-    protected final float VOLUME = 0.02f;
+    protected final float VOLUME = 0.5f;
     private Rect screenBounds;
     protected Rect worldBounds;
     private Rect glBounds;

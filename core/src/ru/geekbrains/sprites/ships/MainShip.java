@@ -60,7 +60,7 @@ public class MainShip extends Ship {
     public void startNewGame() {
         setHp(20);
         setFrags(0);
-        setFragsForNextLevel(3);
+        setFragsForNextLevel(5);
         setLevel(1);
         setReloadInterval(0.4f);
         flushDestroy();
@@ -97,9 +97,8 @@ public class MainShip extends Ship {
 
     private void levelUp() {
         level++;
-        fragsForNextLevel += level * 2;
+        fragsForNextLevel += level * 3;
         setHp(getHp() + 10);
-//        setReloadInterval(0.3f/level + 0.1f);
         gameScreen.nextLevel();
     }
 

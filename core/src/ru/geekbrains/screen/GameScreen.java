@@ -82,7 +82,7 @@ public class GameScreen extends BaseScreen {
     private ButtonUpDamage buttonUpDamage;
     private ButtonUpHP buttonUpHP;
     private ButtonUpReload buttonUpReload;
-    private final int maxDamage = 4;
+    private final int maxDamage = 3;
 
     GameScreen(Game game, Music gameMusic) {
         super();
@@ -117,6 +117,7 @@ public class GameScreen extends BaseScreen {
         this.gameMusic = gameMusic;
         expSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bang.wav"));
         gameMusic.play();
+        gameMusic.setLooping(true);
         gameMusic.setVolume(VOLUME);
     }
 
@@ -278,12 +279,10 @@ public class GameScreen extends BaseScreen {
     }
 
     private void blackoutAnimation(float delta) {
-        if (blackoutDraw > 0){
+        if (blackoutDraw > 0.003){
             blackoutDraw -= 0.001;
-            System.out.println(blackoutDraw);
         }else{
             blackoutDraw = 0;
-            System.out.println(blackoutDraw);
         }
     }
 
@@ -341,7 +340,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (gameMode == GameMode.Play) {
+        if (gameMode != GameMode.GameOver) {
             mainShip.keyDown(keycode);
         }
         return super.keyDown(keycode);
@@ -349,7 +348,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (gameMode == GameMode.Play) {
+        if (gameMode != GameMode.GameOver) {
             mainShip.keyUp(keycode);
         }
         return super.keyUp(keycode);
