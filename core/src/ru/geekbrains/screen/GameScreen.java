@@ -82,6 +82,7 @@ public class GameScreen extends BaseScreen {
     private ButtonUpDamage buttonUpDamage;
     private ButtonUpHP buttonUpHP;
     private ButtonUpReload buttonUpReload;
+    private final int maxDamage = 4;
 
     GameScreen(Game game, Music gameMusic) {
         super();
@@ -201,7 +202,7 @@ public class GameScreen extends BaseScreen {
                 batch.setColor(1,1,1,1);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < 4) buttonUpDamage.draw(batch);
+                if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.draw(batch);
                 buttonUpHP.draw(batch);
                 buttonUpReload.draw(batch);
                 break;
@@ -364,7 +365,7 @@ public class GameScreen extends BaseScreen {
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < 4) buttonUpDamage.touchDown(touch, pointer);
+                if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.touchDown(touch, pointer);
                 buttonUpHP.touchDown(touch, pointer);
                 buttonUpReload.touchDown(touch, pointer);
                 break;
@@ -386,7 +387,7 @@ public class GameScreen extends BaseScreen {
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < 4) buttonUpDamage.touchUp(touch, pointer);
+                if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.touchUp(touch, pointer);
                 buttonUpHP.touchUp(touch, pointer);
                 buttonUpReload.touchUp(touch, pointer);
                 break;
