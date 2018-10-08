@@ -63,6 +63,8 @@ public class MainShip extends Ship {
         setFragsForNextLevel(5);
         setLevel(1);
         setReloadInterval(0.4f);
+        setBulletHeight(0.03f);
+        setBulledDamage(1);
         flushDestroy();
     }
 

@@ -211,8 +211,8 @@ public class GameScreen extends BaseScreen {
                 batch.setColor(1, 1, 1, 1);
                 messageGameOver.draw(batch);
                 buttonNewGame.draw(batch);
-                batch.setColor(blackoutDraw, blackoutDraw, blackoutDraw, blackoutDraw);
                 buttonExit.draw(batch);
+                batch.setColor(blackoutDraw, blackoutDraw, blackoutDraw, blackoutDraw);
                 break;
         }
         batch.end();
