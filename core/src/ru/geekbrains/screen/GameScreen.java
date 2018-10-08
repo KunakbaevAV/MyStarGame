@@ -58,6 +58,8 @@ public class GameScreen extends BaseScreen {
     private final float LABEL_Y = 0.5f;
     private float posLabelY;
 
+    private float blackoutDraw = 1;
+
     private enum GameMode {Play, LevelUp, GameOver}
 
     private GameMode gameMode;
@@ -183,6 +185,61 @@ public class GameScreen extends BaseScreen {
         draw();
     }
 
+    private void draw() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        for (Sprite s : spites) {
+            s.draw(batch);
+        }
+        bulletPool.drawActiveObjects(batch);
+        enemyPool.drawActiveObjects(batch);
+        mainShip.draw(batch);
+        explosionPull.drawActiveObjects(batch);
+        printInfo();
+        switch (gameMode) {
+            case Play:
+                batch.setColor(1,1,1,1);
+                break;
+            case LevelUp:
+                if (mainShip.getBulledDamage() < 4) buttonUpDamage.draw(batch);
+                buttonUpHP.draw(batch);
+                buttonUpReload.draw(batch);
+                break;
+            case GameOver:
+                batch.setColor(1, 1, 1, 1);
+                messageGameOver.draw(batch);
+                buttonNewGame.draw(batch);
+                batch.setColor(blackoutDraw, blackoutDraw, blackoutDraw, blackoutDraw);
+                buttonExit.draw(batch);
+                break;
+        }
+        batch.end();
+    }
+
+    private void update(float delta) {
+        for (Sprite s : spites) {
+            s.update(delta);
+        }
+        explosionPull.updateActiveObjects(delta);
+
+        if (mainShip.isDestroyed()) gameMode = GameMode.GameOver;
+
+        switch (gameMode) {
+            case Play:
+                mainShip.update(delta);
+                enemyPool.updateActiveObjects(delta);
+                enemiesEmitter.generateEnemies(delta);
+                bulletPool.updateActiveObjects(delta);
+                break;
+            case LevelUp:
+                labelAnimation(delta);
+                break;
+            case GameOver:
+                blackoutAnimation(delta);
+                break;
+        }
+    }
+
     private void printInfo() {
         sbFrags.setLength(0);
         sbFrags.append(FRAGS).append(mainShip.getFrags());
@@ -219,56 +276,13 @@ public class GameScreen extends BaseScreen {
         }
     }
 
-    private void draw() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        for (Sprite s : spites) {
-            s.draw(batch);
-        }
-        bulletPool.drawActiveObjects(batch);
-        enemyPool.drawActiveObjects(batch);
-        mainShip.draw(batch);
-        explosionPull.drawActiveObjects(batch);
-        printInfo();
-        switch (gameMode) {
-            case Play:
-
-                break;
-            case LevelUp:
-                if (mainShip.getBulledDamage() < 4) buttonUpDamage.draw(batch);
-                buttonUpHP.draw(batch);
-                buttonUpReload.draw(batch);
-                break;
-            case GameOver:
-                messageGameOver.draw(batch);
-                buttonNewGame.draw(batch);
-                buttonExit.draw(batch);
-                break;
-        }
-        batch.end();
-    }
-
-    private void update(float delta) {
-        for (Sprite s : spites) {
-            s.update(delta);
-        }
-        explosionPull.updateActiveObjects(delta);
-
-        if (mainShip.isDestroyed()) gameMode = GameMode.GameOver;
-
-        switch (gameMode) {
-            case Play:
-                mainShip.update(delta);
-                enemyPool.updateActiveObjects(delta);
-                enemiesEmitter.generateEnemies(delta);
-                bulletPool.updateActiveObjects(delta);
-                break;
-            case LevelUp:
-                labelAnimation(delta);
-                break;
-            case GameOver:
-
-                break;
+    private void blackoutAnimation(float delta) {
+        if (blackoutDraw > 0){
+            blackoutDraw -= 0.001;
+            System.out.println(blackoutDraw);
+        }else{
+            blackoutDraw = 0;
+            System.out.println(blackoutDraw);
         }
     }
 
@@ -321,6 +335,7 @@ public class GameScreen extends BaseScreen {
         enemyPool.freeAllActiveObjects();
         mainShip.startNewGame();
         bigStar.startNewGame();
+        blackoutDraw = 1;
     }
 
     @Override
