@@ -128,7 +128,6 @@ public class Ship extends Sprite {
         return bulletHeight;
     }
 
-
     public void setReloadInterval(float reloadInterval) {
         this.reloadInterval = reloadInterval;
         reloadTimer = reloadInterval;
@@ -189,16 +188,17 @@ public class Ship extends Sprite {
         setHp(0);
     }
 
-    void shoot() {
+    void shot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this,
                 bulletRegion,
                 pos.cpy().add(0, getHalfHeight()),
                 bulletV,
-                bulletHeight,
+                0.02f + (float)getBulledDamage()/1000,
                 worldBounds,
                 bulledDamage,
-                explosionPull);
+                explosionPull,
+                0);
         shotSound.play(VOLUME);
     }
 
@@ -206,7 +206,7 @@ public class Ship extends Sprite {
         if (!isDestroyed()) {
             reloadTimer += delta;
             if (reloadTimer >= reloadInterval) {
-                shoot();
+                shot();
                 reloadTimer = 0;
             }
         }

@@ -35,7 +35,6 @@ public class AnimatedButton extends Sprite implements ButtonAction {
         return false;
     }
 
-//    @Override
     public void doButtonAction() {
     }
 }

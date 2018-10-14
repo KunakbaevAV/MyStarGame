@@ -15,9 +15,9 @@ public class EnemiesEmitter {
         this.mainShip = enemyPool.getMainShip();
     }
 
-    public void generateEnemies(float delta){
+    public void generateEnemies(float delta) {
         generateTimer += delta;
-        if (generateTimer >= generateInterval){
+        if (generateTimer >= generateInterval) {
             generateTimer = 0;
             Enemy enemy = enemyPool.obtain(); // добавить корабль
             enemy.setShip(getEnemyTypeByLevel());
@@ -26,27 +26,29 @@ public class EnemiesEmitter {
     }
 
     private void updateGenerateInterval() {
-        generateInterval = 3 / mainShip.getLevel() + 1;
+        if (generateInterval > 0) {
+            generateInterval = 3 - (mainShip.getLevel() / 50);
+        } else generateInterval = 0;
     }
 
     private int getEnemyType() {
         float type = (float) Math.random();
-        if(type < 0.3f){
+        if (type < 0.3f) {
             return 1;
-        }else if (type < 0.6f){
+        } else if (type < 0.6f) {
             return 2;
-        }else if (type < 0.8f){
+        } else if (type < 0.8f) {
             return 3;
-        }else if (type < 0.9){
+        } else if (type < 0.9) {
             return 4;
-        }else {
+        } else {
             return 5;
         }
     }
 
     private int getEnemyTypeByLevel() {
         int type = getEnemyType();
-        if (type > mainShip.getLevel()) return mainShip.getLevel();
+        if (type > mainShip.getLevel() / 3) return mainShip.getLevel() / 3 + 1;
         return type;
     }
 }

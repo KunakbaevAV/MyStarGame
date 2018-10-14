@@ -13,7 +13,7 @@ public class BigStar extends Sprite {
 
     public BigStar(TextureAtlas atlas, String name) {
         super(atlas, name);
-        v = new Vector2(0,-0.02f);
+        v = new Vector2(0, -0.02f);
         setHeightProportion(1);
     }
 
@@ -21,11 +21,11 @@ public class BigStar extends Sprite {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         this.wordBounds = worldBounds;
-        setRight(Rnd.nextFloat(0,1));
+        setRight(Rnd.nextFloat(0, 1));
         setBottom(0.4f);
     }
 
-    public void startNewGame(){
+    public void startNewGame() {
         setBottom(wordBounds.getTop());
     }
 

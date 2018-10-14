@@ -27,14 +27,6 @@ public class Enemy extends Ship {
         this.mainShip = mainShip;
     }
 
-    public void setEnemyShipV(Vector2 enemyShipV) {
-        v.set(enemyShipV);
-    }
-
-    public void setEnemyShipV(float x, float y) {
-        v = new Vector2(x, y);
-    }
-
     @Override
     public void update(float delta) {
         super.update(delta);
@@ -56,7 +48,7 @@ public class Enemy extends Ship {
     }
 
     @Override
-    void shoot() {
+    void shot() {
         Bullet bullet = bulletPool.obtain();
         Vector2 posBullet = new Vector2(pos.x, getBottom());
         bullet.set(this,
@@ -66,7 +58,8 @@ public class Enemy extends Ship {
                 bulletHeight,
                 worldBounds,
                 bulledDamage,
-                explosionPull);
+                explosionPull,
+                0);
         getShotSound().play(VOLUME);
     }
 
@@ -82,10 +75,10 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy1");          // название текстуры корабля
                 setHeightProportion(0.15f);                     // размеры корабля
                 setShipVY(-0.1f);                               // скорость падения корабля
-                setHp(lvl / 4 + 3);                                       // прочность корабля
+                setHp(lvl + 3);                                 // прочность корабля
                 setBulletName("shotEnemy");                     // название текстуры пули
-                setBulletHeight(lvl * 0.00025f + 0.05f);                         // размеры пули
-                setBulledDamage(lvl / 4 + 1);                             // урон пули
+                setBulletHeight(lvl * 0.00025f + 0.05f);        // размеры пули
+                setBulledDamage(1);                   // урон пули
                 setBulletVY(-0.5f);                             // скорость пули
                 setReloadInterval(3);                           // частота стрельбы
                 setShotSound(bulletPool.shotSounds[1]);         // звук выстрела
@@ -95,11 +88,11 @@ public class Enemy extends Ship {
             case 2:
                 setRegions(atlas, "shipEnemy2");          // название текстуры корабля
                 setHeightProportion(0.20f);                     // размеры корабля
-                setShipVY(lvl * -0.001f - 0.08f);                              // скорость падения корабля
-                setHp(lvl / 3 + 5);                                       // прочность корабля
+                setShipVY(lvl * -0.001f - 0.08f);               // скорость падения корабля
+                setHp(lvl + 5);                                 // прочность корабля
                 setBulletName("shotEnemy");                     // название текстуры пули
-                setBulletHeight(lvl * 0.00025f + 0.07f);                         // размеры пули
-                setBulledDamage(lvl / 4 + 2);                             // урон пули
+                setBulletHeight(lvl * 0.00025f + 0.07f);        // размеры пули
+                setBulledDamage(2);                   // урон пули
                 setBulletVY(-0.5f);                             // скорость пули
                 setReloadInterval(2);                           // частота стрельбы
                 setShotSound(bulletPool.shotSounds[1]);
@@ -110,12 +103,12 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy3");          // название текстуры корабля
                 setHeightProportion(0.3f);                      // размеры корабля
                 setShipVY(-0.06f);                              // скорость падения корабля
-                setHp(lvl / 3 + 7);                                       // прочность корабля
-                setBulletName("shotEnemy");                    // название текстуры пули
-                setBulletHeight(lvl * 0.00033f + 0.1f);                          // размеры пули
-                setBulledDamage(lvl / 3 + 3);                             // урон пули
+                setHp(lvl * 2 + 7);                             // прочность корабля
+                setBulletName("shotEnemy");                     // название текстуры пули
+                setBulletHeight(lvl * 0.00033f + 0.1f);         // размеры пули
+                setBulledDamage(3);                   // урон пули
                 setBulletVY(-0.4f);                             // скорость пули
-                setReloadInterval(1.5f - lvl/100);                        // частота стрельбы
+                setReloadInterval(1.5f - lvl/100);              // частота стрельбы
                 setShotSound(bulletPool.shotSounds[2]);
                 setAngle(0);
                 setAngleMod(0);
@@ -124,12 +117,12 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy4");          // название текстуры корабля
                 setHeightProportion(0.4f);                      // размеры корабля
                 setShipVY(-0.03f);                              // скорость падения корабля
-                setHp(lvl /2 + 10);                                       // прочность корабля
+                setHp(lvl * 4 + 10);                           // прочность корабля
                 setBulletName("shotEnemy");                    // название текстуры пули
-                setBulletHeight(lvl * 0.00033f + 0.15f);                         // размеры пули
-                setBulledDamage(lvl / 3 + 4);                             // урон пули
+                setBulletHeight(lvl * 0.00033f + 0.15f);        // размеры пули
+                setBulledDamage(4);                   // урон пули
                 setBulletVY(-0.3f);                             // скорость пули
-                setReloadInterval(3 - lvl / 50);                           // частота стрельбы
+                setReloadInterval(3 - lvl / 50);                // частота стрельбы
                 setShotSound(bulletPool.shotSounds[1]);
                 setAngle(0);
                 setAngleMod(0.5f);
@@ -138,10 +131,10 @@ public class Enemy extends Ship {
                 setRegions(atlas, "shipEnemy5");          // название текстуры корабля
                 setHeightProportion(0.6f);                      // размеры корабля
                 setShipVY(-0.02f);                              // скорость падения корабля
-                setHp(lvl + 15);                                      // прочность корабля
+                setHp(lvl * 10 + 15);                           // прочность корабля
                 setBulletName("shotEnemy2");                    // название текстуры пули
                 setBulletHeight(0.2f);                          // размеры пули
-                setBulledDamage(lvl / 2 + 5);                             // урон пули
+                setBulledDamage(5);                   // урон пули
                 setBulletVY(-0.2f);                             // скорость пули
                 setReloadInterval(3);                           // частота стрельбы
                 setShotSound(bulletPool.shotSounds[3]);

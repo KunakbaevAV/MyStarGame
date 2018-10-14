@@ -3,12 +3,11 @@ package ru.geekbrains.screen;
 import com.badlogic.gdx.Game;
 
 import ru.geekbrains.base.Sprite;
-import ru.geekbrains.math.ScreenObjects;
+import ru.geekbrains.math.PanelObjects;
 import ru.geekbrains.sprites.buttons.ButtonTest;
-import ru.geekbrains.sprites.buttons.ButtonUpHP;
 
 public class TestScreen extends BaseGameScreen {
-    ScreenObjects<Sprite> buttons;
+    PanelObjects<Sprite> buttons;
 
     public TestScreen(Game game) {
         super(game);
@@ -17,10 +16,10 @@ public class TestScreen extends BaseGameScreen {
     @Override
     public void show() {
         super.show();
-        buttons = new ScreenObjects<Sprite>(this.worldBounds);
-        buttons.objects.add(new ButtonTest(atlas, "upHP"));
-        buttons.objects.add(new ButtonTest(atlas, "upDamage"));
-        buttons.objects.add(new ButtonTest(atlas, "upReload"));
+        buttons = new PanelObjects<Sprite>(this.worldBounds);
+        buttons.add(new ButtonTest(atlas, "upHP"));
+        buttons.add(new ButtonTest(atlas, "upDamage"));
+        buttons.add(new ButtonTest(atlas, "upReload"));
     }
 
     @Override

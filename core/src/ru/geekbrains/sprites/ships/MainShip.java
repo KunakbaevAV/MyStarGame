@@ -10,6 +10,7 @@ import ru.geekbrains.math.Rnd;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.pools.ExplosionPull;
 import ru.geekbrains.screen.GameScreen;
+import ru.geekbrains.sprites.Bullet;
 import ru.geekbrains.sprites.Explosion;
 
 public class MainShip extends Ship {
@@ -30,6 +31,13 @@ public class MainShip extends Ship {
     private int fragsForNextLevel = 3;
 
     private GameScreen gameScreen;
+
+    private boolean leftWeapon;
+    Vector2 modLeftV = new Vector2(-0.3f, 0);
+    private int leftBulletDamage = 1;
+    private boolean rightWeapon;
+    Vector2 modRightV = new Vector2(0.3f, 0);
+    private int rightBulletDamage = 1;
 
     public MainShip(
             TextureAtlas atlas,
@@ -63,9 +71,44 @@ public class MainShip extends Ship {
         setFragsForNextLevel(5);
         setLevel(1);
         setReloadInterval(0.4f);
-        setBulletHeight(0.03f);
         setBulledDamage(1);
+        setLeftWeapon(false);
+        setLeftBulletDamage(1);
+        setRightWeapon(false);
+        setRightBulletDamage(1);
         flushDestroy();
+    }
+
+    public int getLeftBulletDamage() {
+        return leftBulletDamage;
+    }
+
+    public void setLeftBulletDamage(int leftBulletDamage) {
+        this.leftBulletDamage = leftBulletDamage;
+    }
+
+    public int getRightBulletDamage() {
+        return rightBulletDamage;
+    }
+
+    public void setRightBulletDamage(int rightBulletDamage) {
+        this.rightBulletDamage = rightBulletDamage;
+    }
+
+    public boolean isLeftWeapon() {
+        return leftWeapon;
+    }
+
+    public boolean isRightWeapon() {
+        return rightWeapon;
+    }
+
+    public void setLeftWeapon(boolean leftWeapon) {
+        this.leftWeapon = leftWeapon;
+    }
+
+    public void setRightWeapon(boolean rightWeapon) {
+        this.rightWeapon = rightWeapon;
     }
 
     public int getLevel() {
@@ -99,9 +142,39 @@ public class MainShip extends Ship {
 
     private void levelUp() {
         level++;
-        fragsForNextLevel += level * 3;
-        setHp(getHp() + 10);
+        fragsForNextLevel += level * 2;
+        setHp(getHp() + 10 + level);
+
         gameScreen.nextLevel();
+    }
+
+    @Override
+    void shot() {
+        super.shot();
+        if (leftWeapon){
+            Bullet bullet = bulletPool.obtain();
+            bullet.set(this,
+                    bulletRegion,
+                    pos.cpy().add(0, getHalfHeight()),
+                    bulletV.cpy().add(modLeftV),
+                    0.02f + (float)getLeftBulletDamage()/1000,
+                    worldBounds,
+                    bulledDamage,
+                    explosionPull,
+                    25);
+        }
+        if (rightWeapon){
+            Bullet bullet = bulletPool.obtain();
+            bullet.set(this,
+                    bulletRegion,
+                    pos.cpy().add(0, getHalfHeight()),
+                    bulletV.cpy().add(modRightV),
+                    0.02f + (float)getRightBulletDamage()/1000,
+                    worldBounds,
+                    bulledDamage,
+                    explosionPull,
+                    -25);
+        }
     }
 
     @Override
@@ -159,6 +232,9 @@ public class MainShip extends Ship {
                 pressedRight = true;
                 moveRight();
                 break;
+//            case Input.Keys.UP:
+//                levelUp();
+//                break;
         }
     }
 

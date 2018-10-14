@@ -1,8 +1,5 @@
 package ru.geekbrains.sprites.buttons;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
 import ru.geekbrains.base.AnimatedButton;
 import ru.geekbrains.base.ButtonAction;
 import ru.geekbrains.math.Rect;

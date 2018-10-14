@@ -4,36 +4,32 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Font;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.EnemiesEmitter;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.PanelObjects;
 import ru.geekbrains.pools.EnemyPool;
 import ru.geekbrains.pools.ExplosionPull;
-import ru.geekbrains.sprites.Background;
-import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.pools.BulletPool;
 import ru.geekbrains.sprites.Bullet;
-import ru.geekbrains.sprites.buttons.ButtonExit;
 import ru.geekbrains.sprites.buttons.ButtonNewGame;
-import ru.geekbrains.sprites.buttons.ButtonUpDamage;
-import ru.geekbrains.sprites.buttons.ButtonUpHP;
-import ru.geekbrains.sprites.buttons.ButtonUpReload;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonLeftWeapon;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonRightWeapon;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonUpDamage;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonUpDamageLeft;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonUpDamageRight;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonUpHP;
+import ru.geekbrains.sprites.buttons.bonuses.ButtonUpReload;
 import ru.geekbrains.sprites.buttons.MessageGameOver;
+import ru.geekbrains.sprites.buttons.bonuses.PanelBonuses;
 import ru.geekbrains.sprites.ships.Enemy;
 import ru.geekbrains.sprites.ships.MainShip;
-import ru.geekbrains.sprites.Star;
 
 public class GameScreen extends BaseGameScreen {
 
@@ -45,14 +41,6 @@ public class GameScreen extends BaseGameScreen {
     private StringBuilder sbHP;
     private StringBuilder sbLevel;
     private Font font;
-
-    private final String LEVEL_UP = "New level: ";
-    private StringBuilder sbNextLevel;
-    private Font fontNextLevel;
-    private float intervalLabel = 3;
-    private float timerLabel = 0;
-    private final float LABEL_Y = 0.5f;
-    private float posLabelY;
 
     private float intervalGameOver = 3;
     private float timerGameOver = 0;
@@ -74,10 +62,8 @@ public class GameScreen extends BaseGameScreen {
 
     private MessageGameOver messageGameOver;
     private ButtonNewGame buttonNewGame;
-    private ButtonUpDamage buttonUpDamage;
-    private ButtonUpHP buttonUpHP;
-    private ButtonUpReload buttonUpReload;
-    private final int maxDamage = 3;
+
+    private PanelBonuses bonuses;
 
     GameScreen(Game game, Music gameMusic) {
         super(game);
@@ -92,15 +78,24 @@ public class GameScreen extends BaseGameScreen {
         enemyPool = new EnemyPool(atlas, bulletPool, explosionPull, worldBounds, mainShip);
         enemiesEmitter = new EnemiesEmitter(enemyPool);
         addButtons();
+        addBonuses();
         gameMode = GameMode.Play;
+    }
+
+    private void addBonuses() {
+        bonuses = new PanelBonuses(this.worldBounds);
+        bonuses.add(new ButtonLeftWeapon(atlas, "leftWeapon", mainShip, this));
+        bonuses.add(new ButtonRightWeapon(atlas, "rightWeapon", mainShip, this));
+        bonuses.add(new ButtonUpDamage(atlas, "upDamage", mainShip, this));
+        bonuses.add(new ButtonUpDamageLeft(atlas, "leftWeaponDamage", mainShip, this));
+        bonuses.add(new ButtonUpDamageRight(atlas, "rightWeaponDamage", mainShip, this));
+        bonuses.add(new ButtonUpReload(atlas, "upReload", mainShip, this));
+        bonuses.add(new ButtonUpHP(atlas, "upHP", mainShip, this));
     }
 
     private void addButtons() {
         messageGameOver = new MessageGameOver(atlas);
         buttonNewGame = new ButtonNewGame(this);
-        buttonUpDamage = new ButtonUpDamage(atlas, "upDamage", mainShip, this);
-        buttonUpHP = new ButtonUpHP(atlas, "upHP", mainShip, this);
-        buttonUpReload = new ButtonUpReload(atlas, "upReload", mainShip, this);
     }
 
     private void addMusic(Music gameMusic) {
@@ -116,11 +111,7 @@ public class GameScreen extends BaseGameScreen {
         font.setFrontSize(0.04f);
         sbFrags = new StringBuilder();
         sbHP = new StringBuilder();
-
         sbLevel = new StringBuilder();
-        fontNextLevel = new Font("font/myFont.fnt", "font/myFont.png");
-        fontNextLevel.setFrontSize(0.06f);
-        sbNextLevel = new StringBuilder();
     }
 
     private void addMainShip() {
@@ -153,9 +144,7 @@ public class GameScreen extends BaseGameScreen {
                 batch.setColor(1, 1, 1, 1);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.draw(batch);
-                buttonUpHP.draw(batch);
-                buttonUpReload.draw(batch);
+                bonuses.draw(batch);
                 break;
             case GameOver:
                 batch.setColor(1, 1, 1, 1);
@@ -182,7 +171,6 @@ public class GameScreen extends BaseGameScreen {
                 bulletPool.updateActiveObjects(delta);
                 break;
             case LevelUp:
-                labelAnimation(delta);
                 break;
             case GameOver:
                 blackoutAnimation(delta);
@@ -193,7 +181,7 @@ public class GameScreen extends BaseGameScreen {
     private void printInfo() {
         sbFrags.setLength(0);
         sbFrags.append(FRAGS).append(mainShip.getFrags());
-        font.draw(batch, sbFrags, worldBounds.getLeft() + SIDE, worldBounds.getTop() - SIDE, Align.left);
+        font.draw(batch, sbFrags, worldBounds.getLeft() + SIDE + 0.15f, worldBounds.getTop() - SIDE, Align.left);
 
         sbHP.setLength(0);
         sbHP.append(HP).append(mainShip.getHp());
@@ -202,28 +190,14 @@ public class GameScreen extends BaseGameScreen {
         sbLevel.setLength(0);
         sbLevel.append(LEVEL).append(mainShip.getLevel());
         font.draw(batch, sbLevel, worldBounds.getRight() - SIDE, worldBounds.getTop() - SIDE, Align.right);
-
-        if (gameMode == GameMode.LevelUp)
-            fontNextLevel.draw(batch, sbNextLevel, 0, posLabelY, Align.center);
     }
 
     public void nextLevel() {
-        sbNextLevel.setLength(0);
-        sbNextLevel.append(LEVEL_UP).append(mainShip.getLevel());
         gameMode = GameMode.LevelUp;
     }
 
     public void continueGame() {
         gameMode = GameMode.Play;
-    }
-
-    private void labelAnimation(float delta) {
-        timerLabel += delta;
-        posLabelY -= 0.001f;
-        if (timerLabel > intervalLabel) {
-            timerLabel = 0;
-            posLabelY = LABEL_Y;
-        }
     }
 
     private void blackoutAnimation(float delta) {
@@ -311,10 +285,7 @@ public class GameScreen extends BaseGameScreen {
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < maxDamage)
-                    buttonUpDamage.touchDown(touch, pointer);
-                buttonUpHP.touchDown(touch, pointer);
-                buttonUpReload.touchDown(touch, pointer);
+                bonuses.touchDown(touch, pointer);
                 break;
             case GameOver:
                 if (timerGameOver > intervalGameOver) {
@@ -332,9 +303,7 @@ public class GameScreen extends BaseGameScreen {
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.touchUp(touch, pointer);
-                buttonUpHP.touchUp(touch, pointer);
-                buttonUpReload.touchUp(touch, pointer);
+                bonuses.touchUp(touch, pointer);
                 break;
             case GameOver:
                 if (timerGameOver > intervalGameOver) {
@@ -351,10 +320,7 @@ public class GameScreen extends BaseGameScreen {
         mainShip.resize(worldBounds);
         messageGameOver.resize(worldBounds);
         buttonNewGame.resize(worldBounds);
-//        buttonExit.resize(worldBounds);
-        buttonUpDamage.resize(worldBounds);
-        buttonUpHP.resize(worldBounds);
-        buttonUpReload.resize(worldBounds);
+        bonuses.resize(worldBounds);
     }
 
     @Override
@@ -366,6 +332,5 @@ public class GameScreen extends BaseGameScreen {
         expSound.dispose();
         gameMusic.dispose();
         font.dispose();
-        fontNextLevel.dispose();
     }
 }

@@ -27,7 +27,8 @@ public class Bullet extends Sprite {
             float height,
             Rect worldBounds,
             int damage,
-            ExplosionPull explosionPull
+            ExplosionPull explosionPull,
+            float angle
     ) {
         this.owner = owner;
         this.regions[0] = region;
@@ -37,6 +38,7 @@ public class Bullet extends Sprite {
         this.worldBounds = worldBounds;
         this.damage = damage;
         this.explosionPull = explosionPull;
+        setAngle(angle);
     }
 
     @Override

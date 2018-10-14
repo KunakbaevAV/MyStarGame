@@ -14,6 +14,7 @@ import java.util.List;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
+import ru.geekbrains.math.Rnd;
 import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
 import ru.geekbrains.sprites.Star;
@@ -31,7 +32,8 @@ public class BaseGameScreen extends BaseScreen {
 
     BaseGameScreen(Game game) {
         this.game = game;
-        bigStar = new BigStar(atlas, "bigStar");
+        int type = (int)Rnd.nextFloat(1, 9);
+        bigStar = new BigStar(atlas, "bigStar" + type);
     }
 
     public BaseGameScreen(Game game, String bigStarName) {
@@ -42,7 +44,6 @@ public class BaseGameScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-//        atlas ;
         addBackgroud();
         addStars();
         addButtons();

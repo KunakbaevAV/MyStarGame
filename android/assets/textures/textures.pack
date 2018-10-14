@@ -5,44 +5,51 @@ filter: Nearest,Nearest
 repeat: none
 shipEnemy4
   rotate: false
-  xy: 1, 1003
+  xy: 1, 1027
   size: 2000, 1000
   orig: 2000, 1000
   offset: 0, 0
   index: -1
-shipEnemy3
+bigStar4
   rotate: false
   xy: 1, 1
-  size: 1900, 1000
-  orig: 1900, 1000
+  size: 1024, 1024
+  orig: 1024, 1024
   offset: 0, 0
   index: -1
-star3
+bigStar8
   rotate: false
-  xy: 1903, 851
-  size: 127, 150
-  orig: 127, 150
+  xy: 1027, 346
+  size: 1000, 679
+  orig: 1000, 679
   offset: 0, 0
   index: -1
-bullet
+gameOver
   rotate: false
-  xy: 1903, 721
-  size: 128, 128
-  orig: 128, 128
+  xy: 1027, 88
+  size: 512, 256
+  orig: 512, 256
   offset: 0, 0
   index: -1
-shotEnemy
+exit
   rotate: false
-  xy: 1903, 591
-  size: 128, 128
-  orig: 128, 128
+  xy: 1541, 88
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
-shotEnemy2
+star
   rotate: false
-  xy: 1903, 461
-  size: 128, 128
-  orig: 128, 128
+  xy: 1799, 194
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+star2
+  rotate: false
+  xy: 1799, 42
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
 
@@ -50,32 +57,46 @@ textures2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-mainShip
+shipEnemy3
   rotate: false
   xy: 1, 1003
-  size: 1800, 1000
-  orig: 1800, 1000
+  size: 1900, 1000
+  orig: 1900, 1000
   offset: 0, 0
   index: -1
-shipEnemy1
+mainShip
   rotate: false
   xy: 1, 1
   size: 1800, 1000
   orig: 1800, 1000
   offset: 0, 0
   index: -1
-star
+star3
   rotate: false
-  xy: 1803, 1853
-  size: 150, 150
-  orig: 150, 150
+  xy: 1903, 1853
+  size: 127, 150
+  orig: 127, 150
   offset: 0, 0
   index: -1
-star2
+bullet
   rotate: false
-  xy: 1803, 1701
-  size: 150, 150
-  orig: 150, 150
+  xy: 1903, 1723
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shotEnemy
+  rotate: false
+  xy: 1903, 1593
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+shotEnemy2
+  rotate: false
+  xy: 1903, 1463
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 
@@ -83,14 +104,14 @@ textures3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-shipEnemy2
+shipEnemy1
   rotate: false
   xy: 1, 1003
   size: 1800, 1000
   orig: 1800, 1000
   offset: 0, 0
   index: -1
-shipEnemy5
+shipEnemy2
   rotate: false
   xy: 1, 1
   size: 1800, 1000
@@ -102,6 +123,32 @@ textures4.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+shipEnemy5
+  rotate: false
+  xy: 1, 973
+  size: 1800, 1000
+  orig: 1800, 1000
+  offset: 0, 0
+  index: -1
+bigStar7
+  rotate: false
+  xy: 1, 1
+  size: 970, 970
+  orig: 970, 970
+  offset: 0, 0
+  index: -1
+bigStar2
+  rotate: false
+  xy: 973, 150
+  size: 828, 821
+  orig: 828, 821
+  offset: 0, 0
+  index: -1
+
+textures5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 explosion
   rotate: false
   xy: 1, 517
@@ -109,11 +156,11 @@ explosion
   orig: 1280, 1408
   offset: 0, 0
   index: -1
-gameOver
+bigStar5
   rotate: false
-  xy: 1, 259
-  size: 512, 256
-  orig: 512, 256
+  xy: 1, 115
+  size: 400, 400
+  orig: 400, 400
   offset: 0, 0
   index: -1
 gameStart
@@ -123,57 +170,92 @@ gameStart
   orig: 512, 256
   offset: 0, 0
   index: -1
-upDamage
+leftWeapon
   rotate: false
-  xy: 1, 1
+  xy: 403, 259
   size: 512, 256
   orig: 512, 256
   offset: 0, 0
   index: -1
-upHP
-  rotate: false
-  xy: 515, 259
-  size: 512, 256
-  orig: 512, 256
-  offset: 0, 0
-  index: -1
-upReload
+leftWeaponDamage
   rotate: false
   xy: 1283, 1411
   size: 512, 256
   orig: 512, 256
   offset: 0, 0
   index: -1
-exit
+rightWeapon
   rotate: false
-  xy: 515, 1
-  size: 256, 256
-  orig: 256, 256
+  xy: 1283, 1153
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+rightWeaponDamage
+  rotate: false
+  xy: 1283, 895
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+upDamage
+  rotate: false
+  xy: 1283, 637
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+upHP
+  rotate: false
+  xy: 403, 1
+  size: 512, 256
+  orig: 512, 256
+  offset: 0, 0
+  index: -1
+upReload
+  rotate: false
+  xy: 1283, 379
+  size: 512, 256
+  orig: 512, 256
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 1283, 1153
+  xy: 917, 259
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 
-textures5.png
+textures6.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+bigStar3
+  rotate: false
+  xy: 1, 673
+  size: 1080, 1080
+  orig: 1080, 1080
+  offset: 0, 0
+  index: -1
 logo
   rotate: false
-  xy: 1, 131
+  xy: 1, 1
   size: 1200, 670
   orig: 1200, 670
   offset: 0, 0
   index: -1
-bigStar
+bigStar1
   rotate: false
-  xy: 1203, 1
+  xy: 1083, 953
   size: 800, 800
   orig: 800, 800
+  offset: 0, 0
+  index: -1
+bigStar6
+  rotate: false
+  xy: 1203, 178
+  size: 779, 773
+  orig: 779, 773
   offset: 0, 0
   index: -1
