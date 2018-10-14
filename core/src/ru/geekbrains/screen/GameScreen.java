@@ -150,7 +150,7 @@ public class GameScreen extends BaseGameScreen {
         printInfo();
         switch (gameMode) {
             case Play:
-                batch.setColor(1,1,1,1);
+                batch.setColor(1, 1, 1, 1);
                 break;
             case LevelUp:
                 if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.draw(batch);
@@ -228,9 +228,9 @@ public class GameScreen extends BaseGameScreen {
 
     private void blackoutAnimation(float delta) {
         timerGameOver += delta;
-        if (blackoutDraw > 0.003){
+        if (blackoutDraw > 0.003) {
             blackoutDraw -= 0.001;
-        }else{
+        } else {
             blackoutDraw = 0;
         }
     }
@@ -311,7 +311,8 @@ public class GameScreen extends BaseGameScreen {
                 mainShip.touchDown(touch, pointer);
                 break;
             case LevelUp:
-                if (mainShip.getBulledDamage() < maxDamage) buttonUpDamage.touchDown(touch, pointer);
+                if (mainShip.getBulledDamage() < maxDamage)
+                    buttonUpDamage.touchDown(touch, pointer);
                 buttonUpHP.touchDown(touch, pointer);
                 buttonUpReload.touchDown(touch, pointer);
                 break;
