@@ -24,21 +24,13 @@ import ru.geekbrains.sprites.buttons.ButtonExit;
 import ru.geekbrains.sprites.buttons.ButtonStart;
 import ru.geekbrains.sprites.Star;
 
-public class MenuScreen extends BaseScreen {
+public class MenuScreen extends BaseGameScreen {
 
-    private static final int WHITE_STAR_COUNT = 2048;
-    private static final int RED_STAR_COUNT = 84;
-    private static final int ORANGE_STAR_COUNT = 42;
-    private List<Sprite> spites;
-
-    private TextureAtlas atlas;
-    private Game game;
     private Music gameMusic;
     private Music menuMusic;
 
     public MenuScreen(Game game) {
-        super();
-        this.game = game;
+        super(game);
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/backSound.mp3"));
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Twelve Titans Music - Monolith.mp3"));
         menuMusic.play();
@@ -48,11 +40,8 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        spites = new ArrayList<Sprite>();
-        atlas = new TextureAtlas("textures/textures.pack");
-        addBackgroud();
-        addStars();
-        addButtons();
+        ButtonStart btnStart = new ButtonStart(this);
+        spites.add(btnStart);
         addLogo();
     }
 
@@ -62,99 +51,11 @@ public class MenuScreen extends BaseScreen {
         spites.add(logo);
     }
 
-    private void addButtons() {
-        Sprite btnExit = new ButtonExit(atlas);
-        spites.add(btnExit);
-        Sprite btnStart = new ButtonStart(this);
-        spites.add(btnStart);
-    }
-
-    private void addBackgroud() {
-        Texture backgroudTexture = new Texture("space.png");
-        TextureRegion region = new TextureRegion(backgroudTexture);
-        Sprite background = new Background(region);
-        spites.add(background);
-    }
-
-    private void addStars() {
-        Sprite bigStar = new BigStar(atlas);
-        Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
-        Sprite[] redStar = new Star[RED_STAR_COUNT];
-        Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
-
-        for (int i = 0; i < whiteStar.length; i++) {
-            whiteStar[i] = new Star(atlas, "star", 0.005f, 0.015f, 0.001f);
-            spites.add(whiteStar[i]);
-        }
-
-        spites.add(bigStar);
-
-        for (int i = 0; i < redStar.length; i++) {
-            redStar[i] = new Star(atlas, "star2", 0.01f, 0.1f, 0.002f);
-            spites.add(redStar[i]);
-        }
-
-        for (int i = 0; i < orangeStar.length; i++) {
-            orangeStar[i] = new Star(atlas, "star3", 0.01f, 0.1f, 0.004f);
-            spites.add(orangeStar[i]);
-        }
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        update(delta);
-        draw();
-    }
-
-    private void update(float delta) {
-        for (Sprite s : spites) {
-            s.update(delta);
-        }
-    }
-
-    private void draw() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        for (Sprite s : spites) {
-            s.draw(batch);
-        }
-        batch.end();
-    }
-
-    public TextureAtlas getAtlas() {
-        return atlas;
-    }
-
-    @Override
-    public boolean touchDown(Vector2 touch, int pointer) {
-        for (Sprite s : spites) {
-            s.touchDown(touch, pointer);
-        }
-        return super.touchDown(touch, pointer);
-    }
-
-    @Override
-    public boolean touchUp(Vector2 touch, int pointer) {
-        for (Sprite s : spites) {
-            s.touchUp(touch, pointer);
-        }
-        return super.touchUp(touch, pointer);
-    }
-
-    @Override
-    public void resize(Rect worldBounds) {
-        for (Sprite s : spites) {
-            s.resize(worldBounds);
-        }
-    }
-
     @Override
     public void dispose() {
-        atlas.dispose();
+        super.dispose();
         menuMusic.dispose();
         gameMusic.dispose();
-        super.dispose();
     }
 
     public void startGame(){

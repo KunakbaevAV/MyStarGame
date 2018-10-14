@@ -11,13 +11,13 @@ public class ButtonExit extends AnimatedButton implements ButtonAction {
 
     public ButtonExit(TextureAtlas atlas) {
         super(atlas, "exit");
-        setHeightProportion(0.15f);
+        setHeightProportion(0.1f);
     }
 
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
-        setBottom(worldBounds.getBottom());
+        setTop(worldBounds.getTop());
         setLeft(worldBounds.getLeft());
     }
 

@@ -35,11 +35,7 @@ import ru.geekbrains.sprites.ships.Enemy;
 import ru.geekbrains.sprites.ships.MainShip;
 import ru.geekbrains.sprites.Star;
 
-public class GameScreen extends BaseScreen {
-    private static final int WHITE_STAR_COUNT = 2048;
-    private static final int RED_STAR_COUNT = 84;
-    private static final int ORANGE_STAR_COUNT = 42;
-    private BigStar bigStar;
+public class GameScreen extends BaseGameScreen {
 
     private final float SIDE = 0.01f;
     private final String FRAGS = "Frags: ";
@@ -58,14 +54,14 @@ public class GameScreen extends BaseScreen {
     private final float LABEL_Y = 0.5f;
     private float posLabelY;
 
+    private float intervalGameOver = 3;
+    private float timerGameOver = 0;
+
     private float blackoutDraw = 1;
 
     private enum GameMode {Play, LevelUp, GameOver}
 
     private GameMode gameMode;
-
-    private List<Sprite> spites;
-    private TextureAtlas atlas;
 
     private MainShip mainShip;
     private BulletPool bulletPool;
@@ -78,24 +74,19 @@ public class GameScreen extends BaseScreen {
 
     private MessageGameOver messageGameOver;
     private ButtonNewGame buttonNewGame;
-    private ButtonExit buttonExit;
     private ButtonUpDamage buttonUpDamage;
     private ButtonUpHP buttonUpHP;
     private ButtonUpReload buttonUpReload;
     private final int maxDamage = 3;
 
     GameScreen(Game game, Music gameMusic) {
-        super();
+        super(game);
         addMusic(gameMusic);
     }
 
     @Override
     public void show() {
         super.show();
-        spites = new ArrayList<Sprite>();
-        atlas = new TextureAtlas("textures/textures.pack");
-        addBackgroud();
-        addStars();
         addLabels();
         addMainShip();
         enemyPool = new EnemyPool(atlas, bulletPool, explosionPull, worldBounds, mainShip);
@@ -107,7 +98,6 @@ public class GameScreen extends BaseScreen {
     private void addButtons() {
         messageGameOver = new MessageGameOver(atlas);
         buttonNewGame = new ButtonNewGame(this);
-        buttonExit = new ButtonExit(atlas);
         buttonUpDamage = new ButtonUpDamage(atlas, "upDamage", mainShip, this);
         buttonUpHP = new ButtonUpHP(atlas, "upHP", mainShip, this);
         buttonUpReload = new ButtonUpReload(atlas, "upReload", mainShip, this);
@@ -143,56 +133,16 @@ public class GameScreen extends BaseScreen {
                 this);
     }
 
-    private void addBackgroud() {
-        Texture backgroudTexture = new Texture("space.png");
-        TextureRegion region = new TextureRegion(backgroudTexture);
-        Sprite background = new Background(region);
-        spites.add(background);
-    }
-
-    private void addStars() {
-        bigStar = new BigStar(atlas);
-        Sprite[] whiteStar = new Star[WHITE_STAR_COUNT];
-        Sprite[] redStar = new Star[RED_STAR_COUNT];
-        Sprite[] orangeStar = new Star[ORANGE_STAR_COUNT];
-
-        for (int i = 0; i < whiteStar.length; i++) {
-            whiteStar[i] = new Star(atlas, "star", 0.005f, 0.015f, 0.001f);
-            spites.add(whiteStar[i]);
-        }
-
-        spites.add(bigStar);
-
-        for (int i = 0; i < redStar.length; i++) {
-            redStar[i] = new Star(atlas, "star2", 0.01f, 0.1f, 0.002f);
-            spites.add(redStar[i]);
-        }
-
-        for (int i = 0; i < orangeStar.length; i++) {
-            orangeStar[i] = new Star(atlas, "star3", 0.01f, 0.1f, 0.004f);
-            spites.add(orangeStar[i]);
-        }
-    }
-
-    public TextureAtlas getAtlas() {
-        return atlas;
-    }
-
     @Override
     public void render(float delta) {
         super.render(delta);
-        update(delta);
         checkCollisions();
         deleteAllDestroed();
-        draw();
     }
 
-    private void draw() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        for (Sprite s : spites) {
-            s.draw(batch);
-        }
+    @Override
+    public void draw() {
+        super.draw();
         bulletPool.drawActiveObjects(batch);
         enemyPool.drawActiveObjects(batch);
         mainShip.draw(batch);
@@ -211,17 +161,15 @@ public class GameScreen extends BaseScreen {
                 batch.setColor(1, 1, 1, 1);
                 messageGameOver.draw(batch);
                 buttonNewGame.draw(batch);
-                buttonExit.draw(batch);
+                btnExit.draw(batch);
                 batch.setColor(blackoutDraw, blackoutDraw, blackoutDraw, blackoutDraw);
                 break;
         }
-        batch.end();
     }
 
-    private void update(float delta) {
-        for (Sprite s : spites) {
-            s.update(delta);
-        }
+    @Override
+    public void update(float delta) {
+        super.update(delta);
         explosionPull.updateActiveObjects(delta);
 
         if (mainShip.isDestroyed()) gameMode = GameMode.GameOver;
@@ -279,6 +227,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void blackoutAnimation(float delta) {
+        timerGameOver += delta;
         if (blackoutDraw > 0.003){
             blackoutDraw -= 0.001;
         }else{
@@ -336,6 +285,7 @@ public class GameScreen extends BaseScreen {
         mainShip.startNewGame();
         bigStar.startNewGame();
         blackoutDraw = 1;
+        timerGameOver = 0;
     }
 
     @Override
@@ -356,9 +306,6 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        for (Sprite s : spites) {
-            s.touchDown(touch, pointer);
-        }
         switch (gameMode) {
             case Play:
                 mainShip.touchDown(touch, pointer);
@@ -369,8 +316,9 @@ public class GameScreen extends BaseScreen {
                 buttonUpReload.touchDown(touch, pointer);
                 break;
             case GameOver:
-                buttonNewGame.touchDown(touch, pointer);
-                buttonExit.touchDown(touch, pointer);
+                if (timerGameOver > intervalGameOver) {
+                    buttonNewGame.touchDown(touch, pointer);
+                }
                 break;
         }
         return super.touchDown(touch, pointer);
@@ -378,9 +326,6 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        for (Sprite s : spites) {
-            s.touchUp(touch, pointer);
-        }
         switch (gameMode) {
             case Play:
                 mainShip.touchDown(touch, pointer);
@@ -391,23 +336,21 @@ public class GameScreen extends BaseScreen {
                 buttonUpReload.touchUp(touch, pointer);
                 break;
             case GameOver:
-                buttonNewGame.touchUp(touch, pointer);
-                buttonExit.touchUp(touch, pointer);
+                if (timerGameOver > intervalGameOver) {
+                    buttonNewGame.touchUp(touch, pointer);
+                }
                 break;
         }
-
         return super.touchUp(touch, pointer);
     }
 
     @Override
     public void resize(Rect worldBounds) {
-        for (Sprite s : spites) {
-            s.resize(worldBounds);
-        }
+        super.resize(worldBounds);
         mainShip.resize(worldBounds);
         messageGameOver.resize(worldBounds);
         buttonNewGame.resize(worldBounds);
-        buttonExit.resize(worldBounds);
+//        buttonExit.resize(worldBounds);
         buttonUpDamage.resize(worldBounds);
         buttonUpHP.resize(worldBounds);
         buttonUpReload.resize(worldBounds);
@@ -416,7 +359,6 @@ public class GameScreen extends BaseScreen {
     @Override
     public void dispose() {
         super.dispose();
-        atlas.dispose();
         bulletPool.dispose();
         enemyPool.dispose();
         explosionPull.dispose();
