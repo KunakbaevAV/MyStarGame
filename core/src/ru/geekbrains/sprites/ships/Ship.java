@@ -83,7 +83,7 @@ public class Ship extends Sprite {
         this.angleMod = angleMod;
     }
 
-    void setHp(int hp) {
+    public void setHp(int hp) {
         this.hp = hp;
     }
 
@@ -112,17 +112,30 @@ public class Ship extends Sprite {
         this.bulletRegion = atlas.findRegion(this.bulletName);
     }
 
-    void setBulletHeight(float bulletHeight) {
+    public void setBulletHeight(float bulletHeight) {
         this.bulletHeight = bulletHeight;
     }
 
-    void setBulledDamage(int bulledDamage) {
+    public void setBulledDamage(int bulledDamage) {
         this.bulledDamage = bulledDamage;
     }
 
-    void setReloadInterval(float reloadInterval) {
+    public int getBulledDamage() {
+        return bulledDamage;
+    }
+
+    public float getBulletHeight() {
+        return bulletHeight;
+    }
+
+
+    public void setReloadInterval(float reloadInterval) {
         this.reloadInterval = reloadInterval;
         reloadTimer = reloadInterval;
+    }
+
+    public float getReloadInterval(){
+        return reloadInterval;
     }
 
     @Override
@@ -142,9 +155,18 @@ public class Ship extends Sprite {
         damageAnimateTimer = 0;
         hp -= damage;
         if (hp <= 0) {
-            boom();
-            destroy();
+            destroyAndFrag();
         }
+    }
+
+    public void destroyAndFrag() {
+        boom();
+        destroy();
+    }
+
+    void destroyWithoutFrag(){
+        boom();
+        destroy();
     }
 
     private void doAnimateDamage(float delta) {

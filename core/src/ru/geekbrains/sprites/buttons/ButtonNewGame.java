@@ -1,4 +1,4 @@
-package ru.geekbrains.sprites;
+package ru.geekbrains.sprites.buttons;
 
 import ru.geekbrains.base.AnimatedButton;
 import ru.geekbrains.math.Rect;

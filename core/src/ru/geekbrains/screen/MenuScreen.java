@@ -20,8 +20,8 @@ import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.sprites.Background;
 import ru.geekbrains.sprites.BigStar;
-import ru.geekbrains.sprites.ButtonExit;
-import ru.geekbrains.sprites.ButtonStart;
+import ru.geekbrains.sprites.buttons.ButtonExit;
+import ru.geekbrains.sprites.buttons.ButtonStart;
 import ru.geekbrains.sprites.Star;
 
 public class MenuScreen extends BaseScreen {

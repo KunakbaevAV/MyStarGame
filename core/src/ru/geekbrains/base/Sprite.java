@@ -14,7 +14,7 @@ import ru.geekbrains.math.Regions;
 
 public class Sprite extends Rect {
 
-    public final float VOLUME = 0.9f;
+    public final float VOLUME = 0.5f;
     protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;

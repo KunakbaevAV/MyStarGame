@@ -43,8 +43,14 @@ public class Enemy extends Ship {
         } else {
             autoShot(delta);
             pos.mulAdd(v, delta);
-            if (pos.y < worldBounds.getBottom()) doDamage(getHp());
+            if (pos.y < worldBounds.getBottom()) destroyWithoutFrag();
         }
+    }
+
+    @Override
+    public void destroyAndFrag() {
+        super.destroyAndFrag();
+        mainShip.addFrag();
     }
 
     @Override
@@ -60,12 +66,6 @@ public class Enemy extends Ship {
                 bulledDamage,
                 explosionPull);
         getShotSound().play(VOLUME);
-    }
-
-    public void destroyShipOut() {
-        Explosion explosion = explosionPull.obtain();
-        explosion.set(pos, getHeight());
-        destroy();
     }
 
     private void generatePos() {
